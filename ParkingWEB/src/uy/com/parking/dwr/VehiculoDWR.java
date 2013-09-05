@@ -11,7 +11,9 @@ import org.directwebremoting.annotations.RemoteProxy;
 
 import uy.com.parking.bean.IVehiculoBean;
 import uy.com.parking.bean.VehiculoBean;
+import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.Vehiculo;
+import uy.com.parking.transferObjects.ClienteTO;
 import uy.com.parking.transferObjects.VehiculoTO;
 
 @RemoteProxy
@@ -36,6 +38,24 @@ public class VehiculoDWR {
 			for (Vehiculo vehiculo : iVehiculoBean.list()) {
 				VehiculoTO vehiculoTO = new VehiculoTO();
 				
+				Collection<ClienteTO> clientesTO = new LinkedList<ClienteTO>();
+				for (Cliente cliente : vehiculo.getClientes()) {
+					ClienteTO clienteTO = new ClienteTO();
+					clienteTO.setFact(cliente.getFact());
+					clienteTO.setFechaBaja(cliente.getFechaBaja());
+					clienteTO.setId(cliente.getId());
+					clienteTO.setNombre(cliente.getNombre());
+					clienteTO.setTerm(cliente.getTerm());
+					clienteTO.setUact(cliente.getUact());
+					
+					clientesTO.add(clienteTO);
+				}
+				
+				vehiculoTO.setClientes(clientesTO);
+				
+				vehiculoTO.setDescripcion(vehiculo.getDescripcion());
+				vehiculoTO.setMatricula(vehiculo.getMatricula());
+				
 				vehiculoTO.setFact(vehiculo.getFact());
 				vehiculoTO.setId(vehiculo.getId());
 				vehiculoTO.setTerm(vehiculo.getTerm());
@@ -55,6 +75,19 @@ public class VehiculoDWR {
 			IVehiculoBean iVehiculoBean = lookupBean();
 			
 			Vehiculo vehiculo = new Vehiculo();
+			
+			Collection<Cliente> clientes = new LinkedList<Cliente>();
+			for (ClienteTO clienteTO : vehiculoTO.getClientes()) {
+				Cliente cliente = new Cliente();
+				cliente.setId(clienteTO.getId());
+
+				clientes.add(cliente);
+			}
+			
+			vehiculo.setClientes(clientes);
+			
+			vehiculo.setDescripcion(vehiculoTO.getDescripcion());
+			vehiculo.setMatricula(vehiculoTO.getMatricula());
 			
 			vehiculo.setFact(vehiculoTO.getFact());
 			vehiculo.setTerm(vehiculoTO.getTerm());
@@ -84,6 +117,19 @@ public class VehiculoDWR {
 			IVehiculoBean iVehiculoBean = lookupBean();
 			
 			Vehiculo vehiculo = new Vehiculo();
+			
+			Collection<Cliente> clientes = new LinkedList<Cliente>();
+			for (ClienteTO clienteTO : vehiculoTO.getClientes()) {
+				Cliente cliente = new Cliente();
+				cliente.setId(clienteTO.getId());
+
+				clientes.add(cliente);
+			}
+			
+			vehiculo.setClientes(clientes);
+			
+			vehiculo.setDescripcion(vehiculoTO.getDescripcion());
+			vehiculo.setMatricula(vehiculoTO.getMatricula());
 			
 			vehiculo.setId(vehiculoTO.getId());
 			vehiculo.setFact(vehiculoTO.getFact());

@@ -36,6 +36,9 @@ public class MonedaDWR {
 			for (Moneda moneda : iMonedaBean.list()) {
 				MonedaTO monedaTO = new MonedaTO();
 				
+				monedaTO.setAbreviacion(moneda.getAbreviacion());
+				monedaTO.setDescripcion(moneda.getDescripcion());
+
 				monedaTO.setFact(moneda.getFact());
 				monedaTO.setId(moneda.getId());
 				monedaTO.setTerm(moneda.getTerm());
@@ -55,6 +58,9 @@ public class MonedaDWR {
 			IMonedaBean iMonedaBean = lookupBean();
 			
 			Moneda moneda = new Moneda();
+			
+			moneda.setAbreviacion(monedaTO.getAbreviacion());
+			moneda.setDescripcion(monedaTO.getDescripcion());
 			
 			moneda.setFact(monedaTO.getFact());
 			moneda.setTerm(monedaTO.getTerm());
@@ -84,6 +90,9 @@ public class MonedaDWR {
 			IMonedaBean iMonedaBean = lookupBean();
 			
 			Moneda moneda = new Moneda();
+			
+			moneda.setAbreviacion(monedaTO.getAbreviacion());
+			moneda.setDescripcion(monedaTO.getDescripcion());			
 			
 			moneda.setId(monedaTO.getId());
 			moneda.setFact(monedaTO.getFact());
