@@ -34,6 +34,25 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 		return result;
 	}
 
+	public ServicioPrecio getPrecioVigenteByServicioMoneda(Servicio servicio, Moneda moneda) {
+		ServicioPrecio result = null;
+		try {
+			Query query = 
+				entityManager.createQuery(
+					"SELECT sp FROM ServicioPrecio sp"
+					+ " WHERE sp.servicio.id = :servicioId"
+					+ " AND sp.moneda.id = :monedaId"
+					+ " AND sp.validoHasta = null");
+			query.setParameter("servicioId", servicio.getId());
+			query.setParameter("monedaId", moneda.getId());
+			
+			return (ServicioPrecio) query.getResultList().get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public void save(ServicioPrecio servicioPrecio) {
 		try {
 			servicioPrecio.setServicio(entityManager.find(Servicio.class, servicioPrecio.getId()));
@@ -65,4 +84,5 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 			e.printStackTrace();
 		}
 	}
+
 }

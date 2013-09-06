@@ -38,37 +38,7 @@ public class ServicioPrecioDWR {
 			IServicioPrecioBean iServicioPrecioBean = lookupBean();
 			
 			for (ServicioPrecio servicioPrecio : iServicioPrecioBean.list()) {
-				ServicioPrecioTO servicioPrecioTO = new ServicioPrecioTO();
-				
-				MonedaTO monedaTO = new MonedaTO();
-				monedaTO.setAbreviacion(servicioPrecio.getMoneda().getAbreviacion());
-				monedaTO.setDescripcion(servicioPrecio.getMoneda().getDescripcion());
-				monedaTO.setFact(servicioPrecio.getMoneda().getFact());
-				monedaTO.setId(servicioPrecio.getMoneda().getId());
-				monedaTO.setTerm(servicioPrecio.getMoneda().getTerm());
-				monedaTO.setUact(servicioPrecio.getMoneda().getUact());
-				
-				servicioPrecioTO.setMoneda(monedaTO);
-				
-				servicioPrecioTO.setPrecio(servicioPrecio.getPrecio());
-				
-				ServicioTO servicioTO = new ServicioTO();
-				servicioTO.setDescripcion(servicioPrecio.getServicio().getDescripcion());
-				servicioTO.setFact(servicioPrecio.getServicio().getFact());
-				servicioTO.setId(servicioPrecio.getServicio().getId());
-				servicioTO.setTerm(servicioPrecio.getServicio().getTerm());
-				servicioTO.setUact(servicioPrecio.getServicio().getUact());
-				
-				servicioPrecioTO.setServicio(servicioTO);
-				
-				servicioPrecioTO.setValidoHasta(servicioPrecio.getValidoHasta());
-				
-				servicioPrecioTO.setFact(servicioPrecio.getFact());
-				servicioPrecioTO.setId(servicioPrecio.getId());
-				servicioPrecioTO.setTerm(servicioPrecio.getTerm());
-				servicioPrecioTO.setUact(servicioPrecio.getUact());
-				
-				result.add(servicioPrecioTO);
+				result.add(this.transform(servicioPrecio));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,7 +47,27 @@ public class ServicioPrecioDWR {
 		return result;
 	}
 
-	public void add(ServicioPrecioTO servicioPrecioTO) {
+	public ServicioPrecioTO getPrecioVigenteByServicioMoneda(ServicioTO servicioTO, MonedaTO monedaTO) {
+		ServicioPrecioTO result = null;
+		try {
+			IServicioPrecioBean iServicioPrecioBean = lookupBean();
+			
+			Servicio servicio = new Servicio();
+			servicio.setId(servicioTO.getId());
+			
+			Moneda moneda = new Moneda();
+			moneda.setId(monedaTO.getId());
+			
+			ServicioPrecio servicioPrecio = iServicioPrecioBean.getPrecioVigenteByServicioMoneda(servicio, moneda);
+			
+			result = this.transform(servicioPrecio);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+ 	public void add(ServicioPrecioTO servicioPrecioTO) {
 		this.update(servicioPrecioTO);
 	}
 	
@@ -132,5 +122,39 @@ public class ServicioPrecioDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private ServicioPrecioTO transform(ServicioPrecio servicioPrecio) {
+		ServicioPrecioTO servicioPrecioTO = new ServicioPrecioTO();
+		
+		MonedaTO monedaTO = new MonedaTO();
+		monedaTO.setAbreviacion(servicioPrecio.getMoneda().getAbreviacion());
+		monedaTO.setDescripcion(servicioPrecio.getMoneda().getDescripcion());
+		monedaTO.setFact(servicioPrecio.getMoneda().getFact());
+		monedaTO.setId(servicioPrecio.getMoneda().getId());
+		monedaTO.setTerm(servicioPrecio.getMoneda().getTerm());
+		monedaTO.setUact(servicioPrecio.getMoneda().getUact());
+		
+		servicioPrecioTO.setMoneda(monedaTO);
+		
+		servicioPrecioTO.setPrecio(servicioPrecio.getPrecio());
+		
+		ServicioTO servicioTO = new ServicioTO();
+		servicioTO.setDescripcion(servicioPrecio.getServicio().getDescripcion());
+		servicioTO.setFact(servicioPrecio.getServicio().getFact());
+		servicioTO.setId(servicioPrecio.getServicio().getId());
+		servicioTO.setTerm(servicioPrecio.getServicio().getTerm());
+		servicioTO.setUact(servicioPrecio.getServicio().getUact());
+		
+		servicioPrecioTO.setServicio(servicioTO);
+		
+		servicioPrecioTO.setValidoHasta(servicioPrecio.getValidoHasta());
+		
+		servicioPrecioTO.setFact(servicioPrecio.getFact());
+		servicioPrecioTO.setId(servicioPrecio.getId());
+		servicioPrecioTO.setTerm(servicioPrecio.getTerm());
+		servicioPrecioTO.setUact(servicioPrecio.getUact());
+		
+		return servicioPrecioTO;
 	}
 }
