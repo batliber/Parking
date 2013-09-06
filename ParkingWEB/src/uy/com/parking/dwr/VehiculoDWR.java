@@ -71,32 +71,7 @@ public class VehiculoDWR {
 	}
 	
 	public void add(VehiculoTO vehiculoTO) {
-		try {
-			IVehiculoBean iVehiculoBean = lookupBean();
-			
-			Vehiculo vehiculo = new Vehiculo();
-			
-			Collection<Cliente> clientes = new LinkedList<Cliente>();
-			for (ClienteTO clienteTO : vehiculoTO.getClientes()) {
-				Cliente cliente = new Cliente();
-				cliente.setId(clienteTO.getId());
-
-				clientes.add(cliente);
-			}
-			
-			vehiculo.setClientes(clientes);
-			
-			vehiculo.setDescripcion(vehiculoTO.getDescripcion());
-			vehiculo.setMatricula(vehiculoTO.getMatricula());
-			
-			vehiculo.setFact(vehiculoTO.getFact());
-			vehiculo.setTerm(vehiculoTO.getTerm());
-			vehiculo.setUact(vehiculoTO.getUact());
-			
-			iVehiculoBean.save(vehiculo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.update(vehiculoTO);
 	}
 
 	public void remove(VehiculoTO vehiculoTO) {

@@ -68,7 +68,6 @@ public class FacturaDWR {
 					servicioTO.setDescripcion(facturaLinea.getServicio().getDescripcion());
 					servicioTO.setFact(facturaLinea.getServicio().getFact());
 					servicioTO.setId(facturaLinea.getServicio().getId());
-					servicioTO.setPrecio(facturaLinea.getServicio().getPrecio());
 					servicioTO.setTerm(facturaLinea.getServicio().getTerm());
 					servicioTO.setUact(facturaLinea.getServicio().getUact());
 					

@@ -71,30 +71,7 @@ public class ClienteDWR {
 	}
 	
 	public void add(ClienteTO clienteTO) {
-		try {
-			IClienteBean iClienteBean = lookupBean();
-			
-			Cliente cliente = new Cliente();
-			
-			cliente.setFechaBaja(clienteTO.getFechaBaja());
-			cliente.setNombre(clienteTO.getNombre());
-			
-			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
-			for (VehiculoTO vehiculoTO : clienteTO.getVehiculos()) {
-				Vehiculo vehiculo = new Vehiculo();
-				vehiculoTO.setId(vehiculo.getId());
-				
-				vehiculos.add(vehiculo);
-			}
-			
-			cliente.setFact(clienteTO.getFact());
-			cliente.setTerm(clienteTO.getTerm());
-			cliente.setUact(clienteTO.getUact());
-			
-			iClienteBean.save(cliente);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.update(clienteTO);
 	}
 
 	public void remove(ClienteTO clienteTO) {
@@ -122,10 +99,12 @@ public class ClienteDWR {
 			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
 			for (VehiculoTO vehiculoTO : clienteTO.getVehiculos()) {
 				Vehiculo vehiculo = new Vehiculo();
-				vehiculoTO.setId(vehiculo.getId());
+				vehiculo.setId(vehiculoTO.getId());
 				
 				vehiculos.add(vehiculo);
 			}
+			
+			cliente.setVehiculos(vehiculos);
 			
 			cliente.setId(clienteTO.getId());
 			cliente.setFact(clienteTO.getFact());

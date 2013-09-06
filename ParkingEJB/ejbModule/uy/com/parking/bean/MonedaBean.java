@@ -1,35 +1,60 @@
 package uy.com.parking.bean;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import uy.com.parking.entities.Moneda;
 
 @Stateless
 public class MonedaBean implements IMonedaBean {
 
-	@Override
+	@PersistenceContext(unitName = "uy.com.parking.persistenceUnit")
+	private EntityManager entityManager;
+	
 	public Collection<Moneda> list() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Moneda> result = new LinkedList<Moneda>();
+		
+		try {
+			Query query = entityManager.createQuery("SELECT m FROM Moneda m");
+			
+			for (Object object : query.getResultList()) {
+				result.add((Moneda) object);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
-	@Override
 	public void save(Moneda moneda) {
-		// TODO Auto-generated method stub
-
+		try {
+			entityManager.persist(moneda);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Override
 	public void remove(Moneda moneda) {
-		// TODO Auto-generated method stub
-
+		try {
+			Moneda managedMoneda = entityManager.find(Moneda.class, moneda.getId());
+			
+			entityManager.remove(managedMoneda);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Override
 	public void update(Moneda moneda) {
-		// TODO Auto-generated method stub
-
+		try {
+			entityManager.merge(moneda);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

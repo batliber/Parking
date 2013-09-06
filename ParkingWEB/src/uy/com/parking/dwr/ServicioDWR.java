@@ -37,7 +37,6 @@ public class ServicioDWR {
 				ServicioTO servicioTO = new ServicioTO();
 				
 				servicioTO.setDescripcion(servicio.getDescripcion());
-				servicioTO.setPrecio(servicio.getPrecio());
 				
 				servicioTO.setFact(servicio.getFact());
 				servicioTO.setId(servicio.getId());
@@ -54,22 +53,7 @@ public class ServicioDWR {
 	}
 	
 	public void add(ServicioTO servicioTO) {
-		try {
-			IServicioBean iServicioBean = lookupBean();
-			
-			Servicio servicio = new Servicio();
-			
-			servicio.setDescripcion(servicioTO.getDescripcion());
-			servicio.setPrecio(servicioTO.getPrecio());
-			
-			servicio.setFact(servicioTO.getFact());
-			servicio.setTerm(servicioTO.getTerm());
-			servicio.setUact(servicioTO.getUact());
-			
-			iServicioBean.save(servicio);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.update(servicioTO);
 	}
 
 	public void remove(ServicioTO servicioTO) {
@@ -92,7 +76,6 @@ public class ServicioDWR {
 			Servicio servicio = new Servicio();
 			
 			servicio.setDescripcion(servicioTO.getDescripcion());
-			servicio.setPrecio(servicioTO.getPrecio());
 			
 			servicio.setId(servicioTO.getId());
 			servicio.setFact(servicioTO.getFact());

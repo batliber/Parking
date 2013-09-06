@@ -2,8 +2,12 @@ package uy.com.parking.entities;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -19,7 +23,13 @@ public class Vehiculo extends BaseEntity {
 	@Column(name = "descripcion")
 	private String descripcion;
 
-	@ManyToMany(mappedBy = "vehiculos")
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(name = "vehiculo_cliente",
+	joinColumns=
+			@JoinColumn(name = "vehiculo_id", referencedColumnName = "id"),
+		inverseJoinColumns=
+			@JoinColumn(name = "cliente_id", referencedColumnName = "id")
+	)
 	private Collection<Cliente> clientes;
 
 	public String getMatricula() {

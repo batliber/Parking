@@ -43,6 +43,7 @@
 		uy.com.parking.dwr.FacturaLineaDWR,
 		uy.com.parking.dwr.MonedaDWR,
 		uy.com.parking.dwr.ServicioDWR,
+		uy.com.parking.dwr.ServicioPrecioDWR,
 		uy.com.parking.dwr.VehiculoDWR,
 		
 		uy.com.parking.transferObjects.CajaMovimientoTO,
@@ -52,6 +53,7 @@
 		uy.com.parking.transferObjects.FacturaTO,
 		uy.com.parking.transferObjects.MonedaTO,
 		uy.com.parking.transferObjects.ServicioTO,
+		uy.com.parking.transferObjects.ServicioPrecioTO,
 		uy.com.parking.transferObjects.VehiculoTO
       </param-value>
     </init-param>

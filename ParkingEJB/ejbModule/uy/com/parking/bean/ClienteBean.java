@@ -1,35 +1,75 @@
 package uy.com.parking.bean;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import uy.com.parking.entities.Cliente;
+import uy.com.parking.entities.Vehiculo;
 
 @Stateless
 public class ClienteBean implements IClienteBean {
 
-	@Override
+	@PersistenceContext(unitName = "uy.com.parking.persistenceUnit")
+	private EntityManager entityManager;
+	
 	public Collection<Cliente> list() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Cliente> result = new LinkedList<Cliente>();
+		
+		try {
+			Query query = entityManager.createQuery("SELECT c FROM Cliente c");
+			
+			for (Object object : query.getResultList()) {
+				result.add((Cliente) object);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
-	@Override
 	public void save(Cliente cliente) {
-		// TODO Auto-generated method stub
-
+		try {
+			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
+			for (Vehiculo vehiculo : cliente.getVehiculos()) {
+				vehiculos.add(entityManager.find(Vehiculo.class, vehiculo.getId()));
+			}
+			
+			cliente.setVehiculos(vehiculos);
+			
+			entityManager.persist(cliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Override
 	public void remove(Cliente cliente) {
-		// TODO Auto-generated method stub
-
+		try {
+			Cliente managedCliente = entityManager.find(Cliente.class, cliente.getId());
+			
+			entityManager.remove(managedCliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Override
 	public void update(Cliente cliente) {
-		// TODO Auto-generated method stub
-
+		try {
+			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
+			for (Vehiculo vehiculo : cliente.getVehiculos()) {
+				vehiculos.add(entityManager.find(Vehiculo.class, vehiculo.getId()));
+			}
+			
+			cliente.setVehiculos(vehiculos);
+			
+			entityManager.merge(cliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

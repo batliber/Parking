@@ -54,22 +54,7 @@ public class CajaTipoDocumentoDWR {
 	}
 	
 	public void add(CajaTipoDocumentoTO cajaTipoDocumentoTO) {
-		try {
-			ICajaTipoDocumentoBean iCajaTipoDocumentoBean = lookupBean();
-			
-			CajaTipoDocumento cajaTipoDocumento = new CajaTipoDocumento();
-			
-			cajaTipoDocumento.setDescripcion(cajaTipoDocumentoTO.getDescripcion());
-			cajaTipoDocumento.setSigno(cajaTipoDocumentoTO.getSigno());
-			
-			cajaTipoDocumento.setFact(cajaTipoDocumentoTO.getFact());
-			cajaTipoDocumento.setTerm(cajaTipoDocumentoTO.getTerm());
-			cajaTipoDocumento.setUact(cajaTipoDocumentoTO.getUact());
-			
-			iCajaTipoDocumentoBean.save(cajaTipoDocumento);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.update(cajaTipoDocumentoTO);
 	}
 
 	public void remove(CajaTipoDocumentoTO cajaTipoDocumentoTO) {

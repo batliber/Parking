@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "caja_tipo_movimiento")
+@Table(name = "caja_tipo_documento")
 public class CajaTipoDocumento extends BaseEntity {
 
 	private static final long serialVersionUID = 7459037091986747625L;

@@ -54,22 +54,7 @@ public class MonedaDWR {
 	}
 	
 	public void add(MonedaTO monedaTO) {
-		try {
-			IMonedaBean iMonedaBean = lookupBean();
-			
-			Moneda moneda = new Moneda();
-			
-			moneda.setAbreviacion(monedaTO.getAbreviacion());
-			moneda.setDescripcion(monedaTO.getDescripcion());
-			
-			moneda.setFact(monedaTO.getFact());
-			moneda.setTerm(monedaTO.getTerm());
-			moneda.setUact(monedaTO.getUact());
-			
-			iMonedaBean.save(moneda);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.update(monedaTO);
 	}
 
 	public void remove(MonedaTO monedaTO) {
