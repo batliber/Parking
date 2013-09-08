@@ -11,6 +11,8 @@ public interface IVehiculoBean {
 
 	public Collection<Vehiculo> list();
 	
+	public Vehiculo getByMatricula(String matricula);
+	
 	public void save(Vehiculo vehiculo);
 	
 	public void remove(Vehiculo vehiculo);

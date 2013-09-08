@@ -36,6 +36,7 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 
 	public ServicioPrecio getPrecioVigenteByServicioMoneda(Servicio servicio, Moneda moneda) {
 		ServicioPrecio result = null;
+		
 		try {
 			Query query = 
 				entityManager.createQuery(
@@ -50,6 +51,7 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return result;
 	}
 	
@@ -84,5 +86,4 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 			e.printStackTrace();
 		}
 	}
-
 }

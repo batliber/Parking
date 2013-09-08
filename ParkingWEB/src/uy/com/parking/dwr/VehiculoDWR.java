@@ -70,6 +70,20 @@ public class VehiculoDWR {
 		return result;
 	}
 	
+	public Vehiculo getByMatricula(String matricula) {
+		Vehiculo result = null;
+		
+		try {
+			IVehiculoBean iVehiculoBean = lookupBean();
+			
+			result = iVehiculoBean.getByMatricula(matricula);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void add(VehiculoTO vehiculoTO) {
 		this.update(vehiculoTO);
 	}
