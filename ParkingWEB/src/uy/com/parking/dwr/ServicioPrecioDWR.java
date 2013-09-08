@@ -49,6 +49,7 @@ public class ServicioPrecioDWR {
 
 	public ServicioPrecioTO getPrecioVigenteByServicioMoneda(ServicioTO servicioTO, MonedaTO monedaTO) {
 		ServicioPrecioTO result = null;
+		
 		try {
 			IServicioPrecioBean iServicioPrecioBean = lookupBean();
 			
@@ -64,6 +65,7 @@ public class ServicioPrecioDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return result;
 	}
 	

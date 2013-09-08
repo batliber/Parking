@@ -36,32 +36,7 @@ public class VehiculoDWR {
 			IVehiculoBean iVehiculoBean = lookupBean();
 			
 			for (Vehiculo vehiculo : iVehiculoBean.list()) {
-				VehiculoTO vehiculoTO = new VehiculoTO();
-				
-				Collection<ClienteTO> clientesTO = new LinkedList<ClienteTO>();
-				for (Cliente cliente : vehiculo.getClientes()) {
-					ClienteTO clienteTO = new ClienteTO();
-					clienteTO.setFact(cliente.getFact());
-					clienteTO.setFechaBaja(cliente.getFechaBaja());
-					clienteTO.setId(cliente.getId());
-					clienteTO.setNombre(cliente.getNombre());
-					clienteTO.setTerm(cliente.getTerm());
-					clienteTO.setUact(cliente.getUact());
-					
-					clientesTO.add(clienteTO);
-				}
-				
-				vehiculoTO.setClientes(clientesTO);
-				
-				vehiculoTO.setDescripcion(vehiculo.getDescripcion());
-				vehiculoTO.setMatricula(vehiculo.getMatricula());
-				
-				vehiculoTO.setFact(vehiculo.getFact());
-				vehiculoTO.setId(vehiculo.getId());
-				vehiculoTO.setTerm(vehiculo.getTerm());
-				vehiculoTO.setUact(vehiculo.getUact());
-				
-				result.add(vehiculoTO);
+				result.add(this.transform(vehiculo));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,13 +45,13 @@ public class VehiculoDWR {
 		return result;
 	}
 	
-	public Vehiculo getByMatricula(String matricula) {
-		Vehiculo result = null;
+	public VehiculoTO getByMatricula(String matricula) {
+		VehiculoTO result = null;
 		
 		try {
 			IVehiculoBean iVehiculoBean = lookupBean();
 			
-			result = iVehiculoBean.getByMatricula(matricula);
+			result = this.transform(iVehiculoBean.getByMatricula(matricula));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,5 +104,34 @@ public class VehiculoDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private VehiculoTO transform(Vehiculo vehiculo) {
+		VehiculoTO vehiculoTO = new VehiculoTO();
+		
+		Collection<ClienteTO> clientesTO = new LinkedList<ClienteTO>();
+		for (Cliente cliente : vehiculo.getClientes()) {
+			ClienteTO clienteTO = new ClienteTO();
+			clienteTO.setFact(cliente.getFact());
+			clienteTO.setFechaBaja(cliente.getFechaBaja());
+			clienteTO.setId(cliente.getId());
+			clienteTO.setNombre(cliente.getNombre());
+			clienteTO.setTerm(cliente.getTerm());
+			clienteTO.setUact(cliente.getUact());
+			
+			clientesTO.add(clienteTO);
+		}
+		
+		vehiculoTO.setClientes(clientesTO);
+		
+		vehiculoTO.setDescripcion(vehiculo.getDescripcion());
+		vehiculoTO.setMatricula(vehiculo.getMatricula());
+		
+		vehiculoTO.setFact(vehiculo.getFact());
+		vehiculoTO.setId(vehiculo.getId());
+		vehiculoTO.setTerm(vehiculo.getTerm());
+		vehiculoTO.setUact(vehiculo.getUact());
+		
+		return vehiculoTO;
 	}
 }
