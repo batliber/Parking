@@ -2,11 +2,13 @@ package uy.com.parking.bean;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.Vehiculo;
@@ -37,14 +39,17 @@ public class VehiculoBean implements IVehiculoBean {
 		Vehiculo result = null;
 		
 		try {
-			Query query = 
+			TypedQuery<Vehiculo> query = 
 				entityManager.createQuery(
 					"SELECT v FROM Vehiculo v"
 					+ " WHERE v.matricula = :matricula"
-				);
+				, Vehiculo.class);
 			query.setParameter("matricula", matricula);
 			
-			return (Vehiculo) query.getResultList().get(0);
+			List<Vehiculo> resultList = query.getResultList();
+			if (!resultList.isEmpty()) {
+				result = resultList.get(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

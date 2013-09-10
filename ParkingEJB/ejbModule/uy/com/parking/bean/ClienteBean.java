@@ -33,6 +33,18 @@ public class ClienteBean implements IClienteBean {
 		return result;
 	}
 
+	public Cliente getById(Long id) {
+		Cliente result = null;
+		
+		try {
+			result = entityManager.find(Cliente.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(Cliente cliente) {
 		try {
 			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();

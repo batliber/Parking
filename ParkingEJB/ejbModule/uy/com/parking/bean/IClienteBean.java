@@ -11,6 +11,8 @@ public interface IClienteBean {
 
 	public Collection<Cliente> list();
 	
+	public Cliente getById(Long id);
+	
 	public void save(Cliente cliente);
 	
 	public void remove(Cliente cliente);

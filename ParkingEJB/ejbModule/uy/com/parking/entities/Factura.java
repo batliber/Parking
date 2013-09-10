@@ -1,10 +1,13 @@
 package uy.com.parking.entities;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,24 +20,31 @@ public class Factura extends BaseEntity {
 	private static final long serialVersionUID = 7926991811875600524L;
 
 	@Column(name = "numero")
+	@GeneratedValue
 	private Long numero;
 
 	@Column(name = "fecha")
 	private Date fecha;
 
-	@Column(name = "importe")
-	private Double importe;
+	@Column(name = "importe_subtotal")
+	private Double importeSubtotal;
 
-	@ManyToOne(optional = false)
+	@Column(name = "importe_iva")
+	private Double importeIVA;
+	
+	@Column(name = "importe_total")
+	private Double importeTotal;
+	
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "moneda_id", nullable = false)
 	private Moneda moneda;
 
-	@OneToMany(mappedBy = "factura")
-	private Collection<FacturaLinea> facturaLineas;
+	@OneToMany(mappedBy = "factura", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+	private Set<FacturaLinea> facturaLineas;
 
 	public Long getNumero() {
 		return numero;
@@ -51,13 +61,29 @@ public class Factura extends BaseEntity {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-
-	public Double getImporte() {
-		return importe;
+	
+	public Double getImporteSubtotal() {
+		return importeSubtotal;
 	}
 
-	public void setImporte(Double importe) {
-		this.importe = importe;
+	public void setImporteSubtotal(Double importeSubtotal) {
+		this.importeSubtotal = importeSubtotal;
+	}
+
+	public Double getImporteIVA() {
+		return importeIVA;
+	}
+
+	public void setImporteIVA(Double importeIVA) {
+		this.importeIVA = importeIVA;
+	}
+
+	public Double getImporteTotal() {
+		return importeTotal;
+	}
+
+	public void setImporteTotal(Double importeTotal) {
+		this.importeTotal = importeTotal;
 	}
 
 	public Cliente getCliente() {
@@ -76,11 +102,11 @@ public class Factura extends BaseEntity {
 		this.moneda = moneda;
 	}
 
-	public Collection<FacturaLinea> getFacturaLineas() {
+	public Set<FacturaLinea> getFacturaLineas() {
 		return facturaLineas;
 	}
 
-	public void setFacturaLineas(Collection<FacturaLinea> facturaLineas) {
+	public void setFacturaLineas(Set<FacturaLinea> facturaLineas) {
 		this.facturaLineas = facturaLineas;
 	}
 }

@@ -36,28 +36,25 @@ public class RegistroDWR {
 			IRegistroBean iRegistroBean = lookupBean();
 			
 			for (Registro registro : iRegistroBean.list()) {
-				RegistroTO registroTO = new RegistroTO();
-				
-				registroTO.setFecha(registro.getFecha());
-				registroTO.setMatricula(registro.getMatricula());
-				
-				RegistroTipoTO registroTipoTO = new RegistroTipoTO();
-				
-				registroTipoTO.setDescripcion(registro.getRegistroTipo().getDescripcion());
-				
-				registroTipoTO.setFact(registro.getRegistroTipo().getFact());
-				registroTipoTO.setId(registro.getRegistroTipo().getId());
-				registroTipoTO.setTerm(registro.getRegistroTipo().getTerm());
-				registroTipoTO.setUact(registro.getRegistroTipo().getUact());
-				
-				registroTO.setRegistroTipo(registroTipoTO);
-				
-				registroTO.setFact(registro.getFact());
-				registroTO.setId(registro.getId());
-				registroTO.setTerm(registro.getTerm());
-				registroTO.setUact(registro.getUact());
-				
-				result.add(registroTO);
+				result.add(this.transform(registro));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public RegistroTO getLastByMatricula(String matricula) {
+		RegistroTO result = null;
+		
+		try {
+			IRegistroBean iRegistroBean = lookupBean();
+			
+			Registro registro = iRegistroBean.getLastByMatricula(matricula);
+			
+			if (registro != null) {
+				result = this.transform(registro);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,5 +123,30 @@ public class RegistroDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private RegistroTO transform(Registro registro) {
+		RegistroTO registroTO = new RegistroTO();
+		
+		registroTO.setFecha(registro.getFecha());
+		registroTO.setMatricula(registro.getMatricula());
+		
+		RegistroTipoTO registroTipoTO = new RegistroTipoTO();
+		
+		registroTipoTO.setDescripcion(registro.getRegistroTipo().getDescripcion());
+		
+		registroTipoTO.setFact(registro.getRegistroTipo().getFact());
+		registroTipoTO.setId(registro.getRegistroTipo().getId());
+		registroTipoTO.setTerm(registro.getRegistroTipo().getTerm());
+		registroTipoTO.setUact(registro.getRegistroTipo().getUact());
+		
+		registroTO.setRegistroTipo(registroTipoTO);
+		
+		registroTO.setFact(registro.getFact());
+		registroTO.setId(registro.getId());
+		registroTO.setTerm(registro.getTerm());
+		registroTO.setUact(registro.getUact());
+		
+		return registroTO;
 	}
 }

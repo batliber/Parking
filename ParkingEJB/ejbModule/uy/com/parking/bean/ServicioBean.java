@@ -32,6 +32,18 @@ public class ServicioBean implements IServicioBean {
 		return result;
 	}
 
+	public Servicio getById(Long id) {
+		Servicio result = null;
+		
+		try {
+			result = entityManager.find(Servicio.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(Servicio servicio) {
 		try {
 			entityManager.persist(servicio);
@@ -39,7 +51,7 @@ public class ServicioBean implements IServicioBean {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void remove(Servicio servicio) {
 		try {
 			Servicio managedServicio = entityManager.find(Servicio.class, servicio.getId());

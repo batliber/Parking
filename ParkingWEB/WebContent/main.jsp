@@ -8,5 +8,6 @@
 </head>
 <body>
 	<iframe src="/ParkingWEB/pages/registro/registro.jsp"></iframe>
+	<iframe src="/ParkingWEB/pages/factura/factura.jsp" style="width: 640px;height: 320px;"></iframe>
 </body>
 </html>

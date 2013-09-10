@@ -51,7 +51,11 @@ public class VehiculoDWR {
 		try {
 			IVehiculoBean iVehiculoBean = lookupBean();
 			
-			result = this.transform(iVehiculoBean.getByMatricula(matricula));
+			Vehiculo vehiculo = iVehiculoBean.getByMatricula(matricula);
+			
+			if (vehiculo != null) {
+				result = this.transform(vehiculo);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

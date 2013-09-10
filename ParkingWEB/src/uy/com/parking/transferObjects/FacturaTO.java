@@ -10,7 +10,9 @@ public class FacturaTO extends BaseTO {
 
 	private Long numero;
 	private Date fecha;
-	private Double importe;
+	private Double importeSubtotal;
+	private Double importeIVA;
+	private Double importeTotal;
 	private ClienteTO cliente;
 	private MonedaTO moneda;
 	private Collection<FacturaLineaTO> facturaLineas;
@@ -31,12 +33,28 @@ public class FacturaTO extends BaseTO {
 		this.fecha = fecha;
 	}
 
-	public Double getImporte() {
-		return importe;
+	public Double getImporteSubtotal() {
+		return importeSubtotal;
 	}
 
-	public void setImporte(Double importe) {
-		this.importe = importe;
+	public void setImporteSubtotal(Double importeSubtotal) {
+		this.importeSubtotal = importeSubtotal;
+	}
+
+	public Double getImporteIVA() {
+		return importeIVA;
+	}
+
+	public void setImporteIVA(Double importeIVA) {
+		this.importeIVA = importeIVA;
+	}
+
+	public Double getImporteTotal() {
+		return importeTotal;
+	}
+
+	public void setImporteTotal(Double importeTotal) {
+		this.importeTotal = importeTotal;
 	}
 
 	public ClienteTO getCliente() {

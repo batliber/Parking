@@ -11,6 +11,8 @@ public interface IRegistroBean {
 
 	public Collection<Registro> list();
 	
+	public Registro getLastByMatricula(String matricula);
+	
 	public void save(Registro registro);
 	
 	public void remove(Registro registro);

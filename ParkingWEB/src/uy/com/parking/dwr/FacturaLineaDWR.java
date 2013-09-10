@@ -76,7 +76,9 @@ public class FacturaLineaDWR {
 				facturaTO.setFact(facturaLinea.getFactura().getFact());
 				facturaTO.setFecha(facturaLinea.getFactura().getFecha());
 				facturaTO.setId(facturaLinea.getFactura().getId());
-				facturaTO.setImporte(facturaLinea.getFactura().getImporte());
+				facturaTO.setImporteIVA(facturaLinea.getFactura().getImporteIVA());
+				facturaTO.setImporteSubtotal(facturaLinea.getFactura().getImporteSubtotal());
+				facturaTO.setImporteTotal(facturaLinea.getFactura().getImporteTotal());
 				
 				MonedaTO monedaTO = new MonedaTO();
 				monedaTO.setAbreviacion(facturaLinea.getFactura().getMoneda().getAbreviacion());

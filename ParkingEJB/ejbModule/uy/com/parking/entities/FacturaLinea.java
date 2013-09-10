@@ -18,13 +18,13 @@ public class FacturaLinea extends BaseEntity {
 	@Column(name = "detalle")
 	private String detalle;
 
-	@Column(name = "importeUnitario")
+	@Column(name = "importe_unitario")
 	private Double importeUnitario;
 
 	@Column(name = "unidades")
 	private Double unidades;
 
-	@Column(name = "importeTotal")
+	@Column(name = "importe_total")
 	private Double importeTotal;
 
 	@ManyToOne(optional = false)

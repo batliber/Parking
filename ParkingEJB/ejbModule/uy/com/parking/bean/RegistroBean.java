@@ -2,11 +2,13 @@ package uy.com.parking.bean;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Registro;
 import uy.com.parking.entities.RegistroTipo;
@@ -33,6 +35,29 @@ public class RegistroBean implements IRegistroBean {
 		return result;
 	}
 
+	public Registro getLastByMatricula(String matricula) {
+		Registro result = null;
+		
+		try {
+			TypedQuery<Registro> query = 
+				entityManager.createQuery(
+					"SELECT r FROM Registro r"
+					+ " WHERE r.matricula = :matricula"
+					+ " ORDER BY r.fecha DESC", Registro.class);
+			query.setParameter("matricula", matricula);
+			query.setMaxResults(1);
+			
+			List<Registro> resultList = query.getResultList();
+			if (!resultList.isEmpty()) {
+				result = resultList.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(Registro registro) {
 		try {
 			registro.setRegistroTipo(entityManager.find(RegistroTipo.class, registro.getRegistroTipo().getId()));

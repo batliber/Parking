@@ -47,7 +47,7 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 			query.setParameter("servicioId", servicio.getId());
 			query.setParameter("monedaId", moneda.getId());
 			
-			return (ServicioPrecio) query.getResultList().get(0);
+			result = (ServicioPrecio) query.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

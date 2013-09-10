@@ -1,7 +1,9 @@
 package uy.com.parking.dwr;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -42,67 +44,25 @@ public class FacturaDWR {
 			IFacturaBean iFacturaBean = lookupBean();
 			
 			for (Factura factura : iFacturaBean.list()) {
-				FacturaTO facturaTO = new FacturaTO();
-				
-				ClienteTO clienteTO = new ClienteTO();
-				clienteTO.setFact(factura.getCliente().getFact());
-				clienteTO.setFechaBaja(factura.getCliente().getFechaBaja());
-				clienteTO.setId(factura.getCliente().getId());
-				clienteTO.setNombre(factura.getCliente().getNombre());
-				clienteTO.setTerm(factura.getCliente().getTerm());
-				clienteTO.setUact(factura.getCliente().getUact());
-				
-				facturaTO.setCliente(clienteTO);
-				
-				Collection<FacturaLineaTO> facturaLineas = new LinkedList<FacturaLineaTO>();
-				for (FacturaLinea facturaLinea : factura.getFacturaLineas()) {
-					FacturaLineaTO facturaLineaTO = new FacturaLineaTO();
-					facturaLineaTO.setDetalle(facturaLinea.getDetalle());
-					facturaLineaTO.setFact(facturaLinea.getFact());
-					facturaLineaTO.setId(facturaLinea.getId());
-					facturaLineaTO.setImporteTotal(facturaLinea.getImporteTotal());
-					facturaLineaTO.setImporteUnitario(facturaLinea.getImporteUnitario());
-					facturaLineaTO.setNumero(facturaLinea.getNumero());
-					
-					ServicioTO servicioTO = new ServicioTO();
-					servicioTO.setDescripcion(facturaLinea.getServicio().getDescripcion());
-					servicioTO.setFact(facturaLinea.getServicio().getFact());
-					servicioTO.setId(facturaLinea.getServicio().getId());
-					servicioTO.setTerm(facturaLinea.getServicio().getTerm());
-					servicioTO.setUact(facturaLinea.getServicio().getUact());
-					
-					facturaLineaTO.setServicio(servicioTO);
-					
-					facturaLineaTO.setTerm(facturaLinea.getTerm());
-					facturaLineaTO.setUact(facturaLinea.getUact());
-					facturaLineaTO.setUnidades(facturaLinea.getUnidades());
-					
-					facturaLineas.add(facturaLineaTO);
-				}
-				
-				facturaTO.setFacturaLineas(facturaLineas);
-				
-				facturaTO.setFecha(factura.getFecha());
-				facturaTO.setImporte(factura.getImporte());
-				
-				MonedaTO monedaTO = new MonedaTO();
-				monedaTO.setAbreviacion(factura.getMoneda().getAbreviacion());
-				monedaTO.setDescripcion(factura.getMoneda().getDescripcion());
-				monedaTO.setFact(factura.getMoneda().getFact());
-				monedaTO.setId(factura.getMoneda().getId());
-				monedaTO.setTerm(factura.getMoneda().getTerm());
-				monedaTO.setUact(factura.getMoneda().getUact());
-				
-				facturaTO.setMoneda(monedaTO);
-				
-				facturaTO.setNumero(factura.getNumero());
-				
-				facturaTO.setFact(factura.getFact());
-				facturaTO.setId(factura.getId());
-				facturaTO.setTerm(factura.getTerm());
-				facturaTO.setUact(factura.getUact());
-				
-				result.add(facturaTO);
+				result.add(this.transform(factura));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public FacturaTO getById(Long id) {
+		FacturaTO result = null;
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			Factura factura = iFacturaBean.getById(id);
+			
+			if (factura != null) {
+				result = this.transform(factura);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,56 +75,42 @@ public class FacturaDWR {
 		try {
 			IFacturaBean iFacturaBean = lookupBean();
 			
-			Factura factura = new Factura();
-			
-			Cliente cliente = new Cliente();
-			cliente.setId(facturaTO.getCliente().getId());
-			
-			factura.setCliente(cliente);
-			
-			Collection<FacturaLinea> facturaLineas = new LinkedList<FacturaLinea>();
-			for (FacturaLineaTO facturaLineaTO : facturaTO.getFacturaLineas()) {
-				FacturaLinea facturaLinea = new FacturaLinea();
-				facturaLinea.setDetalle(facturaLineaTO.getDetalle());
-				facturaLinea.setFact(facturaLineaTO.getFact());
-				facturaLinea.setImporteTotal(facturaLineaTO.getImporteTotal());
-				facturaLinea.setImporteUnitario(facturaLineaTO.getImporteUnitario());
-				facturaLinea.setNumero(facturaLineaTO.getNumero());
-				
-				Servicio servicio = new Servicio();
-				servicio.setId(facturaLinea.getServicio().getId());
-				
-				facturaLinea.setServicio(servicio);
-				
-				facturaLinea.setTerm(facturaLineaTO.getTerm());
-				facturaLinea.setUact(facturaLineaTO.getUact());
-				facturaLinea.setUnidades(facturaLineaTO.getUnidades());
-				
-				facturaLineas.add(facturaLinea);
-			}
-			
-			factura.setFacturaLineas(facturaLineas);
-			
-			factura.setFecha(facturaTO.getFecha());
-			factura.setImporte(facturaTO.getImporte());
-			
-			Moneda moneda = new Moneda();
-			moneda.setId(facturaTO.getMoneda().getId());
-			
-			factura.setMoneda(moneda);
-			
-			factura.setNumero(facturaTO.getNumero());
-			
-			factura.setFact(facturaTO.getFact());
-			factura.setTerm(facturaTO.getTerm());
-			factura.setUact(facturaTO.getUact());
-			
-			iFacturaBean.save(factura);
+			iFacturaBean.save(this.transform(facturaTO));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	public FacturaTO saveAndCloseRegistro(FacturaTO facturaTO, String matricula) {
+		FacturaTO result = null;
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			Factura factura = this.transform(facturaTO);
+			
+			result = this.transform(iFacturaBean.saveAndCloseRegistro(factura, matricula));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public FacturaTO generateFacturaByMatricula(String matricula) {
+		FacturaTO result = null;
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			result = this.transform(iFacturaBean.generateFacturaByMatricula(matricula));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void remove(FacturaTO facturaTO) {
 		try {
 			IFacturaBean iFacturaBean = lookupBean();
@@ -189,7 +135,7 @@ public class FacturaDWR {
 			
 			factura.setCliente(cliente);
 			
-			Collection<FacturaLinea> facturaLineas = new LinkedList<FacturaLinea>();
+			Set<FacturaLinea> facturaLineas = new HashSet<FacturaLinea>();
 			for (FacturaLineaTO facturaLineaTO : facturaTO.getFacturaLineas()) {
 				FacturaLinea facturaLinea = new FacturaLinea();
 				facturaLinea.setDetalle(facturaLineaTO.getDetalle());
@@ -213,7 +159,9 @@ public class FacturaDWR {
 			factura.setFacturaLineas(facturaLineas);
 			
 			factura.setFecha(facturaTO.getFecha());
-			factura.setImporte(facturaTO.getImporte());
+			factura.setImporteIVA(facturaTO.getImporteIVA());
+			factura.setImporteSubtotal(facturaTO.getImporteSubtotal());
+			factura.setImporteTotal(facturaTO.getImporteTotal());
 			
 			Moneda moneda = new Moneda();
 			moneda.setId(facturaTO.getMoneda().getId());
@@ -231,5 +179,123 @@ public class FacturaDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private FacturaTO transform(Factura factura) {
+		FacturaTO facturaTO = new FacturaTO();
+		
+		ClienteTO clienteTO = new ClienteTO();
+		clienteTO.setFact(factura.getCliente().getFact());
+		clienteTO.setFechaBaja(factura.getCliente().getFechaBaja());
+		clienteTO.setId(factura.getCliente().getId());
+		clienteTO.setNombre(factura.getCliente().getNombre());
+		clienteTO.setTerm(factura.getCliente().getTerm());
+		clienteTO.setUact(factura.getCliente().getUact());
+		
+		facturaTO.setCliente(clienteTO);
+		
+		Collection<FacturaLineaTO> facturaLineas = new LinkedList<FacturaLineaTO>();
+		for (FacturaLinea facturaLinea : factura.getFacturaLineas()) {
+			FacturaLineaTO facturaLineaTO = new FacturaLineaTO();
+			facturaLineaTO.setDetalle(facturaLinea.getDetalle());
+			facturaLineaTO.setFact(facturaLinea.getFact());
+			facturaLineaTO.setId(facturaLinea.getId());
+			facturaLineaTO.setImporteTotal(facturaLinea.getImporteTotal());
+			facturaLineaTO.setImporteUnitario(facturaLinea.getImporteUnitario());
+			facturaLineaTO.setNumero(facturaLinea.getNumero());
+			
+			ServicioTO servicioTO = new ServicioTO();
+			servicioTO.setDescripcion(facturaLinea.getServicio().getDescripcion());
+			servicioTO.setFact(facturaLinea.getServicio().getFact());
+			servicioTO.setId(facturaLinea.getServicio().getId());
+			servicioTO.setTerm(facturaLinea.getServicio().getTerm());
+			servicioTO.setUact(facturaLinea.getServicio().getUact());
+			
+			facturaLineaTO.setServicio(servicioTO);
+			
+			facturaLineaTO.setTerm(facturaLinea.getTerm());
+			facturaLineaTO.setUact(facturaLinea.getUact());
+			facturaLineaTO.setUnidades(facturaLinea.getUnidades());
+			
+			facturaLineas.add(facturaLineaTO);
+		}
+		
+		facturaTO.setFacturaLineas(facturaLineas);
+		
+		facturaTO.setFecha(factura.getFecha());
+		facturaTO.setImporteIVA(factura.getImporteIVA());
+		facturaTO.setImporteSubtotal(factura.getImporteSubtotal());
+		facturaTO.setImporteTotal(factura.getImporteTotal());
+		
+		MonedaTO monedaTO = new MonedaTO();
+		monedaTO.setAbreviacion(factura.getMoneda().getAbreviacion());
+		monedaTO.setDescripcion(factura.getMoneda().getDescripcion());
+		monedaTO.setFact(factura.getMoneda().getFact());
+		monedaTO.setId(factura.getMoneda().getId());
+		monedaTO.setTerm(factura.getMoneda().getTerm());
+		monedaTO.setUact(factura.getMoneda().getUact());
+		
+		facturaTO.setMoneda(monedaTO);
+		
+		facturaTO.setNumero(factura.getNumero());
+		
+		facturaTO.setFact(factura.getFact());
+		facturaTO.setId(factura.getId());
+		facturaTO.setTerm(factura.getTerm());
+		facturaTO.setUact(factura.getUact());
+		
+		return facturaTO;
+	}
+
+	private Factura transform(FacturaTO facturaTO) {
+		Factura factura = new Factura();
+		
+		Cliente cliente = new Cliente();
+		cliente.setId(facturaTO.getCliente().getId());
+		
+		factura.setCliente(cliente);
+		
+		Set<FacturaLinea> facturaLineas = new HashSet<FacturaLinea>();
+		for (FacturaLineaTO facturaLineaTO : facturaTO.getFacturaLineas()) {
+			FacturaLinea facturaLinea = new FacturaLinea();
+			facturaLinea.setDetalle(facturaLineaTO.getDetalle());
+			
+			facturaLinea.setFactura(factura);
+			
+			facturaLinea.setImporteTotal(facturaLineaTO.getImporteTotal());
+			facturaLinea.setImporteUnitario(facturaLineaTO.getImporteUnitario());
+			facturaLinea.setNumero(facturaLineaTO.getNumero());
+			
+			Servicio servicio = new Servicio();
+			servicio.setId(facturaLineaTO.getServicio().getId());
+			
+			facturaLinea.setServicio(servicio);
+			
+			facturaLinea.setUnidades(facturaLineaTO.getUnidades());
+			
+			facturaLinea.setFact(facturaLineaTO.getFact());
+			facturaLinea.setTerm(facturaLineaTO.getTerm());
+			facturaLinea.setUact(facturaLineaTO.getUact());
+			
+			facturaLineas.add(facturaLinea);
+		}
+		
+		factura.setFacturaLineas(facturaLineas);
+		
+		factura.setFecha(facturaTO.getFecha());
+		factura.setImporteIVA(facturaTO.getImporteIVA());
+		factura.setImporteSubtotal(facturaTO.getImporteSubtotal());
+		factura.setImporteTotal(facturaTO.getImporteTotal());
+		
+		Moneda moneda = new Moneda();
+		moneda.setId(facturaTO.getMoneda().getId());
+		
+		factura.setMoneda(moneda);
+		
+		factura.setFact(facturaTO.getFact());
+		factura.setTerm(facturaTO.getTerm());
+		factura.setUact(facturaTO.getUact());
+		
+		return factura;
 	}
 }

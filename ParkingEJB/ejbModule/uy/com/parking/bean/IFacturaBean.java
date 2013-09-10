@@ -11,7 +11,13 @@ public interface IFacturaBean {
 
 	public Collection<Factura> list();
 	
+	public Factura getById(Long id);
+	
 	public void save(Factura factura);
+	
+	public Factura saveAndCloseRegistro(Factura factura, String matricula);
+	
+	public Factura generateFacturaByMatricula(String matricula);
 	
 	public void remove(Factura factura);
 	

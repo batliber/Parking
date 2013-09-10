@@ -11,6 +11,8 @@ public interface IServicioBean {
 
 	public Collection<Servicio> list();
 	
+	public Servicio getById(Long id);
+	
 	public void save(Servicio servicio);
 	
 	public void remove(Servicio servicio);

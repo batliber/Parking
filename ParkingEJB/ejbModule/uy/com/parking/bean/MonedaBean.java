@@ -32,6 +32,18 @@ public class MonedaBean implements IMonedaBean {
 		return result;
 	}
 
+	public Moneda getById(Long id) {
+		Moneda result = null;
+		
+		try {
+			result = entityManager.find(Moneda.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(Moneda moneda) {
 		try {
 			entityManager.persist(moneda);

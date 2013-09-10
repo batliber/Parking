@@ -11,6 +11,8 @@ public interface IMonedaBean {
 
 	public Collection<Moneda> list();
 	
+	public Moneda getById(Long id);
+	
 	public void save(Moneda moneda);
 	
 	public void remove(Moneda moneda);
