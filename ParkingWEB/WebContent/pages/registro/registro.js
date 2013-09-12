@@ -53,6 +53,7 @@ function inputMatriculaOnChange(event) {
 					};
 					
 					$("#divDescripcion").text("Vehículo no registrado");
+					$("#divClienteNombre").text(".");
 					
 					$("#divButtonAgregarVehiculo").show();
 				}
@@ -122,10 +123,12 @@ function inputGenerarFacturaOnClick(event) {
 	$("#divButtonAgregarVehiculo").hide();
 	
 	window.parent.frames[1].location = "/ParkingWEB/pages/factura/factura.jsp?m=" + vehiculo.matricula;
+	window.parent.document.getElementById("divIFrameFactura").style.display = "";
 }
 
 function inputAgregarVehiculoOnClick(event) {
-	
+	window.parent.frames[2].location = "/ParkingWEB/pages/vehiculo/vehiculo.jsp?m=" + vehiculo.matricula;
+	window.parent.document.getElementById("divIFrameVehiculo").style.display = "";
 }
 
 function limpiarFormulario() {

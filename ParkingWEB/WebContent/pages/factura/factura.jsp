@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="./factura.js"></script>
+	<link rel="stylesheet" type="text/css" href="/ParkingWEB/css/global.css"/>
 </head>
 <body>
 	<div>
@@ -22,7 +23,7 @@
 		<div style="float: left;">Moneda:</div><div id="divFacturaMonedaDescripcion">&nbsp;</div>
 	</div>
 	<div>
-		<table id="tableFacturaLineas" border="0" cellspacing="0" cellpadding="0" style="border: solid 1px black;">
+		<table id="tableFacturaLineas" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
 					<td><div>N&uacute;mero</div></td>

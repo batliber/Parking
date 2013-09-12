@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="./registro.js"></script>
+	<link rel="stylesheet" type="text/css" href="/ParkingWEB/css/global.css"/>
 </head>
 <body>
 	<div>

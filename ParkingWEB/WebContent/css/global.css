@@ -1,0 +1,13 @@
+table {
+	border-right: solid 1px gray;
+	border-bottom: solid 1px gray;
+}
+
+tr {
+	
+}
+
+td {
+	border-left: solid 1px gray;
+	border-top: solid 1px gray;
+}

@@ -1,0 +1,76 @@
+body {
+	width: 1024px;
+	height: 648px;
+}
+
+.divMenuBar {
+	border-bottom: solid 1px black;
+	width: 100%;
+	height: 30px;
+}
+
+.divMenuBar div {
+	float: left;
+	height: 100%;
+	margin-left: 5px;
+}
+
+#divIFrameActivePage {
+	width: 100%;
+	height: 75%
+}
+
+#iFrameActivePage {
+	border: none;
+	width: 100%;
+	height: 100%	
+}
+
+.divTitleBar {
+	width: 100%;
+	height: 20px;
+	border-bottom: solid 1px black;
+}
+
+.divTitleBarText {
+	width: 200px;
+}
+
+.divTitleBarCloseButton {
+	float: right;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	margin-top: 2px;
+	text-align: center;
+	background-image: url("/ParkingWEB/images/cross.png");
+	color: white;
+}
+
+#divIFrameFactura {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#iFrameFactura {
+	width: 640px;
+	height: 320px;
+	border: none;
+}
+
+#divIFrameVehiculo {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#iFrameVehiculo {
+	width: 480px;
+	height: 320px;
+	border: none;
+}
