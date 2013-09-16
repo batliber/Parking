@@ -1,3 +1,7 @@
+function showPopUp(element) {
+	element.style.display = "";
+}
+
 function closePopUp(event, element) {
-	element.parentNode.parentNode.style.display = "none";
+	element.style.display = "none";
 }

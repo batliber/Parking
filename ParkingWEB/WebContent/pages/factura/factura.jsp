@@ -14,23 +14,24 @@
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="./factura.js"></script>
 	<link rel="stylesheet" type="text/css" href="/ParkingWEB/css/global.css"/>
+	<link rel="stylesheet" type="text/css" href="./factura.css"/>
 </head>
 <body>
 	<div>
 		<div style="float: left;">N&uacute;mero:</div><div id="divFacturaNumero">&nbsp;</div>
 		<div style="float: left;">Fecha:</div><div id="divFacturaFecha">&nbsp;</div>
-		<div style="float: left;">Cliente:</div><div id="divFacturaClienteNombre"></div>
+		<div style="float: left;">Cliente:</div><div id="divFacturaClienteNombre">&nbsp;</div>
 		<div style="float: left;">Moneda:</div><div id="divFacturaMonedaDescripcion">&nbsp;</div>
 	</div>
 	<div>
 		<table id="tableFacturaLineas" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
-					<td><div>N&uacute;mero</div></td>
-					<td><div>Detalle</div></td>
-					<td><div>Importe unit.</div></td>
-					<td><div>Cantidad</div></td>
-					<td><div>Total</div></td>
+					<td class="tdNumero"><div id="divFacturaNumero">N&uacute;mero</div></td>
+					<td class="tdDetalle"><div>Detalle</div></td>
+					<td class="tdImporteUnitario"><div>Imp. unit.</div></td>
+					<td class="tdUnidades"><div>Cantidad</div></td>
+					<td class="tdImporteTotal"><div>Total</div></td>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,6 +52,7 @@
 	</div>
 	<div>
 		<input type="submit" id="inputGrabarFactura" value="Grabar factura" onclick="javascript:inputGrabarFacturaOnClick(event)"/>
+		<input type="submit" id="inputImprimirFactura" value="Imprimir factura" onclick="javascript:inputImprimirFacturaOnClick(event)"/>
 	</div>
 </body>
 </html>

@@ -1,6 +1,9 @@
 var factura = null;
 
 $(document).ready(function() {
+	$("#inputGrabarFactura").hide();
+	$("#inputImprimirFactura").hide();
+	
 	if (matricula != null && matricula != "") {
 		FacturaDWR.generateFacturaByMatricula(
 			matricula,
@@ -8,37 +11,102 @@ $(document).ready(function() {
 				callback: function(data)  {
 					factura = data;
 					
-					$("#divFacturaFecha").text(formatShortDate(data.fecha));
-					$("#divFacturaClienteNombre").text(data.cliente.nombre);
-					$("#divFacturaMonedaDescripcion").text(data.moneda.descripcion);
+					showFactura();
 					
-					$("#tableFacturaLineas > tbody:last > tr").remove();
-					
-					for (var i=0; i<data.facturaLineas.length; i++) {
-						$("#tableFacturaLineas > tbody:last").append(
-							"<tr>"
-								+ "<td><div>" + data.facturaLineas[i].numero + "</div></td>"
-								+ "<td><div>" + data.facturaLineas[i].detalle + "</div></td>"
-								+ "<td><div>" + data.moneda.abreviacion + " " + new Number(data.facturaLineas[i].importeUnitario).toFixed(2) + "</div></td>"
-								+ "<td><div>" + new Number(data.facturaLineas[i].unidades).toFixed(2) + "</div></td>"
-								+ "<td><div id='divImporteTotalFacturaLinea" + data.facturaLineas[i].numero + "'>" 
-									+ data.moneda.abreviacion 
-									+ " <input type='text' id='inputImporteTotalFacturaLinea" + data.facturaLineas[i].numero + "'"
-									+ " value='" + new Number(data.facturaLineas[i].importeTotal).toFixed(2) + "'" 
-									+ " onchange='javascript:inputImporteTotalFacturaLineaOnChange(event)'/>"
-								+ "</div></td>"
-							+ "</tr>"
-						);
+					$("#inputGrabarFactura").show();
+				}, async: false
+			}
+		);
+	} else {
+		$("#divFacturaNumero").append("<input id='inputFacturaNumero' type='text' onchange='javascript:inputFacturaNumeroOnChange(event)'/>");
+		
+		$("#inputFacturaNumero").focus();
+	}
+});
+
+function showFactura() {
+	$("#divFacturaFecha").text(formatShortDate(factura.fecha));
+	$("#divFacturaClienteNombre").text(factura.cliente.nombre);
+	$("#divFacturaMonedaDescripcion").text(factura.moneda.descripcion);
+	
+	$("#tableFacturaLineas > tbody:last > tr").remove();
+	
+	for (var i=0; i<factura.facturaLineas.length; i++) {
+		$("#tableFacturaLineas > tbody:last").append(
+			"<tr>"
+				+ "<td class='tdNumero'><div>" + factura.facturaLineas[i].numero + "</div></td>"
+				+ "<td class='tdDetalle'><div>" + factura.facturaLineas[i].detalle + "</div></td>"
+				+ "<td class='tdImporteUnitario'>"
+					+ "<div>" + factura.moneda.abreviacion + " " + new Number(factura.facturaLineas[i].importeUnitario).toFixed(2) + "</div>"
+				+ "</td>"
+				+ "<td class='tdUnidades'><div>" + new Number(factura.facturaLineas[i].unidades).toFixed(2) + "</div></td>"
+				+ "<td class='tdImporteTotal'>" 
+					+ "<div id='divImporteTotalFacturaLinea" + factura.facturaLineas[i].numero + "'>" 
+						+ "<div style='float: left;'>" + factura.moneda.abreviacion + "</div>"
+						+ ((matricula != null && matricula != "") ?
+							" <div>"
+								+ "<input type='text' id='inputImporteTotalFacturaLinea" + factura.facturaLineas[i].numero + "'"
+								+ " value='" + new Number(factura.facturaLineas[i].importeTotal).toFixed(2) + "'"
+								+ " onchange='javascript:inputImporteTotalFacturaLineaOnChange(event)'/>"
+							+ "</div>"
+							: "<div>" + new Number(factura.facturaLineas[i].importeTotal).toFixed(2) + "</div>"
+							)
+					+ "</div>"
+				+ "</td>"
+			+ "</tr>"
+		);
+	}
+	
+	$("#divFacturaImporteSubtotal").text(factura.moneda.abreviacion + " " + new Number(factura.importeSubtotal).toFixed(2));
+	$("#divFacturaImporteIVA").text(factura.moneda.abreviacion + " " + new Number(factura.importeIVA).toFixed(2));
+	$("#divFacturaImporteTotal").text(factura.moneda.abreviacion + " " + new Number(factura.importeTotal).toFixed(2));
+}
+
+function clearForm() {
+	$("#inputGrabarFactura").hide();
+	$("#inputImprimirFactura").hide();
+	
+	$("#divFacturaFecha").text(".");
+	$("#divFacturaClienteNombre").text(".");
+	$("#divFacturaMonedaDescripcion").text(".");
+	
+	$("#tableFacturaLineas > tbody:last > tr").remove();
+	
+	$("#tableFacturaLineas > tbody:last").append(
+		"<tr>"
+			+ "<td><div>&nbsp;</div></td>"
+			+ "<td><div>&nbsp;</div></td>"
+			+ "<td><div>&nbsp;</div></td>"
+			+ "<td><div>&nbsp;</div></td>"
+			+ "<td><div>&nbsp;</div></td>"
+		+ "</tr>"
+	);
+	
+	$("#divFacturaImporteSubtotal").text(".");
+	$("#divFacturaImporteIVA").text(".");
+	$("#divFacturaImporteTotal").text(".");
+}
+
+function inputFacturaNumeroOnChange(event) {
+	clearForm();
+	
+	if ($("#inputFacturaNumero").val() != "") {
+		FacturaDWR.getByNumero(
+			$("#inputFacturaNumero").val(),
+			{
+				callback: function(data) {
+					if (data != null) {
+						factura = data;
+						
+						showFactura();
+					} else {
+						
 					}
-					
-					$("#divFacturaImporteSubtotal").text(data.moneda.abreviacion + " " + new Number(data.importeSubtotal).toFixed(2));
-					$("#divFacturaImporteIVA").text(data.moneda.abreviacion + " " + new Number(data.importeIVA).toFixed(2));
-					$("#divFacturaImporteTotal").text(data.moneda.abreviacion + " " + new Number(data.importeTotal).toFixed(2));
 				}, async: false
 			}
 		);
 	}
-});
+}
 
 function inputImporteTotalFacturaLineaOnChange(event) {
 	factura.importeSubtotal = 0;
@@ -69,7 +137,13 @@ function inputGrabarFacturaOnClick(event) {
 		{
 			callback: function(data) {
 				$("#divFacturaNumero").text(data.numero);
+				
+				$("#inputImprimirFactura").show();
 			}, async: false
 		}
 	);
+}
+
+function inputImprimirFacturaOnClick(event) {
+	window.print();
 }

@@ -10,8 +10,10 @@
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/VehiculoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/js/global.js"></script>
 	<script type="text/javascript" src="./registro.js"></script>
 	<link rel="stylesheet" type="text/css" href="/ParkingWEB/css/global.css"/>
+	<link rel="stylesheet" type="text/css" href="./registro.css"/>
 </head>
 <body>
 	<div>
@@ -27,6 +29,20 @@
 		<div id="divButtonRegistrarSalida" style="float: left;display: none;"><input type="submit" value="Registrar salida" onclick="javascript:inputRegistrarSalidaOnClick(event);"/></div>
 		<div id="divButtonGenerarFactura" style="float: left;display: none;"><input type="submit" value="Generar factura" onclick="javascript:inputGenerarFacturaOnClick(event);"/></div>
 		<div id="divButtonAgregarVehiculo" style="display: none;"><input type="submit" value="Agregar vehiculo" onclick="javascript:inputAgregarVehiculoOnClick(event);"/></div>
+	</div>
+	<div id="divIFrameFactura" style="display:none;">
+		<div class="divTitleBar">
+			<div style="float:left;">Factura</div>
+			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
+		</div>
+		<iframe id="iFrameFactura" src="/ParkingWEB/pages/factura/factura.jsp"></iframe>
+	</div>
+	<div id="divIFrameVehiculo" style="display:none;">
+		<div class="divTitleBar">
+			<div style="float:left;">Veh&iacute;culo</div>
+			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
+		</div>
+		<iframe id="iFrameVehiculo" src="/ParkingWEB/pages/vehiculo/vehiculo_edit.jsp"></iframe>
 	</div>
 </body>
 </html>

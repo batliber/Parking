@@ -36,33 +36,22 @@ public class ClienteDWR {
 			IClienteBean iClienteBean = lookupBean();
 			
 			for (Cliente cliente : iClienteBean.list()) {
-				ClienteTO clienteTO = new ClienteTO();
-				
-				clienteTO.setFechaBaja(cliente.getFechaBaja());
-				clienteTO.setNombre(cliente.getNombre());
-				
-				Collection<VehiculoTO> vehiculosTO = new LinkedList<VehiculoTO>();
-				for (Vehiculo vehiculo : cliente.getVehiculos()) {
-					VehiculoTO vehiculoTO = new VehiculoTO();
-					vehiculoTO.setDescripcion(vehiculo.getDescripcion());
-					vehiculoTO.setFact(vehiculo.getFact());
-					vehiculoTO.setId(vehiculo.getId());
-					vehiculoTO.setMatricula(vehiculo.getMatricula());
-					vehiculoTO.setTerm(vehiculo.getTerm());
-					vehiculoTO.setUact(vehiculo.getUact());
-					
-					vehiculosTO.add(vehiculoTO);
-				}
-				
-				clienteTO.setVehiculos(vehiculosTO);
-				
-				clienteTO.setFact(cliente.getFact());
-				clienteTO.setId(cliente.getId());
-				clienteTO.setTerm(cliente.getTerm());
-				clienteTO.setUact(cliente.getUact());
-				
-				result.add(clienteTO);
+				result.add(this.transform(cliente));
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public ClienteTO getById(Long id) {
+		ClienteTO result = null;
+		
+		try {
+			IClienteBean iClienteBean = lookupBean();
+			
+			result = this.transform(iClienteBean.getById(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,5 +104,34 @@ public class ClienteDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private ClienteTO transform(Cliente cliente) {
+		ClienteTO clienteTO = new ClienteTO();
+		
+		clienteTO.setFechaBaja(cliente.getFechaBaja());
+		clienteTO.setNombre(cliente.getNombre());
+		
+		Collection<VehiculoTO> vehiculosTO = new LinkedList<VehiculoTO>();
+		for (Vehiculo vehiculo : cliente.getVehiculos()) {
+			VehiculoTO vehiculoTO = new VehiculoTO();
+			vehiculoTO.setDescripcion(vehiculo.getDescripcion());
+			vehiculoTO.setFact(vehiculo.getFact());
+			vehiculoTO.setId(vehiculo.getId());
+			vehiculoTO.setMatricula(vehiculo.getMatricula());
+			vehiculoTO.setTerm(vehiculo.getTerm());
+			vehiculoTO.setUact(vehiculo.getUact());
+			
+			vehiculosTO.add(vehiculoTO);
+		}
+		
+		clienteTO.setVehiculos(vehiculosTO);
+		
+		clienteTO.setFact(cliente.getFact());
+		clienteTO.setId(cliente.getId());
+		clienteTO.setTerm(cliente.getTerm());
+		clienteTO.setUact(cliente.getUact());
+		
+		return clienteTO;
 	}
 }

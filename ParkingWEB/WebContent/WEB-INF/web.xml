@@ -41,6 +41,7 @@
 		uy.com.parking.dwr.ClienteDWR,
 		uy.com.parking.dwr.FacturaDWR,
 		uy.com.parking.dwr.FacturaLineaDWR,
+		uy.com.parking.dwr.GeneracionArchivoABITABDWR,
 		uy.com.parking.dwr.MonedaDWR,
 		uy.com.parking.dwr.RegistroDWR,
 		uy.com.parking.dwr.RegistroTipoDWR,

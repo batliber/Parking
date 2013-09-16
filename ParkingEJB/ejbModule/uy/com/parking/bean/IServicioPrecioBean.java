@@ -13,6 +13,10 @@ public interface IServicioPrecioBean {
 
 	public Collection<ServicioPrecio> list();
 	
+	public Collection<ServicioPrecio> listVigentes();
+	
+	public ServicioPrecio getById(Long id);
+	
 	public ServicioPrecio getPrecioVigenteByServicioMoneda(Servicio servicio, Moneda moneda);
 	
 	public void save(ServicioPrecio servicioPrecio);

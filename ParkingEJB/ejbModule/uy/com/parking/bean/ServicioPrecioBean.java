@@ -33,7 +33,35 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 		
 		return result;
 	}
+	
+	public Collection<ServicioPrecio> listVigentes() {
+		Collection<ServicioPrecio> result = new LinkedList<ServicioPrecio>();
+		
+		try {
+			Query query = entityManager.createQuery("SELECT sp FROM ServicioPrecio sp WHERE sp.validoHasta = null");
+			
+			for (Object object : query.getResultList()) {
+				result.add((ServicioPrecio) object);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
+	public ServicioPrecio getById(Long id) {
+		ServicioPrecio result = null;
+		
+		try {
+			result = entityManager.find(ServicioPrecio.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public ServicioPrecio getPrecioVigenteByServicioMoneda(Servicio servicio, Moneda moneda) {
 		ServicioPrecio result = null;
 		
@@ -57,9 +85,6 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 	
 	public void save(ServicioPrecio servicioPrecio) {
 		try {
-			servicioPrecio.setServicio(entityManager.find(Servicio.class, servicioPrecio.getId()));
-			servicioPrecio.setMoneda(entityManager.find(Moneda.class, servicioPrecio.getMoneda().getId()));
-			
 			entityManager.persist(servicioPrecio);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,9 +103,6 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 
 	public void update(ServicioPrecio servicioPrecio) {
 		try {
-			servicioPrecio.setServicio(entityManager.find(Servicio.class, servicioPrecio.getServicio().getId()));
-			servicioPrecio.setMoneda(entityManager.find(Moneda.class, servicioPrecio.getMoneda().getId()));
-			
 			entityManager.merge(servicioPrecio);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -2,42 +2,40 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Veh&iacute;culo</title>
+	<title>Cliente</title>
 	<script type="text/javascript" src="/ParkingWEB/dwr/engine.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>
-	<script type="text/javascript" src="/ParkingWEB/dwr/interface/VehiculoDWR.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ClienteDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/global.js"></script>
-	<script type="text/javascript" src="./vehiculo.js"></script>
+	<script type="text/javascript" src="./cliente.js"></script>
 	<link rel="stylesheet" type="text/css" href="/ParkingWEB/css/global.css"/>
-	<link rel="stylesheet" type="text/css" href="./vehiculo.css"/>
+	<link rel="stylesheet" type="text/css" href="./cliente.css"/>
 </head>
 <body>
 	<div>
-		<table id="tableVehiculos" border="0" cellspacing="0" cellpadding="0">
+		<table id="tableClientes" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
 					<td><div>&nbsp;</div></td>
-					<td class="tdVehiculoMatricula"><div>Matr&iacute;cula</div></td>
-					<td class="tdVehiculoDescripcion"><div>Descripci&oacute;n</div></td>
+					<td class="tdClienteNombre"><div>Nombre</div></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td><div>&nbsp;</div></td>
-					<td class="tdVehiculoMatricula"><div>&nbsp;</div></td>
-					<td class="tdVehiculoDescripcion"><div>&nbsp;</div></td>
+					<td class="tdClienteNombre"><div>&nbsp;</div></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<div id="divIFrameVehiculo" style="display: none;">
+	<div id="divIFrameCliente" style="display: none;">
 		<div class="divTitleBar">
-			<div style="float:left;">Veh&iacute;culo</div>
+			<div style="float:left;">Cliente</div>
 			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
 		</div>
-		<iframe id="iFrameVehiculo" src="#"></iframe>
+		<iframe id="iFrameCliente" src="#"></iframe>
 	</div>
 </body>
 </html>

@@ -1,0 +1,25 @@
+.tdServicioDescripcionServicioPrecio div {
+	width: 400px;
+}
+
+.tdMonedaAbreviacionServicioPrecio div {
+	width: 75px;
+}
+
+.tdPrecioServicioPrecio div {
+	width: 100px;
+}
+
+#divIFrameServicioPrecio {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#iFrameServicioPrecio {
+	width: 640px;
+	height: 320px;
+	border: none;
+}

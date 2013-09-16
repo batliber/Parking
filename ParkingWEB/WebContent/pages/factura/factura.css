@@ -1,0 +1,31 @@
+#tableFacturaLineas {
+	
+}
+
+.tdNumero div {
+	width: 75px;
+}
+
+.tdDetalle div {
+	width: 300px;
+}
+
+.tdImporteUnitario div {
+	width: 75px;
+}
+
+.tdUnidades div {
+	width: 75px;
+}
+
+.tdImporteTotal div {
+	width: 75px;
+}
+
+.tdImporteTotal div div {
+	width: 37px;
+}
+
+td div input {
+	width: 60px;
+}

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -12,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.Factura;
@@ -69,6 +71,28 @@ public class FacturaBean implements IFacturaBean {
 		
 		try {
 			result = entityManager.find(Factura.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public Factura getByNumero(Long numero) {
+		Factura result = null;
+		
+		try {
+			TypedQuery<Factura> query = 
+				entityManager.createQuery(
+					"SELECT f FROM Factura f"
+					+ " WHERE f.numero = :numero"
+				, Factura.class);
+			query.setParameter("numero", numero);
+			
+			List<Factura> resultList = query.getResultList();
+			if (!resultList.isEmpty()) {
+				result = resultList.get(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

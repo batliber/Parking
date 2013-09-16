@@ -47,6 +47,38 @@ public class ServicioPrecioDWR {
 		return result;
 	}
 
+	public Collection<ServicioPrecioTO> listVigentes() {
+		Collection<ServicioPrecioTO> result = new LinkedList<ServicioPrecioTO>();
+		
+		try {
+			IServicioPrecioBean iServicioPrecioBean = lookupBean();
+			
+			for (ServicioPrecio servicioPrecio : iServicioPrecioBean.listVigentes()) {
+				result.add(this.transform(servicioPrecio));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;	
+	}
+	
+	public ServicioPrecioTO getById(Long id) {
+		ServicioPrecioTO result = null;
+		
+		try {
+			IServicioPrecioBean iServicioPrecioBean = lookupBean();
+			
+			ServicioPrecio servicioPrecio = iServicioPrecioBean.getById(id);
+			
+			result = this.transform(servicioPrecio);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public ServicioPrecioTO getPrecioVigenteByServicioMoneda(ServicioTO servicioTO, MonedaTO monedaTO) {
 		ServicioPrecioTO result = null;
 		

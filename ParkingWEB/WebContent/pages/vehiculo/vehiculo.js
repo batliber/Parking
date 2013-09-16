@@ -1,102 +1,57 @@
-var vehiculo = null;
-
 $(document).ready(function() {
-	if (matricula != null && matricula != "") {
-		$("#divVehiculoMatricula").text(matricula);
-		
-		VehiculoDWR.getByMatricula(
-			matricula,
-			{
-				callback: function(data)  {
-					if (data != null) {
-						vehiculo = data;
-						
-						$("#inputVehiculoDescripcion").val(data.descripcion);
-						
-						for (var i=0; i<data.clientes.length; i++) {
-							$("#tableVehiculoClientes > tbody:last").append(
-								"<tr>"
-									+ "<td><div>" + data.clientes[i].nombre + "</div></td>"
-								+ "</tr>"
-							);
-						}
-					}
-				}, async: false
-			}
-		);
-	}
+	VehiculoDWR.list(
+		{
+			callback: function(data) {
+				$("#tableVehiculos > tbody:last > tr").remove();
+				
+				for (var i=0; i<data.length; i++) {
+					$("#tableVehiculos > tbody:last").append(
+						"<tr id='" + data[i].id + "'>"
+							+ "<td class='tdActions'>"
+								+ "<div class='divEdit' onclick='javascript:inputEditOnClick(event, this, " + data[i].id + ")'>&nbsp;</div>"
+								+ "<div class='divDelete' onclick='javascript:inputDeleteOnClick(event, this, " + data[i].id + ")'>&nbsp;</div>"
+							+ "</td>"
+							+ "<td class='tdVehiculoMatricula'><div id='divVehiculoMatricula" + data[i].id + "'>" + data[i].matricula + "</div></td>"
+							+ "<td class='tdVehiculoDescripcion'><div id='divVehiculoDescripcion" + data[i].id + "'>" + data[i].descripcion + "</div></td>"
+						+ "</tr>"
+					);
+				}
+				
+				$("#tableVehiculos > tbody:last").append(
+					"<tr>"
+						+ "<td class='tdActions'>"
+							+ "<div class='divNew' onclick='javascript:inputNewOnClick(event, this)'>&nbsp;</div>"
+						+ "</td>"
+						+ "<td class='tdVehiculoMatricula'><div>&nbsp;</div></td>"
+						+ "<td class='tdVehiculoDescripcion'><div>&nbsp;</div></td>"
+					+ "</tr>"
+				);
+			}, async: false
+		}
+	);
 });
 
-function inputVehiculoMatriculaOnChange(event) {
-	vehiculo = null;
-	
-	$("#inputVehiculoDescripcion").val("");
-	
-	$("#tableVehiculoClientes > tbody:last > tr").remove();
-	
-	matricula = $("#inputVehiculoMatricula").val();
-	if (matricula != "") {
-		VehiculoDWR.getByMatricula(
-			matricula,
-			{
-				callback: function(data)  {
-					if (data != null) {
-						vehiculo = data;
-						
-						$("#inputVehiculoDescripcion").val(data.descripcion);
-						
-						for (var i=0; i<data.clientes.length; i++) {
-							$("#tableVehiculoClientes > tbody:last").append(
-								"<tr>"
-									+ "<td><div>" + data.clientes[i].nombre + "</div></td>"
-								+ "</tr>"
-							);
-						}
-					}
-				}, async: false
-			}
-		);
-	}
+function inputEditOnClick(event, element, id) {
+	document.getElementById("iFrameVehiculo").src = "./vehiculo_edit.jsp?id=" + id;
+	showPopUp(document.getElementById("divIFrameVehiculo"));
 }
 
-function inputGrabarVehiculoOnClick(event) {
-	if (vehiculo == null) {
-		vehiculo = {
-			uact: 1,
-			fact: new Date(),
-			term: 1
-		};
-		
-		if (matricula != null && matricula != "") {
-			vehiculo.matricula = matricula;
-		} else {
-			vehiculo.matricula = $("#inputVehiculoMatricula").val();
+function inputDeleteOnClick(event, element, id) {
+	var vehiculo = {
+		id: id
+	};
+	
+	VehiculoDWR.remove(
+		vehiculo,
+		{
+			callback: function(data) {
+				$("#tableVehiculos > tbody:last > tr[id|='" + id + "']").remove();
+			}, async: false
 		}
+	);
+}
 
-		vehiculo.descripcion = $("#inputVehiculoDescripcion").val();
-		
-		vehiculo.clientes = [];
-		
-		VehiculoDWR.add(
-			vehiculo,
-			{
-				callback: function(data) {
-					
-				}, async: false
-			}
-		);
-	} else {
-		vehiculo.descripcion = $("#inputVehiculoDescripcion").val();
-		
-		vehiculo.clientes = [];
-		
-		VehiculoDWR.update(
-			vehiculo,
-			{
-				callback: function(data) {
-					
-				}, async: false
-			}
-		);
-	}
+function inputNewOnClick(event, element) {
+	document.getElementById("iFrameVehiculo").src = "./vehiculo_edit.jsp";
+	showPopUp(document.getElementById("divIFrameVehiculo"));
 }

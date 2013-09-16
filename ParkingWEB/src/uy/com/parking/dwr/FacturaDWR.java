@@ -71,6 +71,24 @@ public class FacturaDWR {
 		return result;
 	}
 	
+	public FacturaTO getByNumero(Long numero) {
+		FacturaTO result = null;
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			Factura factura = iFacturaBean.getByNumero(numero);
+			
+			if (factura != null) {
+				result = this.transform(factura);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void add(FacturaTO facturaTO) {
 		try {
 			IFacturaBean iFacturaBean = lookupBean();

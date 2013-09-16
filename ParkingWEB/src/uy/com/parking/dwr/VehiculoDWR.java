@@ -45,6 +45,22 @@ public class VehiculoDWR {
 		return result;
 	}
 	
+	public VehiculoTO getById(Long id) {
+		VehiculoTO result = null;
+		
+		try {
+			IVehiculoBean iVehiculoBean = lookupBean();
+			
+			Vehiculo vehiculo = iVehiculoBean.getById(id);
+			
+			result = this.transform(vehiculo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public VehiculoTO getByMatricula(String matricula) {
 		VehiculoTO result = null;
 		

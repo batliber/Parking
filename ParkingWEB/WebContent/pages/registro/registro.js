@@ -1,7 +1,7 @@
 var vehiculo = null;
 
 $(document).ready(function() {
-	limpiarFormulario();
+	clearForm();
 });
 
 function inputMatriculaOnChange(event) {
@@ -83,7 +83,7 @@ function inputRegistrarEntradaOnClick(event) {
 		registro,
 		{
 			callback: function(data) {
-				limpiarFormulario();
+				clearForm();
 			}, async: false
 		}
 	);
@@ -110,7 +110,7 @@ function inputRegistrarSalidaOnClick(event) {
 		registro,
 		{
 			callback: function(data) {
-				limpiarFormulario();
+				clearForm();
 			}, async: false
 		}
 	);
@@ -122,16 +122,16 @@ function inputGenerarFacturaOnClick(event) {
 	$("#divButtonGenerarFactura").hide();
 	$("#divButtonAgregarVehiculo").hide();
 	
-	window.parent.frames[1].location = "/ParkingWEB/pages/factura/factura.jsp?m=" + vehiculo.matricula;
-	window.parent.document.getElementById("divIFrameFactura").style.display = "";
+	document.getElementById("iFrameFactura").src = "/ParkingWEB/pages/factura/factura.jsp?m=" + vehiculo.matricula;
+	showPopUp(document.getElementById("divIFrameFactura"));
 }
 
 function inputAgregarVehiculoOnClick(event) {
-	window.parent.frames[2].location = "/ParkingWEB/pages/vehiculo/vehiculo.jsp?m=" + vehiculo.matricula;
-	window.parent.document.getElementById("divIFrameVehiculo").style.display = "";
+	document.getElementById("iFrameVehiculo").src = "/ParkingWEB/pages/vehiculo/vehiculo_edit.jsp?m=" + vehiculo.matricula;
+	showPopUp(document.getElementById("divIFrameVehiculo"));
 }
 
-function limpiarFormulario() {
+function clearForm() {
 	vehiculo = null;
 	
 	$("#inputMatricula").val("");

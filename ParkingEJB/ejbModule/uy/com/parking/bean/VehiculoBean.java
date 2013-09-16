@@ -35,6 +35,18 @@ public class VehiculoBean implements IVehiculoBean {
 		return result;
 	}
 
+	public Vehiculo getById(Long id) {
+		Vehiculo result = null;
+		
+		try {
+			result = entityManager.find(Vehiculo.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public Vehiculo getByMatricula(String matricula) {
 		Vehiculo result = null;
 		

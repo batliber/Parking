@@ -1,0 +1,27 @@
+#divIFrameFactura {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#iFrameFactura {
+	width: 640px;
+	height: 320px;
+	border: none;
+}
+
+#divIFrameVehiculo {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#iFrameVehiculo {
+	width: 480px;
+	height: 320px;
+	border: none;
+}
