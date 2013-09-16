@@ -9,6 +9,26 @@ var links = {
 	abitab: "/ParkingWEB/pages/abitab/abitab.jsp"
 };
 
+$(document).ready(function() {
+	SeguridadDWR.getActiveUserData(
+		{
+			callback: function(data) {
+				$("#divActiveUser").text(data);
+			}, async: false
+		}
+	);
+});
+
 function menuItemOnClick(event, element) {
 	window.frames[0].location = links[element.id];
+}
+
+function divLogoutOnClick() {
+	SeguridadDWR.logout(
+		{
+			callback: function(data) {
+				window.location = "/ParkingWEB";
+			}, async: false
+		}
+	);
 }

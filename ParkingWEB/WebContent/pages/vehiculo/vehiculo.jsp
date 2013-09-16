@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="./vehiculo.css"/>
 </head>
 <body>
+	<div class="divButtonBar">&nbsp;</div>
 	<div>
 		<table id="tableVehiculos" border="0" cellspacing="0" cellpadding="0">
 			<thead>

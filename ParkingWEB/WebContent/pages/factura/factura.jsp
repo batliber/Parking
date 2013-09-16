@@ -17,6 +17,10 @@
 	<link rel="stylesheet" type="text/css" href="./factura.css"/>
 </head>
 <body>
+	<div class="divButtonBar">
+		<div style="float: left;"><input type="submit" id="inputGrabarFactura" value="Grabar factura" onclick="javascript:inputGrabarFacturaOnClick(event)"/></div>
+		<div><input type="submit" id="inputImprimirFactura" value="Imprimir factura" onclick="javascript:inputImprimirFacturaOnClick(event)"/></div>
+	</div>
 	<div>
 		<div style="float: left;">N&uacute;mero:</div><div id="divFacturaNumero">&nbsp;</div>
 		<div style="float: left;">Fecha:</div><div id="divFacturaFecha">&nbsp;</div>
@@ -49,10 +53,6 @@
 		<div style="float: left;">Subtotal:</div><div id="divFacturaImporteSubtotal">&nbsp;</div>
 		<div style="float: left;">IVA:</div><div id="divFacturaImporteIVA">&nbsp;</div>
 		<div style="float: left;">Total:</div><div id="divFacturaImporteTotal">&nbsp;</div>
-	</div>
-	<div>
-		<input type="submit" id="inputGrabarFactura" value="Grabar factura" onclick="javascript:inputGrabarFacturaOnClick(event)"/>
-		<input type="submit" id="inputImprimirFactura" value="Imprimir factura" onclick="javascript:inputImprimirFacturaOnClick(event)"/>
 	</div>
 </body>
 </html>

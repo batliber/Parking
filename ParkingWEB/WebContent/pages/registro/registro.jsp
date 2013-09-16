@@ -16,6 +16,12 @@
 	<link rel="stylesheet" type="text/css" href="./registro.css"/>
 </head>
 <body>
+	<div class="divButtonBar">
+		<div id="divButtonRegistrarEntrada" style="float: left;display: none;"><input type="submit" value="Registrar entrada" onclick="javascript:inputRegistrarEntradaOnClick(event);"/></div>
+		<div id="divButtonRegistrarSalida" style="float: left;display: none;"><input type="submit" value="Registrar salida" onclick="javascript:inputRegistrarSalidaOnClick(event);"/></div>
+		<div id="divButtonGenerarFactura" style="float: left;display: none;"><input type="submit" value="Generar factura" onclick="javascript:inputGenerarFacturaOnClick(event);"/></div>
+		<div id="divButtonAgregarVehiculo" style="display: none;"><input type="submit" value="Agregar vehiculo" onclick="javascript:inputAgregarVehiculoOnClick(event);"/></div>
+	</div>
 	<div>
 		<div style="float: left;">Matr&iacute;cula:</div>
 		<div><input type="text" id="inputMatricula" onchange="javascript:inputMatriculaOnChange(event);"></div>
@@ -25,10 +31,6 @@
 		<div id="divDescripcion">&nbsp;</div>
 		<div style="float: left;">Cliente:</div>
 		<div id="divClienteNombre">&nbsp;</div>
-		<div id="divButtonRegistrarEntrada" style="float: left;display: none;"><input type="submit" value="Registrar entrada" onclick="javascript:inputRegistrarEntradaOnClick(event);"/></div>
-		<div id="divButtonRegistrarSalida" style="float: left;display: none;"><input type="submit" value="Registrar salida" onclick="javascript:inputRegistrarSalidaOnClick(event);"/></div>
-		<div id="divButtonGenerarFactura" style="float: left;display: none;"><input type="submit" value="Generar factura" onclick="javascript:inputGenerarFacturaOnClick(event);"/></div>
-		<div id="divButtonAgregarVehiculo" style="display: none;"><input type="submit" value="Agregar vehiculo" onclick="javascript:inputAgregarVehiculoOnClick(event);"/></div>
 	</div>
 	<div id="divIFrameFactura" style="display:none;">
 		<div class="divTitleBar">

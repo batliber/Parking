@@ -13,7 +13,9 @@
 	<link rel="stylesheet" type="text/css" href="./reportes.css"/>
 </head>
 <body>
-	<div><input type="submit" value="Facturaci&oacute;n a la fecha"/></div>
-	<div><input type="submit" value="Facturaci&oacute;n por servicio"/></div>
+	<div class="divButtonBar">
+		<div style="float: left;"><input type="submit" value="Facturaci&oacute;n a la fecha"/></div>
+		<div><input type="submit" value="Facturaci&oacute;n por servicio"/></div>
+	</div>
 </body>
 </html>

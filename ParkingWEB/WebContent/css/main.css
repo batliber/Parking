@@ -3,6 +3,25 @@ body {
 	height: 648px;
 }
 
+.divUserInfo {
+	width: 475px;
+	text-align: right;
+	padding-top: 2px;
+}
+
+.divUserInfo div {
+	float: right;
+	text-decoration: underline;
+}
+
+.divLogout {
+	cursor: pointer;
+	float: right;
+	width: 16px;
+	background-image: url("/ParkingWEB/images/logout.png");
+	background-repeat: no-repeat;
+}
+
 .divMenuBar {
 	border-bottom: solid 1px black;
 	width: 100%;

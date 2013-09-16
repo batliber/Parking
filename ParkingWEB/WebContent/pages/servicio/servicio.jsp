@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="./servicio.css"/>
 </head>
 <body>
+	<div class="divButtonBar">&nbsp;</div>
 	<div>
 		<table id="tableServicios" border="0" cellspacing="0" cellpadding="0">
 			<thead>

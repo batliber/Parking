@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="./cliente.css"/>
 </head>
 <body>
+	<div class="divButtonBar">&nbsp;</div>
 	<div>
 		<table id="tableClientes" border="0" cellspacing="0" cellpadding="0">
 			<thead>

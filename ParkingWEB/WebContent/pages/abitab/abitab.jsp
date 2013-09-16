@@ -14,6 +14,8 @@
 	<link rel="stylesheet" type="text/css" href="./abitab.css"/>
 </head>
 <body>
-	<div><input type="submit" value="Generar archivo ABITAB" onclick="javascript:generarArchivoABITAB(event, this)"/></div>
+	<div class="divButtonBar">
+		<div><input type="submit" value="Generar archivo ABITAB" onclick="javascript:generarArchivoABITAB(event, this)"/></div>
+	</div>
 </body>
 </html>
