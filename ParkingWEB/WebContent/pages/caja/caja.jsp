@@ -14,7 +14,8 @@
 	<link rel="stylesheet" type="text/css" href="./caja.css"/>
 </head>
 <body>
-	<div class="divButtonBar">
-	</div>
+	<div class="divButtonBar">&nbsp;</div>
+	<div class="divButtonTitleBar">&nbsp;</div>
+	<div class="divMainWindow">&nbsp;</div>
 </body>
 </html>

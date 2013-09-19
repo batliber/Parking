@@ -5,10 +5,10 @@ $(document).ready(function() {
 });
 
 function inputMatriculaOnChange(event) {
-	$("#divButtonRegistrarEntrada").hide();
-	$("#divButtonRegistrarSalida").hide();
-	$("#divButtonGenerarFactura").hide();
-	$("#divButtonAgregarVehiculo").hide();
+	$("#inputRegistrarEntrada").prop("disabled", true);
+	$("#inputRegistrarSalida").prop("disabled", true);
+	$("#inputGenerarFactura").prop("disabled", true);
+	$("#inputAgregarVehiculo").prop("disabled", true);
 	
 	RegistroDWR.getLastByMatricula(
 		$("#inputMatricula").val(),
@@ -18,21 +18,21 @@ function inputMatriculaOnChange(event) {
 					$("#divUltimoRegistro").text(formatLongDate(data.fecha) + " - " + data.registroTipo.descripcion);
 					
 					if (data.registroTipo.id == 1) {
-						$("#divButtonRegistrarSalida").show();
-						$("#divButtonGenerarFactura").show();
+						$("#inputRegistrarSalida").prop("disabled", false);
+						$("#inputGenerarFactura").prop("disabled", false);
 						
-						$("#divButtonGenerarFactura").focus();
+						$("#inputGenerarFactura").focus();
 					} else {
-						$("#divButtonRegistrarEntrada").show();
+						$("#inputRegistrarEntrada").prop("disabled", false);
 						
-						$("#divButtonRegistrarEntrada").focus();
+						$("#inputRegistrarEntrada").focus();
 					}
 				} else {
 					$("#divUltimoRegistro").text("No hay antecedentes.");
 					
-					$("#divButtonRegistrarEntrada").show();
+					$("#inputRegistrarEntrada").prop("disabled", false);
 					
-					$("#divButtonRegistrarEntrada").focus();
+					$("#inputRegistrarEntrada").focus();
 				}
 			}, async: false
 		}
@@ -55,7 +55,7 @@ function inputMatriculaOnChange(event) {
 					$("#divDescripcion").text("Vehículo no registrado");
 					$("#divClienteNombre").text(".");
 					
-					$("#divButtonAgregarVehiculo").show();
+					$("#inputAgregarVehiculo").prop("disabled", false);
 				}
 			}, async: false
 		}
@@ -63,10 +63,10 @@ function inputMatriculaOnChange(event) {
 }
 
 function inputRegistrarEntradaOnClick(event) {
-	$("#divButtonRegistrarEntrada").hide();
-	$("#divButtonRegistrarSalida").hide();
-	$("#divButtonGenerarFactura").hide();
-	$("#divButtonAgregarVehiculo").hide();
+	$("#inputRegistrarEntrada").prop("disabled", true);
+	$("#inputRegistrarSalida").prop("disabled", true);
+	$("#inputGenerarFactura").prop("disabled", true);
+	$("#inputAgregarVehiculo").prop("disabled", true);
 	
 	var registro = {
 		fecha: new Date(),
@@ -90,10 +90,10 @@ function inputRegistrarEntradaOnClick(event) {
 }
 
 function inputRegistrarSalidaOnClick(event) {
-	$("#divButtonRegistrarEntrada").hide();
-	$("#divButtonRegistrarSalida").hide();
-	$("#divButtonGenerarFactura").hide();
-	$("#divButtonAgregarVehiculo").hide();
+	$("#inputRegistrarEntrada").prop("disabled", true);
+	$("#inputRegistrarSalida").prop("disabled", true);
+	$("#inputGenerarFactura").prop("disabled", true);
+	$("#inputAgregarVehiculo").prop("disabled", true);
 	
 	var registro = {
 		fecha: new Date(),
@@ -117,10 +117,10 @@ function inputRegistrarSalidaOnClick(event) {
 }
 
 function inputGenerarFacturaOnClick(event) {
-	$("#divButtonRegistrarEntrada").hide();
-	$("#divButtonRegistrarSalida").hide();
-	$("#divButtonGenerarFactura").hide();
-	$("#divButtonAgregarVehiculo").hide();
+	$("#inputRegistrarEntrada").prop("disabled", true);
+	$("#inputRegistrarSalida").prop("disabled", true);
+	$("#inputGenerarFactura").prop("disabled", true);
+	$("#inputAgregarVehiculo").prop("disabled", true);
 	
 	document.getElementById("iFrameFactura").src = "/ParkingWEB/pages/factura/factura.jsp?m=" + vehiculo.matricula;
 	showPopUp(document.getElementById("divIFrameFactura"));
@@ -133,6 +133,11 @@ function inputAgregarVehiculoOnClick(event) {
 
 function clearForm() {
 	vehiculo = null;
+	
+	$("#inputRegistrarEntrada").prop("disabled", true);
+	$("#inputRegistrarSalida").prop("disabled", true);
+	$("#inputGenerarFactura").prop("disabled", true);
+	$("#inputAgregarVehiculo").prop("disabled", true);
 	
 	$("#inputMatricula").val("");
 	$("#divUltimoRegistro").text(".");

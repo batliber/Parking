@@ -16,7 +16,15 @@
 	<link rel="stylesheet" type="text/css" href="./vehiculo_edit.css"/>
 </head>
 <body>
-	<div>
+	<div class="divButtonBar">
+		<div class="divButton"><input type="submit" value="Grabar vehiculo" onclick="javascript:inputGrabarVehiculoOnClick(event)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Veh&iacute;culo</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divMainWindow">
 		<div style="float: left;">Matr&iacute;cula:</div><div id="divVehiculoMatricula"><input type="text" id="inputVehiculoMatricula"/></div>
 		<div style="float: left;">Descripci&oacute;n:</div><div id="divVehiculoDescripcion"><input type="text" id="inputVehiculoDescripcion"/></div>
 		<div>
@@ -32,9 +40,6 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div>
-			<input type="submit" value="Grabar vehiculo" onclick="javascript:inputGrabarVehiculoOnClick(event)"/>
 		</div>
 	</div>
 </body>

@@ -17,13 +17,18 @@
 	<link rel="stylesheet" type="text/css" href="./servicio_edit.css"/>
 </head>
 <body>
-	<div>
+	<div class="divButtonBar">
+		<div class="divButton"><input type="submit" value="Grabar servicio" onclick="javascript:inputGrabarServicioPrecioOnClick(event)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Servicio</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divMainWindow">
 		<div style="float: left;">Servicio:</div><div id="divServicioNombre"><input type="text" id="inputServicioDescripcion"/></div>
 		<div style="float: left;">Moneda:</div><div id="divMonedaDescripcion"><select id="selectMoneda"></select></div>
 		<div style="float: left;">Precio:</div><div id="divServicioPrecioPrecio"><input type="text" id="inputServicioPrecioPrecio"/></div>
-		<div>
-			<input type="submit" value="Grabar servicio" onclick="javascript:inputGrabarServicioPrecioOnClick(event)"/>
-		</div>
 	</div>
 </body>
 </html>

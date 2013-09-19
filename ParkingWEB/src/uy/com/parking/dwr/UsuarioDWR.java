@@ -13,6 +13,7 @@ import uy.com.parking.bean.IUsuarioBean;
 import uy.com.parking.bean.UsuarioBean;
 import uy.com.parking.entities.Usuario;
 import uy.com.parking.transferObjects.UsuarioTO;
+import uy.com.parking.util.MD5Utils;
 
 @RemoteProxy
 public class UsuarioDWR {
@@ -34,19 +35,36 @@ public class UsuarioDWR {
 			IUsuarioBean iUsuarioBean = lookupBean();
 			
 			for (Usuario usuario : iUsuarioBean.list()) {
-				UsuarioTO usuarioTO = new UsuarioTO();
-				
-				usuarioTO.setLogin(usuario.getLogin());
-				usuarioTO.setContrasena(usuario.getContrasena());
-				usuarioTO.setNombre(usuario.getNombre());
-
-				usuarioTO.setFact(usuario.getFact());
-				usuarioTO.setId(usuario.getId());
-				usuarioTO.setTerm(usuario.getTerm());
-				usuarioTO.setUact(usuario.getUact());
-				
-				result.add(usuarioTO);
+				result.add(this.transform(usuario));
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public UsuarioTO getById(Long id) {
+		UsuarioTO result = null;
+		
+		try {
+			IUsuarioBean iUsuarioBean = lookupBean();
+			
+			result = this.transform(iUsuarioBean.getById(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public UsuarioTO getByLogin(String login) {
+		UsuarioTO result = null;
+		
+		try {
+			IUsuarioBean iUsuarioBean = lookupBean();
+			
+			result = this.transform(iUsuarioBean.getByLogin(login));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,7 +96,8 @@ public class UsuarioDWR {
 			Usuario usuario = new Usuario();
 			
 			usuario.setLogin(usuarioTO.getLogin());
-			usuario.setContrasena(usuarioTO.getContrasena());
+			
+			usuario.setContrasena(MD5Utils.stringToMD5(usuarioTO.getContrasena()));
 			usuario.setNombre(usuarioTO.getNombre());
 			
 			usuario.setId(usuarioTO.getId());
@@ -90,5 +109,20 @@ public class UsuarioDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private UsuarioTO transform(Usuario usuario) {
+		UsuarioTO usuarioTO = new UsuarioTO();
+		
+		usuarioTO.setLogin(usuario.getLogin());
+		usuarioTO.setContrasena(usuario.getContrasena());
+		usuarioTO.setNombre(usuario.getNombre());
+
+		usuarioTO.setFact(usuario.getFact());
+		usuarioTO.setId(usuario.getId());
+		usuarioTO.setTerm(usuario.getTerm());
+		usuarioTO.setUact(usuario.getUact());
+		
+		return usuarioTO;
 	}
 }

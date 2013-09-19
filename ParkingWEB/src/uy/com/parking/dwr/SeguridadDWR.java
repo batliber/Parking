@@ -9,7 +9,11 @@ import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.annotations.RemoteProxy;
 
 import uy.com.parking.bean.ISeguridadBean;
+import uy.com.parking.bean.IUsuarioBean;
 import uy.com.parking.bean.SeguridadBean;
+import uy.com.parking.bean.UsuarioBean;
+import uy.com.parking.entities.SeguridadAuditoria;
+import uy.com.parking.entities.Usuario;
 
 @RemoteProxy
 public class SeguridadDWR {
@@ -30,37 +34,59 @@ public class SeguridadDWR {
 		HttpSession httpSession = WebContextFactory.get().getSession(false);
 		
 		if ((httpSession != null) && (httpSession.getAttribute("sesion") != null)) {
-			result = (String) httpSession.getAttribute("sesion");
+			Long usuarioId = (Long) httpSession.getAttribute("sesion");
+			
+			try {
+				String EARName = "Parking";
+				String beanName = UsuarioBean.class.getSimpleName();
+				String remoteInterfaceName = IUsuarioBean.class.getName();
+				String lookupName = EARName + "/" + beanName + "/remote-" + remoteInterfaceName;
+				Context context = new InitialContext();
+				
+				IUsuarioBean iUsuarioBean = (IUsuarioBean) context.lookup(lookupName);
+				
+				Usuario usuario = iUsuarioBean.getById(usuarioId);
+				
+				result = usuario.getNombre();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return result;
 	}
 	
-	public void login(String usuario, String contrasena) {
+	public void login(String login, String contrasena) throws Exception {
 		try {
 			ISeguridadBean iSeguridadBean = this.lookupBean();
 			
-			iSeguridadBean.login();
+			SeguridadAuditoria seguridadAuditoria = iSeguridadBean.login(login, contrasena);
 			
-			HttpSession httpSession = WebContextFactory.get().getSession(true);
-			
-			if (httpSession.getAttribute("sesion") == null) {
-				httpSession.setAttribute("sesion", usuario);
+			if (seguridadAuditoria != null) {
+				HttpSession httpSession = WebContextFactory.get().getSession(true);
+				
+				if (httpSession.getAttribute("sesion") == null) {
+					httpSession.setAttribute("sesion", seguridadAuditoria.getUsuario().getId());
+				}
+			} else {
+				throw new Exception("Usuario o contraseña incorrecta.");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 		}
 	}
 	
 	public void logout() {
 		try {
-			ISeguridadBean iSeguridadBean = this.lookupBean();
-			
-			iSeguridadBean.logout();
-			
 			HttpSession httpSession = WebContextFactory.get().getSession(false);
 			
-			if (httpSession.getAttribute("sesion") != null) {
+			Long usuarioId = (Long) httpSession.getAttribute("sesion");
+			
+			if (usuarioId != null) {
+				ISeguridadBean iSeguridadBean = this.lookupBean();
+				
+				iSeguridadBean.logout(usuarioId);
+				
 				httpSession.removeAttribute("sesion");
 			}
 		} catch (Exception e) {

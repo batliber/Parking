@@ -3,10 +3,44 @@ body {
 	height: 648px;
 }
 
+.divMenuBar {
+	width: 100%;
+	height: 22px;
+	margin-left: 10px;
+}
+
+.divMenuBar div {
+	float: left;
+	height: 100%;
+	text-align: center;
+}
+
+.inactiveMenuBarItem {
+	width: 80px;
+	border-bottom: solid 1px gray;
+}
+
+.inactiveMenuBarItem div {
+	width: 98%;
+	border-left: solid 1px #F0F0F0;
+	border-right: solid 1px #F0F0F0;
+}
+
+.activeMenuBarItem {
+	width: 80px;
+	border-bottom: solid 1px #F0F0F0;
+}
+
+.activeMenuBarItem div {
+	width: 98%;
+	border-left: solid 1px gray;
+	border-right: solid 1px gray;
+}
+
 .divUserInfo {
-	width: 475px;
+	width: 340px;
 	text-align: right;
-	padding-top: 2px;
+	border-bottom: solid 1px gray;
 }
 
 .divUserInfo div {
@@ -20,18 +54,6 @@ body {
 	width: 16px;
 	background-image: url("/ParkingWEB/images/logout.png");
 	background-repeat: no-repeat;
-}
-
-.divMenuBar {
-	border-bottom: solid 1px black;
-	width: 100%;
-	height: 30px;
-}
-
-.divMenuBar div {
-	float: left;
-	height: 100%;
-	margin-left: 5px;
 }
 
 #divIFrameActivePage {

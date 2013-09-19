@@ -18,10 +18,15 @@
 </head>
 <body>
 	<div class="divButtonBar">
-		<div style="float: left;"><input type="submit" id="inputGrabarFactura" value="Grabar factura" onclick="javascript:inputGrabarFacturaOnClick(event)"/></div>
-		<div><input type="submit" id="inputImprimirFactura" value="Imprimir factura" onclick="javascript:inputImprimirFacturaOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" id="inputGrabarFactura" value="Grabar factura" onclick="javascript:inputGrabarFacturaOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" id="inputImprimirFactura" value="Imprimir factura" onclick="javascript:inputImprimirFacturaOnClick(event)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
-	<div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Factura</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divMainWindow">
 		<div style="float: left;">N&uacute;mero:</div><div id="divFacturaNumero">&nbsp;</div>
 		<div style="float: left;">Fecha:</div><div id="divFacturaFecha">&nbsp;</div>
 		<div style="float: left;">Cliente:</div><div id="divFacturaClienteNombre">&nbsp;</div>

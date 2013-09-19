@@ -14,8 +14,14 @@
 </head>
 <body>
 	<div class="divButtonBar">
-		<div style="float: left;"><input type="submit" value="Facturaci&oacute;n a la fecha"/></div>
-		<div><input type="submit" value="Facturaci&oacute;n por servicio"/></div>
+		<div class="divButton"><input type="submit" value="Facturaci&oacute;n a la fecha"/></div>
+		<div class="divButton"><input type="submit" value="Facturaci&oacute;n por servicio"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Reportes</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divMainWindow">&nbsp;</div>
 </body>
 </html>

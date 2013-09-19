@@ -13,11 +13,19 @@
 	<link rel="stylesheet" type="text/css" href="./login.css"/>
 </head>
 <body>
-	<div>
-		<div class="divFormLabel" style="float: left;">Usuario:</div><div><input type="text" id="inputUsuario"/></div>
-		<div class="divFormLabel" style="float: left;">Contrase&ntilde;a:</div><div><input type="password" id="inputContrasena"/></div>
-		<div class="divButtons">
-			<div style="float: right;"><input type="submit" id="inputAcceder" value="Acceder" onclick="javascript:inputAccederOnClick(event, this)"/></div>
+	<div class="divMainWindow">
+		<div class="divLoginForm">
+			<div class="divTitleBar">
+				<div class="divTitleBarText">Iniciar sesi&oacute;n</div>
+			</div>
+			<div class="divFormLabel">Usuario:</div>
+			<div class="divFormInput"><input type="text" id="inputUsuario" onkeydown="javascript:inputUsuarioOnKeyDown(event, this)"/></div>
+			<div class="divFormLabel">Contrase&ntilde;a:</div>
+			<div class="divFormInput"><input type="password" id="inputContrasena" onkeydown="javascript:inputContrasenaOnKeyDown(event, this)"/></div>
+			<div class="divButtons">
+				<div style="float: left;width: 70px;"><input type="submit" id="inputAcceder" value="Acceder" onclick="javascript:inputAccederOnClick(event, this)"/></div>
+				<div id="divError">&nbsp;</div>
+			</div>
 		</div>
 	</div>
 </body>

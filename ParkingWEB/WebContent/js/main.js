@@ -21,6 +21,12 @@ $(document).ready(function() {
 
 function menuItemOnClick(event, element) {
 	window.frames[0].location = links[element.id];
+	
+	var active = $(".activeMenuBarItem");
+	active.removeClass("activeMenuBarItem");
+	active.addClass("inactiveMenuBarItem");
+	
+	element.parentNode.parentNode.setAttribute("class", "activeMenuBarItem");
 }
 
 function divLogoutOnClick() {

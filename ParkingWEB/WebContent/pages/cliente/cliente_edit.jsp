@@ -16,7 +16,15 @@
 	<link rel="stylesheet" type="text/css" href="./cliente_edit.css"/>
 </head>
 <body>
-	<div>
+	<div class="divButtonBar">
+		<div class="divButton"><input type="submit" value="Grabar cliente" onclick="javascript:inputGrabarClienteOnClick(event)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Cliente</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divMainWindow">
 		<div style="float: left;">Nombre:</div><div id="divClienteNombre"><input type="text" id="inputClienteNombre"/></div>
 		<div>
 			<table id="tableClienteVehiculos" border="0" cellspacing="0" cellpadding="0">
@@ -33,9 +41,6 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div>
-			<input type="submit" value="Grabar cliente" onclick="javascript:inputGrabarClienteOnClick(event)"/>
 		</div>
 	</div>
 </body>

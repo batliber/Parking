@@ -15,14 +15,14 @@
 </head>
 <body>
 	<div class="divMenuBar">
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="registro">Registro</a></div>
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="facturas">Facturas</a></div>
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="caja">Caja</a></div>
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="vehiculos">Veh&iacute;culos</a></div>
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="clientes">Clientes</a></div>
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="servicios">Servicios</a></div>
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="reportes">Reportes</a></div>
-		<div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="abitab">Generaci&oacute;n de archivo ABITAB</a></div>
+		<div class="activeMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="registro">Registro</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="facturas">Facturas</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="caja">Caja</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="vehiculos">Veh&iacute;culos</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="clientes">Clientes</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="servicios">Servicios</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="reportes">Reportes</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="abitab">ABITAB</a></div></div>
 		<div class="divUserInfo">
 			<div class="divLogout" style="float: right;" onclick="javascript:divLogoutOnClick(event, this)">&nbsp;</div>
 			<div id="divActiveUser" style="float: right;">&nbsp;</div>

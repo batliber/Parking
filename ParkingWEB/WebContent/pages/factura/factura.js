@@ -1,8 +1,8 @@
 var factura = null;
 
 $(document).ready(function() {
-	$("#inputGrabarFactura").hide();
-	$("#inputImprimirFactura").hide();
+	$("#inputGrabarFactura").prop("disabled", true);
+	$("#inputImprimirFactura").prop("disabled", true);
 	
 	if (matricula != null && matricula != "") {
 		FacturaDWR.generateFacturaByMatricula(
@@ -13,7 +13,7 @@ $(document).ready(function() {
 					
 					showFactura();
 					
-					$("#inputGrabarFactura").show();
+					$("#inputGrabarFactura").prop("disabled", false);
 				}, async: false
 			}
 		);
@@ -63,8 +63,8 @@ function showFactura() {
 }
 
 function clearForm() {
-	$("#inputGrabarFactura").hide();
-	$("#inputImprimirFactura").hide();
+	$("#inputGrabarFactura").prop("disabled", true);
+	$("#inputImprimirFactura").prop("disabled", true);
 	
 	$("#divFacturaFecha").text(".");
 	$("#divFacturaClienteNombre").text(".");
@@ -123,7 +123,7 @@ function inputImporteTotalFacturaLineaOnChange(event) {
 }
 
 function inputGrabarFacturaOnClick(event) {
-	$("#inputGrabarFactura").hide();
+	$("#inputGrabarFactura").prop("disabled", true);
 	
 	for (var i=0; i<factura.facturaLineas.length; i++) {
 		factura.facturaLineas[i].importeTotal = $("#inputImporteTotalFacturaLinea" + factura.facturaLineas[i].numero).val();
@@ -138,7 +138,7 @@ function inputGrabarFacturaOnClick(event) {
 			callback: function(data) {
 				$("#divFacturaNumero").text(data.numero);
 				
-				$("#inputImprimirFactura").show();
+				$("#inputImprimirFactura").prop("disabled", false);
 			}, async: false
 		}
 	);

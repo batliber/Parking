@@ -43,7 +43,7 @@ public class SeguridadFilter implements Filter {
 			pageName = pageName.split("?")[0];
 		}
         
-		if (!allowedFileTypes.contains(ext) && !requestedPage.contains("login.jsp")) {
+		if (!allowedFileTypes.contains(ext) && !requestedPage.contains("dwr/test") && !requestedPage.contains("login.jsp")) {
 			if ((httpSession == null) || (httpSession.getAttribute("sesion") == null)) {
 				httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/pages/login/login.jsp");
 			} else {

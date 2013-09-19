@@ -15,7 +15,13 @@
 </head>
 <body>
 	<div class="divButtonBar">
-		<div><input type="submit" value="Generar archivo ABITAB" onclick="javascript:generarArchivoABITAB(event, this)"/></div>
+		<div class="divButton"><input type="submit" value="Archivo ABITAB" onclick="javascript:generarArchivoABITAB(event, this)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Generar archivo</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divMainWindow">&nbsp;</div>
 </body>
 </html>

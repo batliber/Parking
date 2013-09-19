@@ -2,11 +2,13 @@ package uy.com.parking.bean;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Usuario;
 
@@ -32,6 +34,37 @@ public class UsuarioBean implements IUsuarioBean {
 		return result;
 	}
 
+	public Usuario getById(Long id) {
+		Usuario result = null;
+		
+		try {
+			result = entityManager.find(Usuario.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public Usuario getByLogin(String login) {
+		Usuario result = null;
+		
+		try {
+			TypedQuery<Usuario> typedQuery = 
+				entityManager.createQuery("SELECT u FROM Usuario u WHERE login = :login", Usuario.class);
+			typedQuery.setParameter("login", login);
+			
+			List<Usuario> resultList = typedQuery.getResultList();
+			if (!resultList.isEmpty()) {
+				result = resultList.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(Usuario usuario) {
 		try {
 			entityManager.persist(usuario);
