@@ -29,6 +29,6 @@
 			<div style="float: right;">Usuario:</div>
 		</div>
 	</div>
-	<div id="divIFrameActivePage"><iframe id="iFrameActivePage" src="/ParkingWEB/pages/registro/registro.jsp"></iframe></div>
+	<div id="divIFrameActivePage"><iframe id="iFrameActivePage" src="/ParkingWEB/pages/registro/registro.jsp" frameborder="0"></iframe></div>
 </body>
 </html>

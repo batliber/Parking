@@ -48,14 +48,14 @@
 			<div class="divTitleBarText" style="float:left;">Factura</div>
 			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
 		</div>
-		<iframe id="iFrameFactura" src="/ParkingWEB/pages/factura/factura.jsp"></iframe>
+		<iframe id="iFrameFactura" frameborder="0" src="/ParkingWEB/pages/factura/factura.jsp"></iframe>
 	</div>
 	<div id="divIFrameVehiculo" style="display:none;">
 		<div class="divTitleBar">
 			<div class="divTitleBarText" style="float:left;">Veh&iacute;culo</div>
 			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
 		</div>
-		<iframe id="iFrameVehiculo" src="/ParkingWEB/pages/vehiculo/vehiculo_edit.jsp"></iframe>
+		<iframe id="iFrameVehiculo" frameborder="0" src="/ParkingWEB/pages/vehiculo/vehiculo_edit.jsp"></iframe>
 	</div>
 </body>
 </html>

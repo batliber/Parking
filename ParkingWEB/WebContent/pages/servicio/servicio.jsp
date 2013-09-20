@@ -42,7 +42,7 @@
 			<div class="divTitleBarText" style="float:left;">Servicio</div>
 			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
 		</div>
-		<iframe id="iFrameServicioPrecio" src="#"></iframe>
+		<iframe id="iFrameServicioPrecio" frameborder="0" src="#"></iframe>
 	</div>
 </body>
 </html>

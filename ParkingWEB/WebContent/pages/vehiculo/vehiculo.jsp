@@ -39,7 +39,7 @@
 			<div class="divTitleBarText" style="float:left;">Veh&iacute;culo</div>
 			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
 		</div>
-		<iframe id="iFrameVehiculo" src="#"></iframe>
+		<iframe id="iFrameVehiculo" frameborder="0" src="#"></iframe>
 	</div>
 </body>
 </html>
