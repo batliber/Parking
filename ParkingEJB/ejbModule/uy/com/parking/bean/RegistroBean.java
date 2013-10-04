@@ -34,6 +34,37 @@ public class RegistroBean implements IRegistroBean {
 		
 		return result;
 	}
+	
+	public Collection<Registro> listSinSalida() {
+		Collection<Registro> result = new LinkedList<Registro>();
+		
+		try {
+			Query query = entityManager.createQuery(
+				"SELECT r FROM Registro r"
+				+ " ORDER BY r.fecha"
+			);
+			
+			for (Object object : query.getResultList()) {
+				Registro registro = (Registro) object;
+				
+				if (registro.getRegistroTipo().getId() == 1) {
+					result.add(registro);
+				} else {
+					Registro registroEntrada = null;
+					for (Registro registroBusqueda : result) {
+						if (registroBusqueda.getMatricula().equals(registro.getMatricula())) {
+							registroEntrada = registroBusqueda;
+						}
+					}
+					result.remove(registroEntrada);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 	public Registro getLastByMatricula(String matricula) {
 		Registro result = null;

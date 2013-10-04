@@ -32,6 +32,18 @@ public class CajaTipoDocumentoBean implements ICajaTipoDocumentoBean {
 		return result;
 	}
 
+	public CajaTipoDocumento getById(Long id) {
+		CajaTipoDocumento result = null;
+		
+		try {
+			result = entityManager.find(CajaTipoDocumento.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(CajaTipoDocumento cajaTipoDocumento) {
 		try {
 			entityManager.persist(cajaTipoDocumento);

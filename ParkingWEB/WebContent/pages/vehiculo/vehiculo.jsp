@@ -41,5 +41,6 @@
 		</div>
 		<iframe id="iFrameVehiculo" frameborder="0" src="#"></iframe>
 	</div>
+	<div id="divModalBackground">&nbsp;</div>
 </body>
 </html>

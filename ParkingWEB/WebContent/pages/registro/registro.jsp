@@ -34,14 +34,40 @@
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
-		<div style="float: left;">Matr&iacute;cula:</div>
-		<div><input type="text" id="inputMatricula" onchange="javascript:inputMatriculaOnChange(event);"></div>
-		<div style="float: left;">Ultimo registro:</div>
-		<div id="divUltimoRegistro">&nbsp;</div>
-		<div style="float: left;">Descripci&oacute;n:</div>
-		<div id="divDescripcion">&nbsp;</div>
-		<div style="float: left;">Cliente:</div>
-		<div id="divClienteNombre">&nbsp;</div>
+		<div class="divFormRegistro">
+			<div class="divFormLabel">Matr&iacute;cula:</div>
+			<div id="divMatricula"><input type="text" id="inputMatricula" onchange="javascript:inputMatriculaOnChange(event);"></div>
+			<div class="divFormLabel">Ultimo registro:</div>
+			<div id="divUltimoRegistro">&nbsp;</div>
+			<div class="divFormLabel">Descripci&oacute;n:</div>
+			<div id="divVehiculoDescripcion">&nbsp;</div>
+			<div class="divFormLabel">Cliente:</div>
+			<div id="divClienteNombre">&nbsp;</div>
+		</div>
+		<div id="divTableRegistros">
+			<table id="tableRegistros" border="0" cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<td><div>Fecha</div></td>
+						<td><div>Mat&iacute;cula</div></td>
+						<!-- 
+						<td><div>Veh&iacute;culo</div></td>
+						<td><div>Cliente</div></td>
+						-->
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><div>&nbsp;</div></td>
+						<td><div>&nbsp;</div></td>
+						<!-- 
+						<td><div>&nbsp;</div></td>
+						<td><div>&nbsp;</div></td>
+						-->
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<div id="divIFrameFactura" style="display:none;">
 		<div class="divTitleBar">
@@ -57,5 +83,6 @@
 		</div>
 		<iframe id="iFrameVehiculo" frameborder="0" src="/ParkingWEB/pages/vehiculo/vehiculo_edit.jsp"></iframe>
 	</div>
+	<div id="divModalBackground">&nbsp;</div>
 </body>
 </html>

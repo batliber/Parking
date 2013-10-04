@@ -1,7 +1,54 @@
+.divFormRegistro {
+	width: 375px;
+	height: 100px;
+}
+
+#divMatricula {
+	float: left;
+	width: 220px;
+	height: 18px;
+}
+
+#divUltimoRegistro {
+	float: left;
+	width: 220px;
+	height: 18px;
+	margin-top: 2px;
+}
+
+#divVehiculoDescripcion {
+	float: left;
+	width: 220px;
+	height: 18px;
+	margin-top: 2px;
+}
+
+#divClienteNombre {
+	float: left;
+	width: 220px;
+	height: 18px;
+	margin-top: 2px;
+}
+
+#divTableRegistros {
+	width: 210px;
+	height: 250px;
+	overflow: auto;
+}
+
+.tdRegistroFecha {
+	width: 100px;
+}
+
+.tdRegistroMatricula {
+	width: 100px;
+}
+
 #divIFrameFactura {
 	position: absolute;
 	top: 100px;
 	left: 100px;
+	z-index: 10;
 	border: solid 1px black;
 	background-color: white;
 }
@@ -16,6 +63,7 @@
 	position: absolute;
 	top: 100px;
 	left: 100px;
+	z-index: 10;
 	border: solid 1px black;
 	background-color: white;
 }

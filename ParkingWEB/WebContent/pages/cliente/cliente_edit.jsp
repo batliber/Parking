@@ -25,7 +25,7 @@
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
-		<div style="float: left;">Nombre:</div><div id="divClienteNombre"><input type="text" id="inputClienteNombre"/></div>
+		<div class="divFormLabel">Nombre:</div><div id="divClienteNombre"><input type="text" id="inputClienteNombre"/></div>
 		<div>
 			<table id="tableClienteVehiculos" border="0" cellspacing="0" cellpadding="0">
 				<thead>

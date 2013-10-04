@@ -26,9 +26,9 @@
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
-		<div style="float: left;">Servicio:</div><div id="divServicioNombre"><input type="text" id="inputServicioDescripcion"/></div>
-		<div style="float: left;">Moneda:</div><div id="divMonedaDescripcion"><select id="selectMoneda"></select></div>
-		<div style="float: left;">Precio:</div><div id="divServicioPrecioPrecio"><input type="text" id="inputServicioPrecioPrecio"/></div>
+		<div class="divFormLabel">Servicio:</div><div id="divServicioNombre"><input type="text" id="inputServicioDescripcion"/></div>
+		<div class="divFormLabel">Moneda:</div><div id="divMonedaDescripcion"><select id="selectMoneda"></select></div>
+		<div class="divFormLabel">Precio:</div><div id="divServicioPrecioPrecio"><input type="text" id="inputServicioPrecioPrecio"/></div>
 	</div>
 </body>
 </html>

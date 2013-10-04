@@ -25,8 +25,10 @@
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
-		<div style="float: left;">Matr&iacute;cula:</div><div id="divVehiculoMatricula"><input type="text" id="inputVehiculoMatricula"/></div>
-		<div style="float: left;">Descripci&oacute;n:</div><div id="divVehiculoDescripcion"><input type="text" id="inputVehiculoDescripcion"/></div>
+		<div class="divFormLabel">Matr&iacute;cula:</div>
+		<div id="divVehiculoMatricula"><input type="text" id="inputVehiculoMatricula"/></div>
+		<div class="divFormLabel">Descripci&oacute;n:</div>
+		<div id="divVehiculoDescripcion"><input type="text" id="inputVehiculoDescripcion"/></div>
 		<div>
 			<table id="tableVehiculoClientes" border="0" cellspacing="0" cellpadding="0">
 				<thead>

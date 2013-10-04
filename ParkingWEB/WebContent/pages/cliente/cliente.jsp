@@ -39,5 +39,6 @@
 		</div>
 		<iframe id="iFrameCliente" frameborder="0" src="#"></iframe>
 	</div>
+	<div id="divModalBackground">&nbsp;</div>
 </body>
 </html>

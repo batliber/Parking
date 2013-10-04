@@ -45,6 +45,22 @@ public class RegistroDWR {
 		return result;
 	}
 	
+	public Collection<RegistroTO> listSinSalida() {
+		Collection<RegistroTO> result = new LinkedList<RegistroTO>();
+		
+		try {
+			IRegistroBean iRegistroBean = lookupBean();
+			
+			for (Registro registro : iRegistroBean.listSinSalida()) {
+				result.add(this.transform(registro));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public RegistroTO getLastByMatricula(String matricula) {
 		RegistroTO result = null;
 		

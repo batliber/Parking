@@ -59,5 +59,6 @@
 		<div style="float: left;">IVA:</div><div id="divFacturaImporteIVA">&nbsp;</div>
 		<div style="float: left;">Total:</div><div id="divFacturaImporteTotal">&nbsp;</div>
 	</div>
+	<div id="divModalBackground">&nbsp;</div>
 </body>
 </html>

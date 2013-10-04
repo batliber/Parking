@@ -11,6 +11,8 @@ public interface ICajaTipoDocumentoBean {
 
 	public Collection<CajaTipoDocumento> list();
 	
+	public CajaTipoDocumento getById(Long id);
+	
 	public void save(CajaTipoDocumento cajaTipoDocumento);
 	
 	public void remove(CajaTipoDocumento cajaTipoDocumento);

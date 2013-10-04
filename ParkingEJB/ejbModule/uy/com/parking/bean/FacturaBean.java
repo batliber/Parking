@@ -15,6 +15,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import uy.com.parking.entities.CajaMovimiento;
+import uy.com.parking.entities.CajaTipoDocumento;
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.Factura;
 import uy.com.parking.entities.FacturaLinea;
@@ -49,6 +51,12 @@ public class FacturaBean implements IFacturaBean {
 	
 	@EJB
 	private IServicioPrecioBean iServicioPrecioBean;
+	
+	@EJB
+	private ICajaTipoDocumentoBean iCajaTipoDocumentoBean;
+	
+	@EJB
+	private ICajaMovimientoBean iCajaMovimientoBean;
 	
 	public Collection<Factura> list() {
 		Collection<Factura> result = new LinkedList<Factura>();
@@ -138,6 +146,24 @@ public class FacturaBean implements IFacturaBean {
 			this.save(result);
 			
 			iRegistroBean.save(registro);
+			
+			CajaMovimiento cajaMovimiento = new CajaMovimiento();
+			
+			CajaTipoDocumento cajaTipoDocumento = iCajaTipoDocumentoBean.getById(new Long(1));
+			
+			cajaMovimiento.setCajaTipoDocumento(cajaTipoDocumento);
+			
+			cajaMovimiento.setDocumentoId(result.getId());
+			cajaMovimiento.setFecha(new Date());
+			cajaMovimiento.setImporte(factura.getImporteTotal());
+			cajaMovimiento.setMoneda(result.getMoneda());
+			cajaMovimiento.setObservaciones("");
+			
+			cajaMovimiento.setFact(new Date());
+			cajaMovimiento.setTerm(new Long(1));
+			cajaMovimiento.setUact(new Long(1));
+			
+			iCajaMovimientoBean.save(cajaMovimiento);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

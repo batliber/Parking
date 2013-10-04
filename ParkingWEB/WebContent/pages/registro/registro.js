@@ -45,14 +45,14 @@ function inputMatriculaOnChange(event) {
 				if (data != null) {
 					vehiculo = data;
 					
-					$("#divDescripcion").text(data.descripcion);
+					$("#divVehiculoDescripcion").text(data.descripcion);
 					$("#divClienteNombre").text(data.clientes[0].nombre);
 				} else {
 					vehiculo = {
 						matricula: $("#inputMatricula").val()
 					};
 					
-					$("#divDescripcion").text("Vehículo no registrado");
+					$("#divVehiculoDescripcion").text("Vehículo no registrado");
 					$("#divClienteNombre").text(".");
 					
 					$("#inputAgregarVehiculo").prop("disabled", false);
@@ -141,8 +141,27 @@ function clearForm() {
 	
 	$("#inputMatricula").val("");
 	$("#divUltimoRegistro").text(".");
-	$("#divDescripcion").text(".");
+	$("#divVehiculoDescripcion").text(".");
 	$("#divClienteNombre").text(".");
+	
+	RegistroDWR.listSinSalida(
+		{
+			callback: function(data) {
+				if (data != null) {
+					$("#tableRegistros > tbody:last > tr").remove();
+					
+					for (var i=0; i < data.length; i++) {
+						$("#tableRegistros > tbody:last").append(
+							"<tr id='" + data[i].id + "'>"
+								+ "<td class='tdRegistroFecha'><div id='divRegistroFecha" + data[i].id + "'>" + formatLongDate(data[i].fecha) + "</div></td>"
+								+ "<td class='tdRegistroMatricula'><div id='divSRegistroVehiculoMatricula" + data[i].id + "'>" + data[i].matricula + "</div></td>"
+							+ "</tr>"
+						);
+					}
+				}
+			}, async: false
+		}
+	);
 	
 	$("#inputMatricula").focus();
 }
