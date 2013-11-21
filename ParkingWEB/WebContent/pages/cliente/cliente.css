@@ -1,5 +1,38 @@
-.tdClienteNombre div {
-	width: 400px;
+#tableClientes {
+	width: 310px;
+	height: 318px;
+}
+
+#tableClientes thead {
+	position: fixed;
+}
+
+#tableClientes thead tr .tdClienteDocumento {
+	width: 89px;
+}
+
+#tableClientes thead tr .tdClienteNombre {
+	width: 200px;
+}
+
+#tableClientes tbody {
+	position: fixed;
+	margin-top: 17px;
+	overflow: auto;
+	width: 308px;
+	height: 299px;
+}
+
+#tableClientes tbody tr td .divClienteDocumento {
+	text-align: left;
+	margin-left: 2px;
+	width: 87px;
+}
+
+#tableClientes tbody tr td .divClienteNombre {
+	text-align: left;
+	margin-left: 2px;
+	width: 198px;
 }
 
 #divIFrameCliente {

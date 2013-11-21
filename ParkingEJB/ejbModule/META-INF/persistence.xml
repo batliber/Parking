@@ -10,10 +10,20 @@
 		<class>uy.com.parking.entities.CajaMovimiento</class>
 		<class>uy.com.parking.entities.CajaTipoDocumento</class>
 		<class>uy.com.parking.entities.Cliente</class>
+		<class>uy.com.parking.entities.ClienteServicioPrecio</class>
+		<class>uy.com.parking.entities.CobranzaMovimiento</class>
+		<class>uy.com.parking.entities.CobranzaTipoDocumento</class>
+		<class>uy.com.parking.entities.Departamento</class>
 		<class>uy.com.parking.entities.Factura</class>
 		<class>uy.com.parking.entities.FacturaLinea</class>
 		<class>uy.com.parking.entities.Moneda</class>
+		<class>uy.com.parking.entities.Registro</class>
+		<class>uy.com.parking.entities.RegistroTipo</class>
+		<class>uy.com.parking.entities.SeguridadAuditoria</class>
+		<class>uy.com.parking.entities.SeguridadTipoEvento</class>
 		<class>uy.com.parking.entities.Servicio</class>
+		<class>uy.com.parking.entities.ServicioPrecio</class>
+		<class>uy.com.parking.entities.Usuario</class>
 		<class>uy.com.parking.entities.Vehiculo</class>
 
 		<properties>

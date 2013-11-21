@@ -7,25 +7,11 @@ $(document).ready(function() {
 				for (var i=0; i<data.length; i++) {
 					$("#tableVehiculos > tbody:last").append(
 						"<tr id='" + data[i].id + "'>"
-							+ "<td class='tdActions'>"
-								+ "<div class='divEdit' onclick='javascript:inputEditOnClick(event, this, " + data[i].id + ")'>&nbsp;</div>"
-								+ "<div class='divDelete' onclick='javascript:inputDeleteOnClick(event, this, " + data[i].id + ")'>&nbsp;</div>"
-							+ "</td>"
 							+ "<td class='tdVehiculoMatricula'><div id='divVehiculoMatricula" + data[i].id + "'>" + data[i].matricula + "</div></td>"
 							+ "<td class='tdVehiculoDescripcion'><div id='divVehiculoDescripcion" + data[i].id + "'>" + data[i].descripcion + "</div></td>"
 						+ "</tr>"
 					);
 				}
-				
-				$("#tableVehiculos > tbody:last").append(
-					"<tr>"
-						+ "<td class='tdActions'>"
-							+ "<div class='divNew' onclick='javascript:inputNewOnClick(event, this)'>&nbsp;</div>"
-						+ "</td>"
-						+ "<td class='tdVehiculoMatricula'><div>&nbsp;</div></td>"
-						+ "<td class='tdVehiculoDescripcion'><div>&nbsp;</div></td>"
-					+ "</tr>"
-				);
 			}, async: false
 		}
 	);

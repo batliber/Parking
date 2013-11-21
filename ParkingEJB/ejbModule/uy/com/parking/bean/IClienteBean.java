@@ -13,6 +13,8 @@ public interface IClienteBean {
 	
 	public Cliente getById(Long id);
 	
+	public Cliente getByDocumento(String documento);
+	
 	public void save(Cliente cliente);
 	
 	public void remove(Cliente cliente);

@@ -6,7 +6,7 @@ $(document).ready(function() {
 			callback: function (data) {
 				for (var i=0; i<data.length; i++) {
 					$("#selectMoneda").append(
-						"<option>" + data[i].descripcion + "</option>"
+						"<option value='" + data[i].id + "'>" + data[i].descripcion + "</option>"
 					);
 				}
 			}, async: false

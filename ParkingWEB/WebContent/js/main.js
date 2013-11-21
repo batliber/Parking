@@ -1,6 +1,8 @@
 var links = {
 	registro: "/ParkingWEB/pages/registro/registro.jsp",
+	facturacion: "/ParkingWEB/pages/facturacion/facturacion.jsp",
 	facturas: "/ParkingWEB/pages/factura/factura.jsp",
+	cobranza: "/ParkingWEB/pages/cobranza/cobranza.jsp",
 	caja: "/ParkingWEB/pages/caja/caja.jsp",
 	clientes: "/ParkingWEB/pages/cliente/cliente.jsp",
 	vehiculos: "/ParkingWEB/pages/vehiculo/vehiculo.jsp",

@@ -7,23 +7,11 @@ $(document).ready(function() {
 				for (var i=0; i<data.length; i++) {
 					$("#tableClientes > tbody:last").append(
 						"<tr id='" + data[i].id + "'>"
-							+ "<td class='tdActions'>"
-								+ "<div class='divEdit' onclick='javascript:inputEditOnClick(event, this, " + data[i].id + ")'>&nbsp;</div>"
-								+ "<div class='divDelete' onclick='javascript:inputDeleteOnClick(event, this, " + data[i].id + ")'>&nbsp;</div>"
-							+ "</td>"
-							+ "<td class='tdClienteNombre'><div id='divClienteNombre" + data[i].id + "'>" + data[i].nombre + "</div></td>"
+							+ "<td class='tdClienteDocumento'><div class='divClienteDocumento'>" + data[i].documento + "</div></td>"
+							+ "<td class='tdClienteNombre'><div class='divClienteNombre'>" + data[i].nombre + "</div></td>"
 						+ "</tr>"
 					);
 				}
-				
-				$("#tableClientes > tbody:last").append(
-					"<tr>"
-						+ "<td class='tdActions'>"
-							+ "<div class='divNew' onclick='javascript:inputNewOnClick(event, this)'>&nbsp;</div>"
-						+ "</td>"
-						+ "<td class='tdClienteNombre'><div>&nbsp;</div></td>"
-					+ "</tr>"
-				);
 			}, async: false
 		}
 	);

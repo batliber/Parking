@@ -1,4 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String message = (String) request.getAttribute("message");
+%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,13 +19,27 @@
 </head>
 <body>
 	<div class="divButtonBar">
-		<div class="divButton"><input type="submit" value="Archivo ABITAB" onclick="javascript:generarArchivoABITAB(event, this)"/></div>
+		<div class="divButton"><input type="submit" id="inputGenerarArchivo" value="Generar archivo" onclick="javascript:inputGenerarArchivoOnClick(event, this)"/></div>
+		<div class="divButton"><input type="submit" id="inputImportarArchivo" value="Importar archivo" onclick="javascript:inputImportarArchivoOnClick(event, this)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Generar archivo</div>
+		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Archivos</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
-	<div class="divMainWindow">&nbsp;</div>
+	<div class="divMainWindow">
+		<div class="divFormLabel">Archivo:</div>
+		<form id="formSubirArchivo" method="post" action="/ParkingWEB/Upload" enctype="multipart/form-data">
+			<div id="divSubirArchivo"><input type="file" id="inputArchivo" name="inputArchivo" onchange="javascript:inputArchivoOnChange(event)"/></div>
+		</form>
+<%
+	if (message != null) {
+%>
+		<div class="divFormLabel">&nbsp;</div>
+		<div><%= message %></div>
+<% 
+	} 
+%>
+	</div>
 </body>
 </html>

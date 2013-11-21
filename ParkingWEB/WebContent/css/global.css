@@ -22,9 +22,25 @@ input[type="submit"] {
 	font-size: 9pt;
 }
 
+input[type="file"] {
+	font-family: Segoe UI;
+	font-size: 9pt;
+	height: 21px;
+	background-color: white;
+}
+
 table {
 	border: solid 1px #979797;
 	background-color: white;
+}
+
+tr {
+	background-color: white;
+}
+
+tr:hover {
+	background-color: orange;
+	cursor: pointer;
 }
 
 table thead tr td {
@@ -112,6 +128,10 @@ a {
 
 #divButtonTitleDoubleSize {
 	width: 172px;
+}
+
+#divButtonTitleTripleSize {
+	width: 258px;
 }
 
 .divButtonTitleBarSeparator {

@@ -14,20 +14,26 @@
 	<link rel="stylesheet" type="text/css" href="./vehiculo.css"/>
 </head>
 <body>
-	<div class="divButtonBar">&nbsp;</div>
-	<div class="divButtonTitleBar">&nbsp;</div>
+	<div class="divButtonBar">
+		<div class="divButton"><input type="submit" value="Agregar" onclick="javascript:inputNewOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" value="Eliminar" onclick="javascript:inputDeleteOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" value="Modificar" onclick="javascript:inputEditOnClick(event)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleTripleSize" class="divButtonTitleBarTitle">Acciones</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
 	<div class="divMainWindow">
 		<table id="tableVehiculos" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
-					<td><div>&nbsp;</div></td>
 					<td class="tdVehiculoMatricula"><div>Matr&iacute;cula</div></td>
 					<td class="tdVehiculoDescripcion"><div>Descripci&oacute;n</div></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td><div>&nbsp;</div></td>
 					<td class="tdVehiculoMatricula"><div>&nbsp;</div></td>
 					<td class="tdVehiculoDescripcion"><div>&nbsp;</div></td>
 				</tr>

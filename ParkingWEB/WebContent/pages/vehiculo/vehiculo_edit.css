@@ -5,3 +5,19 @@
 #inputVehiculoDescripcion {
 	width: 400px;
 }
+
+#inputVehiculoClienteDocumento {
+	width: 100px;
+}
+
+#inputVehiculoClienteNombre {
+	width: 400px;
+}
+
+#inputVehiculoClienteDomicilio {
+	width: 400px;
+}
+
+#inputVehiculoClienteTelefono {
+	width: 100px;
+}

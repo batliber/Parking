@@ -1,0 +1,22 @@
+.divFullWidth {
+	float: left;
+	width: 900px;
+	height: 18px;
+	padding-top: 2px;
+}
+
+#tableFacturaLineas thead tr .tdServicio {
+	width: 450px;
+}
+
+#tableFacturaLineas thead tr .tdImporteUnitario {
+	width: 75px;
+}
+
+#tableFacturaLineas thead tr .tdCantidad {
+	width: 140px;
+}
+
+#tableFacturaLineas thead tr .tdTotal {
+	width: 140px;
+}

@@ -7,12 +7,13 @@
 	border: solid 1px black;
 }
 
-.divFormLabel {
+.divLoginForm .divFormLabel {
 	width: 100%;
 	padding-top: 5px;
 	padding-left: 5px;
 	padding-right: 5px;
 	font-weight: bold;
+	text-align: left;
 }
 
 .divFormInput {

@@ -36,7 +36,7 @@ public class ClienteDWR {
 			IClienteBean iClienteBean = lookupBean();
 			
 			for (Cliente cliente : iClienteBean.list()) {
-				result.add(this.transform(cliente));
+				result.add(transform(cliente, true));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,7 +51,21 @@ public class ClienteDWR {
 		try {
 			IClienteBean iClienteBean = lookupBean();
 			
-			result = this.transform(iClienteBean.getById(id));
+			result = transform(iClienteBean.getById(id), true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public ClienteTO getByDocumento(String documento) {
+		ClienteTO result = null;
+		
+		try {
+			IClienteBean iClienteBean = lookupBean();
+			
+			result = transform(iClienteBean.getByDocumento(documento), true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,52 +94,29 @@ public class ClienteDWR {
 		try {
 			IClienteBean iClienteBean = lookupBean();
 			
-			Cliente cliente = new Cliente();
-			
-			cliente.setFechaBaja(clienteTO.getFechaBaja());
-			cliente.setNombre(clienteTO.getNombre());
-			
-			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
-			for (VehiculoTO vehiculoTO : clienteTO.getVehiculos()) {
-				Vehiculo vehiculo = new Vehiculo();
-				vehiculo.setId(vehiculoTO.getId());
-				
-				vehiculos.add(vehiculo);
-			}
-			
-			cliente.setVehiculos(vehiculos);
-			
-			cliente.setId(clienteTO.getId());
-			cliente.setFact(clienteTO.getFact());
-			cliente.setTerm(clienteTO.getTerm());
-			cliente.setUact(clienteTO.getUact());
-			
-			iClienteBean.update(cliente);
+			iClienteBean.update(transform(clienteTO, true));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private ClienteTO transform(Cliente cliente) {
+	public static ClienteTO transform(Cliente cliente, boolean transformCollections) {
 		ClienteTO clienteTO = new ClienteTO();
 		
+		clienteTO.setDocumento(cliente.getDocumento());
+		clienteTO.setDomicilio(cliente.getDomicilio());
 		clienteTO.setFechaBaja(cliente.getFechaBaja());
 		clienteTO.setNombre(cliente.getNombre());
+		clienteTO.setTelefono(cliente.getTelefono());
 		
-		Collection<VehiculoTO> vehiculosTO = new LinkedList<VehiculoTO>();
-		for (Vehiculo vehiculo : cliente.getVehiculos()) {
-			VehiculoTO vehiculoTO = new VehiculoTO();
-			vehiculoTO.setDescripcion(vehiculo.getDescripcion());
-			vehiculoTO.setFact(vehiculo.getFact());
-			vehiculoTO.setId(vehiculo.getId());
-			vehiculoTO.setMatricula(vehiculo.getMatricula());
-			vehiculoTO.setTerm(vehiculo.getTerm());
-			vehiculoTO.setUact(vehiculo.getUact());
+		if (transformCollections) {
+			Collection<VehiculoTO> vehiculosTO = new LinkedList<VehiculoTO>();
+			for (Vehiculo vehiculo : cliente.getVehiculos()) {
+				vehiculosTO.add(VehiculoDWR.transform(vehiculo, false));
+			}
 			
-			vehiculosTO.add(vehiculoTO);
+			clienteTO.setVehiculos(vehiculosTO);
 		}
-		
-		clienteTO.setVehiculos(vehiculosTO);
 		
 		clienteTO.setFact(cliente.getFact());
 		clienteTO.setId(cliente.getId());
@@ -133,5 +124,31 @@ public class ClienteDWR {
 		clienteTO.setUact(cliente.getUact());
 		
 		return clienteTO;
+	}
+	
+	public static Cliente transform(ClienteTO clienteTO, boolean transformCollections) {
+		Cliente cliente = new Cliente();
+		
+		cliente.setDocumento(clienteTO.getDocumento());
+		cliente.setDomicilio(clienteTO.getDomicilio());
+		cliente.setFechaBaja(clienteTO.getFechaBaja());
+		cliente.setNombre(clienteTO.getNombre());
+		cliente.setTelefono(clienteTO.getTelefono());
+		
+		if (transformCollections) {
+			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
+			for (VehiculoTO vehiculoTO : clienteTO.getVehiculos()) {
+				vehiculos.add(VehiculoDWR.transform(vehiculoTO, false));
+			}
+			
+			cliente.setVehiculos(vehiculos);
+		}
+		
+		cliente.setId(clienteTO.getId());
+		cliente.setFact(clienteTO.getFact());
+		cliente.setTerm(clienteTO.getTerm());
+		cliente.setUact(clienteTO.getUact());
+		
+		return cliente;
 	}
 }

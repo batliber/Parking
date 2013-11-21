@@ -2,11 +2,13 @@ package uy.com.parking.bean;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.Vehiculo;
@@ -38,6 +40,27 @@ public class ClienteBean implements IClienteBean {
 		
 		try {
 			result = entityManager.find(Cliente.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public Cliente getByDocumento(String documento) {
+		Cliente result = null;
+		
+		try {
+			TypedQuery<Cliente> query = 
+				entityManager.createQuery(
+					"SELECT c FROM Cliente c WHERE documento = :documento", Cliente.class
+				);
+			query.setParameter("documento", documento);
+			
+			List<Cliente> resultList = query.getResultList();
+			if (!resultList.isEmpty()) {
+				result = resultList.get(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

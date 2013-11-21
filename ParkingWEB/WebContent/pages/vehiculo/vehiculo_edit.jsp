@@ -8,6 +8,8 @@
 	</script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/engine.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/DepartamentoDWR.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ClienteDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/VehiculoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
@@ -27,8 +29,19 @@
 	<div class="divMainWindow">
 		<div class="divFormLabel">Matr&iacute;cula:</div>
 		<div id="divVehiculoMatricula"><input type="text" id="inputVehiculoMatricula"/></div>
-		<div class="divFormLabel">Descripci&oacute;n:</div>
+		<div class="divFormLabel">Departamento:</div>
+		<div id="divVehiculoDepartamento"><select id="selectVehiculoDepartamento"></select></div>
+		<div class="divFormLabel">Marca/Modelo:</div>
 		<div id="divVehiculoDescripcion"><input type="text" id="inputVehiculoDescripcion"/></div>
+		<br/>
+		<div class="divFormLabel">Documento:</div>
+		<div id="divVehiculoClienteDocumento"><input type="text" id="inputVehiculoClienteDocumento" onchange="javascript:inputVehiculoClienteDocumentoOnChange(event)"/></div>
+		<div class="divFormLabel">Nombre:</div>
+		<div id="divVehiculoClienteNombre"><input type="text" id="inputVehiculoClienteNombre"/></div>
+		<div class="divFormLabel">Domicilio:</div>
+		<div id="divVehiculoClienteDomicilio"><input type="text" id="inputVehiculoClienteDomicilio"/></div>
+		<div class="divFormLabel">Tel&eacute;fono:</div>
+		<div id="divVehiculoClienteTelefono"><input type="text" id="inputVehiculoClienteTelefono"/></div>
 		<div>
 			<table id="tableVehiculoClientes" border="0" cellspacing="0" cellpadding="0">
 				<thead>

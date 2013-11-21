@@ -9,6 +9,7 @@ public class VehiculoTO extends BaseTO {
 
 	private String matricula;
 	private String descripcion;
+	private DepartamentoTO departamento;
 	private Collection<ClienteTO> clientes;
 
 	public String getMatricula() {
@@ -27,6 +28,14 @@ public class VehiculoTO extends BaseTO {
 		this.descripcion = descripcion;
 	}
 
+	public DepartamentoTO getDepartamento() {
+		return departamento;
+	}
+	
+	public void setDepartamento(DepartamentoTO departamento) {
+		this.departamento = departamento;
+	}
+	
 	public Collection<ClienteTO> getClientes() {
 		return clientes;
 	}

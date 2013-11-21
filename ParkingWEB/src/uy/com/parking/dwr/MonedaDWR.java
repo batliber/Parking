@@ -89,4 +89,32 @@ public class MonedaDWR {
 			e.printStackTrace();
 		}
 	}
+
+	public static Moneda transform(MonedaTO monedaTO, boolean transformCollections) {
+		Moneda moneda = new Moneda();
+		
+		moneda.setAbreviacion(monedaTO.getAbreviacion());
+		moneda.setDescripcion(monedaTO.getDescripcion());
+		
+		moneda.setFact(monedaTO.getFact());
+		moneda.setId(monedaTO.getId());
+		moneda.setTerm(monedaTO.getTerm());
+		moneda.setUact(monedaTO.getUact());
+		
+		return moneda;
+	}
+
+	public static MonedaTO transform(Moneda moneda, boolean transformCollections) {
+		MonedaTO monedaTO = new MonedaTO();
+		
+		monedaTO.setAbreviacion(moneda.getAbreviacion());
+		monedaTO.setDescripcion(moneda.getDescripcion());
+		
+		monedaTO.setFact(moneda.getFact());
+		monedaTO.setId(moneda.getId());
+		monedaTO.setTerm(moneda.getTerm());
+		monedaTO.setUact(moneda.getUact());
+		
+		return monedaTO;
+	}
 }

@@ -23,7 +23,7 @@ public class SeguridadAuditoria extends BaseEntity {
 	private SeguridadTipoEvento seguridadTipoEvento;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "usuario_id", nullable = false)
+	@JoinColumn(name = "seguridad_usuario_id", nullable = false)
 	private Usuario usuario;
 
 	public Date getFecha() {

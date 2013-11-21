@@ -25,7 +25,10 @@
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
+		<div class="divFormLabel">Documento:</div><div id="divClienteDocumento"><input type="text" id="inputClienteDocumento"/></div>
 		<div class="divFormLabel">Nombre:</div><div id="divClienteNombre"><input type="text" id="inputClienteNombre"/></div>
+		<div class="divFormLabel">Domicilio:</div><div id="divClienteDomicilio"><input type="text" id="inputClienteDomicilio"/></div>
+		<div class="divFormLabel">Tel&eacute;fono:</div><div id="divClienteTelefono"><input type="text" id="inputClienteTelefono"/></div>
 		<div>
 			<table id="tableClienteVehiculos" border="0" cellspacing="0" cellpadding="0">
 				<thead>

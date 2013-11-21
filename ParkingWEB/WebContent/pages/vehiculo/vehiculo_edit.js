@@ -1,6 +1,18 @@
 var vehiculo = null;
 
 $(document).ready(function() {
+	DepartamentoDWR.list(
+		{
+			callback: function(data) {
+				for (var i = 0; i<data.length; i++) {
+					$("#selectVehiculoDepartamento").append(
+						"<option value='" + data[i].id + "'>" + data[i].nombre + "</option>"
+					);
+				}
+			}, async: false
+		}
+	);
+	
 	if (id != null) {
 		VehiculoDWR.getById(
 			id,
@@ -56,6 +68,25 @@ function inputVehiculoMatriculaOnChange(event) {
 			}
 		);
 	}
+}
+
+function inputVehiculoClienteDocumentoOnChange(event) {
+	$("#inputVehiculoClienteNombre").val("");
+	$("#inputVehiculoClienteDomicilio").val("");
+	$("#inputVehiculoClienteTelefono").val("");
+	
+	ClienteDWR.getByDocumento(
+		$("#inputVehiculoClienteDocumento").val()
+		, {
+			callback: function(data) {
+				if (data != null) {
+					$("#inputVehiculoClienteNombre").val(data.nombre);
+					$("#inputVehiculoClienteDomicilio").val(data.domicilio);
+					$("#inputVehiculoClienteTelefono").val(data.telefono);
+				}
+			}, async: false
+		}
+	);
 }
 
 function inputGrabarVehiculoOnClick(event) {

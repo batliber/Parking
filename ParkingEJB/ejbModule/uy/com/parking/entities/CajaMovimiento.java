@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,10 +26,12 @@ public class CajaMovimiento extends BaseEntity {
 	@Column(name = "documentoId")
 	private Long documentoId;
 
-	@Column(name = "caja_tipo_documento")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "caja_tipo_documento_id", nullable = false)
 	private CajaTipoDocumento cajaTipoDocumento;
 
-	@Column(name = "moneda")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "moneda_id", nullable = false)
 	private Moneda moneda;
 
 	public Date getFecha() {

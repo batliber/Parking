@@ -87,4 +87,30 @@ public class ServicioDWR {
 			e.printStackTrace();
 		}
 	}
+	
+	public static Servicio transform(ServicioTO servicioTO, boolean transformCollections) {
+		Servicio servicio = new Servicio();
+		
+		servicio.setDescripcion(servicioTO.getDescripcion());
+		
+		servicio.setFact(servicioTO.getFact());
+		servicio.setId(servicioTO.getId());
+		servicio.setTerm(servicioTO.getTerm());
+		servicio.setUact(servicioTO.getUact());
+		
+		return servicio;
+	}
+
+	public static ServicioTO transform(Servicio servicio, boolean transformCollections) {
+		ServicioTO servicioTO = new ServicioTO();
+		
+		servicioTO.setDescripcion(servicio.getDescripcion());
+		
+		servicioTO.setFact(servicio.getFact());
+		servicioTO.setId(servicio.getId());
+		servicioTO.setTerm(servicio.getTerm());
+		servicioTO.setUact(servicio.getUact());
+		
+		return servicioTO;
+	}
 }

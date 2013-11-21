@@ -8,7 +8,10 @@ $(document).ready(function() {
 				callback: function(data) {
 					cliente = data;
 					
+					$("#inputClienteDocumento").val(data.documento);
 					$("#inputClienteNombre").val(data.nombre);
+					$("#inputClienteDomiclio").val(data.domicilio != null ? data.domicilio : "");
+					$("#inputClienteTelefono").val(data.telefono != null ? data.telefono : "");
 					
 					$("#tableClienteVehiculos > tbody:last > tr").remove();
 					

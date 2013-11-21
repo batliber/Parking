@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,13 +24,12 @@ public class Vehiculo extends BaseEntity {
 	@Column(name = "descripcion")
 	private String descripcion;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinTable(name = "vehiculo_cliente",
-	joinColumns=
-			@JoinColumn(name = "vehiculo_id", referencedColumnName = "id"),
-		inverseJoinColumns=
-			@JoinColumn(name = "cliente_id", referencedColumnName = "id")
-	)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "departamento_id", nullable = false)
+	private Departamento departamento;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "vehiculo_cliente", joinColumns = @JoinColumn(name = "vehiculo_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id"))
 	private Collection<Cliente> clientes;
 
 	public String getMatricula() {
@@ -46,6 +46,14 @@ public class Vehiculo extends BaseEntity {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 
 	public Collection<Cliente> getClientes() {

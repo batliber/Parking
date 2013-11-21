@@ -26,6 +26,9 @@ public class Factura extends BaseEntity {
 	@Column(name = "fecha")
 	private Date fecha;
 
+	@Column(name = "rut")
+	private String rut;
+	
 	@Column(name = "importe_subtotal")
 	private Double importeSubtotal;
 
