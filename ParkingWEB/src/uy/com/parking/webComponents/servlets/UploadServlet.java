@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 
 import uy.com.parking.bean.CobranzaMovimientoBean;
 import uy.com.parking.bean.ICobranzaMovimientoBean;
+import uy.com.parking.util.Configuration;
 
 @MultipartConfig(
 	fileSizeThreshold=1024*1024*10,	// 10 MB
@@ -44,12 +45,14 @@ public class UploadServlet extends HttpServlet {
 	            	}
 		        }
 		        
-		        part.write("E:\\" + fileName);
+		        part.write(Configuration.getInstance().getProperty("importacion.carpeta") + fileName);
 			}
 			
 			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
 			
-			iCobranzaMovimientoBean.procesarArchivoCobranza("E:\\" + fileName);
+			iCobranzaMovimientoBean.procesarArchivoCobranza(
+				Configuration.getInstance().getProperty("importacion.carpeta") + fileName
+			);
 			
 			request.setAttribute("message", "El archivo se ha procesado correctamente.");
 			request.getRequestDispatcher("/pages/abitab/abitab.jsp").forward(request, response);
