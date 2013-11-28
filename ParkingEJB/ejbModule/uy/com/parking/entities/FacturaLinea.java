@@ -2,6 +2,7 @@ package uy.com.parking.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -27,7 +28,7 @@ public class FacturaLinea extends BaseEntity {
 	@Column(name = "importe_total")
 	private Double importeTotal;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "servicio_id", nullable = false)
 	private Servicio servicio;
 

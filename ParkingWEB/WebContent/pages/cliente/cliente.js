@@ -6,9 +6,18 @@ $(document).ready(function() {
 				
 				for (var i=0; i<data.length; i++) {
 					$("#tableClientes > tbody:last").append(
-						"<tr id='" + data[i].id + "'>"
-							+ "<td class='tdClienteDocumento'><div class='divClienteDocumento'>" + data[i].documento + "</div></td>"
-							+ "<td class='tdClienteNombre'><div class='divClienteNombre'>" + data[i].nombre + "</div></td>"
+						"<tr id='" + data[i].id + "'" 
+							+ " onclick='javascript:trClienteOnClick(event, this);'>"
+							+ "<td class='tdClienteDocumento'>"
+								+ "<div class='divClienteDocumento'>"
+									+ data[i].documento 
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdClienteNombre'>"
+								+ "<div class='divClienteNombre'>" 
+									+ data[i].nombre 
+								+ "</div>"
+							+ "</td>"
 						+ "</tr>"
 					);
 				}
@@ -17,8 +26,8 @@ $(document).ready(function() {
 	);
 });
 
-function inputEditOnClick(event, element, id) {
-	document.getElementById("iFrameCliente").src = "./cliente_edit.jsp?id=" + id;
+function trClienteOnClick(event, element) {
+	document.getElementById("iFrameCliente").src = "./cliente_edit.jsp?id=" + $(element).attr("id");
 	showPopUp(document.getElementById("divIFrameCliente"));
 }
 

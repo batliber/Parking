@@ -49,6 +49,7 @@
 				uy.com.parking.dwr.SeguridadDWR,
 				uy.com.parking.dwr.ServicioDWR,
 				uy.com.parking.dwr.ServicioPrecioDWR,
+				uy.com.parking.dwr.ServicioTipoDWR,
 				uy.com.parking.dwr.UsuarioDWR,
 				uy.com.parking.dwr.VehiculoDWR,
 				
@@ -67,6 +68,7 @@
 				uy.com.parking.transferObjects.RegistroTO,
 				uy.com.parking.transferObjects.ServicioTO,
 				uy.com.parking.transferObjects.ServicioPrecioTO,
+				uy.com.parking.transferObjects.ServicioTipoTO,
 				uy.com.parking.transferObjects.UsuarioTO,
 				uy.com.parking.transferObjects.VehiculoTO
 			</param-value>

@@ -10,6 +10,7 @@ public class FacturaTO extends BaseTO {
 
 	private Long numero;
 	private Date fecha;
+	private String rut;
 	private Double importeSubtotal;
 	private Double importeIVA;
 	private Double importeTotal;
@@ -31,6 +32,14 @@ public class FacturaTO extends BaseTO {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public String getRut() {
+		return rut;
+	}
+
+	public void setRut(String rut) {
+		this.rut = rut;
 	}
 
 	public Double getImporteSubtotal() {

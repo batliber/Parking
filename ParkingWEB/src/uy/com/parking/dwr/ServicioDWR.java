@@ -34,16 +34,7 @@ public class ServicioDWR {
 			IServicioBean iServicioBean = lookupBean();
 			
 			for (Servicio servicio : iServicioBean.list()) {
-				ServicioTO servicioTO = new ServicioTO();
-				
-				servicioTO.setDescripcion(servicio.getDescripcion());
-				
-				servicioTO.setFact(servicio.getFact());
-				servicioTO.setId(servicio.getId());
-				servicioTO.setTerm(servicio.getTerm());
-				servicioTO.setUact(servicio.getUact());
-				
-				result.add(servicioTO);
+				result.add(transform(servicio, false));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,6 +84,8 @@ public class ServicioDWR {
 		
 		servicio.setDescripcion(servicioTO.getDescripcion());
 		
+		servicio.setServicioTipo(ServicioTipoDWR.transform(servicioTO.getServicioTipo()));
+		
 		servicio.setFact(servicioTO.getFact());
 		servicio.setId(servicioTO.getId());
 		servicio.setTerm(servicioTO.getTerm());
@@ -105,6 +98,8 @@ public class ServicioDWR {
 		ServicioTO servicioTO = new ServicioTO();
 		
 		servicioTO.setDescripcion(servicio.getDescripcion());
+		
+		servicioTO.setServicioTipo(ServicioTipoDWR.transform(servicio.getServicioTipo()));
 		
 		servicioTO.setFact(servicio.getFact());
 		servicioTO.setId(servicio.getId());

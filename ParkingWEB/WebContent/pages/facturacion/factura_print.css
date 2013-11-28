@@ -1,0 +1,109 @@
+.divVia {
+	float: left;
+	width: 105mm;
+	height: 160mm;
+	border-right: solid 1px white;
+}
+
+.divCabezal {
+	width: 100%;
+	height: 18%;
+}
+
+.divFechaNumero {
+	width: 100%;
+	height: 20px;
+}
+
+#divFecha {
+	float: left;
+	width: 75%;
+	height: 100%;
+	text-align: right;
+}
+
+#divNumero {
+	float: left;
+	width: 25%;
+	height: 100%;
+	text-align: right;
+}
+
+.divNombre {
+	width: 75%;
+	height: 20px;
+	padding-left: 25%;
+}
+
+.divDireccion {
+	width: 75%;
+	height: 20px;
+	padding-left: 25%;
+}
+
+.divRUT {
+	width: 100%;
+	height: 30px;
+	padding-top: 20px;
+	text-align: center;
+}
+
+#divDocumento {
+	float: left;
+	width: 55%;
+	height: 100%;
+}
+
+#divConsumidorFinal {
+	float: left;
+	width: 15%;
+	height: 100%;
+}
+
+#divTipoDocumento {
+	float: left;
+	width: 30%;
+	height: 100%;
+}
+
+.divFacturaLineas {
+	width: 100%;
+	height: 45%;
+}
+
+#tableFacturaLineas {
+	width: 100%;
+	height: 100%;
+}
+
+.trFacturaLinea {
+	height: 22px;
+}
+
+.tdConcepto {
+	
+}
+
+.tdImporte {
+	width: 25%;
+}
+
+#tdEstacionamiento {
+	text-align: right;
+}
+
+#tdOtros {
+	text-align: right;
+}
+
+#tdSubtotal {
+	text-align: right;
+}
+
+#tdIVA {
+	text-align: right;
+}
+
+#tdTotal {
+	text-align: right;
+}

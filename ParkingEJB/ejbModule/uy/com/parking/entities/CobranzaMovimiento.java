@@ -40,8 +40,8 @@ public class CobranzaMovimiento extends BaseEntity {
 	@JoinColumn(name = "servicio_id", nullable = false)
 	private Servicio servicio;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "factura_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "factura_id", nullable = true)
 	private Factura factura;
 
 	public Date getFecha() {

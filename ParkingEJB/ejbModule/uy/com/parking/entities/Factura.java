@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -20,7 +19,6 @@ public class Factura extends BaseEntity {
 	private static final long serialVersionUID = 7926991811875600524L;
 
 	@Column(name = "numero")
-	@GeneratedValue
 	private Long numero;
 
 	@Column(name = "fecha")
@@ -46,7 +44,11 @@ public class Factura extends BaseEntity {
 	@JoinColumn(name = "moneda_id", nullable = false)
 	private Moneda moneda;
 
-	@OneToMany(mappedBy = "factura", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+	@OneToMany(
+		mappedBy = "factura", 
+		fetch = FetchType.EAGER, 
+		cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}
+	)
 	private Set<FacturaLinea> facturaLineas;
 
 	public Long getNumero() {

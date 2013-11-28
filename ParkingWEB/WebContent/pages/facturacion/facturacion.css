@@ -5,6 +5,10 @@
 	padding-top: 2px;
 }
 
+#tableFacturaLineas thead tr .tdAcciones {
+	width: 50px;
+}
+
 #tableFacturaLineas thead tr .tdServicio {
 	width: 450px;
 }
@@ -19,4 +23,10 @@
 
 #tableFacturaLineas thead tr .tdTotal {
 	width: 140px;
+}
+
+#tableFacturaLineas tbody tr .tdAcciones {
+	background-image: url('/ParkingWEB/images/cross.png');
+	background-repeat: no-repeat;
+	background-position: right;
 }

@@ -1,8 +1,11 @@
 package uy.com.parking.dwr;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.naming.Context;
@@ -14,15 +17,14 @@ import org.directwebremoting.annotations.RemoteProxy;
 import uy.com.parking.bean.FacturaBean;
 import uy.com.parking.bean.IFacturaBean;
 import uy.com.parking.entities.Cliente;
+import uy.com.parking.entities.CobranzaMovimiento;
 import uy.com.parking.entities.Factura;
 import uy.com.parking.entities.FacturaLinea;
 import uy.com.parking.entities.Moneda;
 import uy.com.parking.entities.Servicio;
-import uy.com.parking.transferObjects.ClienteTO;
+import uy.com.parking.transferObjects.CobranzaMovimientoTO;
 import uy.com.parking.transferObjects.FacturaLineaTO;
 import uy.com.parking.transferObjects.FacturaTO;
-import uy.com.parking.transferObjects.MonedaTO;
-import uy.com.parking.transferObjects.ServicioTO;
 
 @RemoteProxy
 public class FacturaDWR {
@@ -129,6 +131,30 @@ public class FacturaDWR {
 		return result;
 	}
 	
+	public FacturaTO facturarCobranzaMovimientos(FacturaTO facturaTO, 
+			Collection<CobranzaMovimientoTO> cobranzaMovimientoTOs) {
+		FacturaTO result = null;
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			Collection<CobranzaMovimiento> cobranzaMovimientos = new LinkedList<CobranzaMovimiento>();
+			for (CobranzaMovimientoTO cobranzaMovimientoTO : cobranzaMovimientoTOs) {
+				cobranzaMovimientos.add(CobranzaMovimientoDWR.transform(cobranzaMovimientoTO));
+			}
+			
+			result = this.transform(
+				iFacturaBean.facturarCobranzaMovimientos(
+					transform(facturaTO), cobranzaMovimientos
+				)
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void remove(FacturaTO facturaTO) {
 		try {
 			IFacturaBean iFacturaBean = lookupBean();
@@ -202,17 +228,9 @@ public class FacturaDWR {
 	private FacturaTO transform(Factura factura) {
 		FacturaTO facturaTO = new FacturaTO();
 		
-		ClienteTO clienteTO = new ClienteTO();
-		clienteTO.setFact(factura.getCliente().getFact());
-		clienteTO.setFechaBaja(factura.getCliente().getFechaBaja());
-		clienteTO.setId(factura.getCliente().getId());
-		clienteTO.setNombre(factura.getCliente().getNombre());
-		clienteTO.setTerm(factura.getCliente().getTerm());
-		clienteTO.setUact(factura.getCliente().getUact());
+		facturaTO.setCliente(ClienteDWR.transform(factura.getCliente(), false));
 		
-		facturaTO.setCliente(clienteTO);
-		
-		Collection<FacturaLineaTO> facturaLineas = new LinkedList<FacturaLineaTO>();
+		List<FacturaLineaTO> facturaLineas = new LinkedList<FacturaLineaTO>();
 		for (FacturaLinea facturaLinea : factura.getFacturaLineas()) {
 			FacturaLineaTO facturaLineaTO = new FacturaLineaTO();
 			facturaLineaTO.setDetalle(facturaLinea.getDetalle());
@@ -222,14 +240,7 @@ public class FacturaDWR {
 			facturaLineaTO.setImporteUnitario(facturaLinea.getImporteUnitario());
 			facturaLineaTO.setNumero(facturaLinea.getNumero());
 			
-			ServicioTO servicioTO = new ServicioTO();
-			servicioTO.setDescripcion(facturaLinea.getServicio().getDescripcion());
-			servicioTO.setFact(facturaLinea.getServicio().getFact());
-			servicioTO.setId(facturaLinea.getServicio().getId());
-			servicioTO.setTerm(facturaLinea.getServicio().getTerm());
-			servicioTO.setUact(facturaLinea.getServicio().getUact());
-			
-			facturaLineaTO.setServicio(servicioTO);
+			facturaLineaTO.setServicio(ServicioDWR.transform(facturaLinea.getServicio(), false));
 			
 			facturaLineaTO.setTerm(facturaLinea.getTerm());
 			facturaLineaTO.setUact(facturaLinea.getUact());
@@ -238,6 +249,12 @@ public class FacturaDWR {
 			facturaLineas.add(facturaLineaTO);
 		}
 		
+		Collections.sort(facturaLineas, new Comparator<FacturaLineaTO>() {
+			public int compare(FacturaLineaTO arg0, FacturaLineaTO arg1) {
+				return arg0.getNumero().compareTo(arg1.getNumero());
+			}
+		});
+		
 		facturaTO.setFacturaLineas(facturaLineas);
 		
 		facturaTO.setFecha(factura.getFecha());
@@ -245,15 +262,7 @@ public class FacturaDWR {
 		facturaTO.setImporteSubtotal(factura.getImporteSubtotal());
 		facturaTO.setImporteTotal(factura.getImporteTotal());
 		
-		MonedaTO monedaTO = new MonedaTO();
-		monedaTO.setAbreviacion(factura.getMoneda().getAbreviacion());
-		monedaTO.setDescripcion(factura.getMoneda().getDescripcion());
-		monedaTO.setFact(factura.getMoneda().getFact());
-		monedaTO.setId(factura.getMoneda().getId());
-		monedaTO.setTerm(factura.getMoneda().getTerm());
-		monedaTO.setUact(factura.getMoneda().getUact());
-		
-		facturaTO.setMoneda(monedaTO);
+		facturaTO.setMoneda(MonedaDWR.transform(factura.getMoneda(), false));
 		
 		facturaTO.setNumero(factura.getNumero());
 		

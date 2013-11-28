@@ -23,6 +23,7 @@
 		<class>uy.com.parking.entities.SeguridadTipoEvento</class>
 		<class>uy.com.parking.entities.Servicio</class>
 		<class>uy.com.parking.entities.ServicioPrecio</class>
+		<class>uy.com.parking.entities.ServicioTipo</class>
 		<class>uy.com.parking.entities.Usuario</class>
 		<class>uy.com.parking.entities.Vehiculo</class>
 

@@ -53,19 +53,29 @@ public class CobranzaMovimientoDWR {
 		cobranzaMovimiento.setFecha(cobranzaMovimientoTO.getFecha());
 		cobranzaMovimiento.setImporte(cobranzaMovimientoTO.getImporte());
 		
-		cobranzaMovimiento.setCliente(ClienteDWR.transform(cobranzaMovimientoTO.getCliente(), false));
+		if (cobranzaMovimientoTO.getCliente() != null) {
+			cobranzaMovimiento.setCliente(ClienteDWR.transform(cobranzaMovimientoTO.getCliente(), false));
+		}
 		
-		cobranzaMovimiento.setCobranzaTipoDocumento(
-			CobranzaTipoDocumentoDWR.transform(
-				cobranzaMovimientoTO.getCobranzaTipoDocumento(), false
-			)
-		);
+		if (cobranzaMovimientoTO.getCobranzaTipoDocumento() != null) {
+			cobranzaMovimiento.setCobranzaTipoDocumento(
+				CobranzaTipoDocumentoDWR.transform(
+					cobranzaMovimientoTO.getCobranzaTipoDocumento(), false
+				)
+			);
+		}
 		
-		cobranzaMovimiento.setMoneda(MonedaDWR.transform(cobranzaMovimientoTO.getMoneda(), false));
+		if (cobranzaMovimientoTO.getMoneda() != null) {
+			cobranzaMovimiento.setMoneda(MonedaDWR.transform(cobranzaMovimientoTO.getMoneda(), false));
+		}
 		
-		cobranzaMovimiento.setProceso(ProcesoDWR.transform(cobranzaMovimientoTO.getProceso(), false));
+		if (cobranzaMovimientoTO.getProceso() != null) {
+			cobranzaMovimiento.setProceso(ProcesoDWR.transform(cobranzaMovimientoTO.getProceso(), false));
+		}
 		
-		cobranzaMovimiento.setServicio(ServicioDWR.transform(cobranzaMovimientoTO.getServicio(), false));
+		if (cobranzaMovimientoTO.getServicio() != null) {
+			cobranzaMovimiento.setServicio(ServicioDWR.transform(cobranzaMovimientoTO.getServicio(), false));
+		}
 	
 		cobranzaMovimiento.setFact(cobranzaMovimientoTO.getFact());
 		cobranzaMovimiento.setId(cobranzaMovimientoTO.getId());

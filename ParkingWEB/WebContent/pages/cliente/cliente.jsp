@@ -17,11 +17,10 @@
 	<div class="divButtonBar">
 		<div class="divButton"><input type="submit" value="Agregar" onclick="javascript:inputNewOnClick(event)"/></div>
 		<div class="divButton"><input type="submit" value="Eliminar" onclick="javascript:inputDeleteOnClick(event)"/></div>
-		<div class="divButton"><input type="submit" value="Modificar" onclick="javascript:inputEditOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleTripleSize" class="divButtonTitleBarTitle">Acciones</div>
+		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Acciones</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
