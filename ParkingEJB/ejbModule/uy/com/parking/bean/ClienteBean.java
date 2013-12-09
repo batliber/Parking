@@ -1,6 +1,7 @@
 package uy.com.parking.bean;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,9 @@ public class ClienteBean implements IClienteBean {
 		Collection<Cliente> result = new LinkedList<Cliente>();
 		
 		try {
-			Query query = entityManager.createQuery("SELECT c FROM Cliente c");
+			Query query = entityManager.createQuery(
+				"SELECT c FROM Cliente c WHERE c.fechaBaja IS NULL"
+			);
 			
 			for (Object object : query.getResultList()) {
 				result.add((Cliente) object);
@@ -87,7 +90,9 @@ public class ClienteBean implements IClienteBean {
 		try {
 			Cliente managedCliente = entityManager.find(Cliente.class, cliente.getId());
 			
-			entityManager.remove(managedCliente);
+			managedCliente.setFechaBaja(GregorianCalendar.getInstance().getTime());
+			
+			entityManager.merge(managedCliente);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

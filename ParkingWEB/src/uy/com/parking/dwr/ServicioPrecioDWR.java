@@ -161,26 +161,11 @@ public class ServicioPrecioDWR {
 	private ServicioPrecioTO transform(ServicioPrecio servicioPrecio) {
 		ServicioPrecioTO servicioPrecioTO = new ServicioPrecioTO();
 		
-		MonedaTO monedaTO = new MonedaTO();
-		monedaTO.setAbreviacion(servicioPrecio.getMoneda().getAbreviacion());
-		monedaTO.setDescripcion(servicioPrecio.getMoneda().getDescripcion());
-		monedaTO.setFact(servicioPrecio.getMoneda().getFact());
-		monedaTO.setId(servicioPrecio.getMoneda().getId());
-		monedaTO.setTerm(servicioPrecio.getMoneda().getTerm());
-		monedaTO.setUact(servicioPrecio.getMoneda().getUact());
-		
-		servicioPrecioTO.setMoneda(monedaTO);
+		servicioPrecioTO.setMoneda(MonedaDWR.transform(servicioPrecio.getMoneda(), false));
 		
 		servicioPrecioTO.setPrecio(servicioPrecio.getPrecio());
 		
-		ServicioTO servicioTO = new ServicioTO();
-		servicioTO.setDescripcion(servicioPrecio.getServicio().getDescripcion());
-		servicioTO.setFact(servicioPrecio.getServicio().getFact());
-		servicioTO.setId(servicioPrecio.getServicio().getId());
-		servicioTO.setTerm(servicioPrecio.getServicio().getTerm());
-		servicioTO.setUact(servicioPrecio.getServicio().getUact());
-		
-		servicioPrecioTO.setServicio(servicioTO);
+		servicioPrecioTO.setServicio(ServicioDWR.transform(servicioPrecio.getServicio(), false));
 		
 		servicioPrecioTO.setValidoHasta(servicioPrecio.getValidoHasta());
 		

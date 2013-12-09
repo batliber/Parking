@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,9 +25,13 @@ public class CobranzaMovimiento extends BaseEntity {
 	@JoinColumn(name = "cobranza_tipo_documento_id", nullable = false)
 	private CobranzaTipoDocumento cobranzaTipoDocumento;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "proceso_id", nullable = false)
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "proceso_id", nullable = true)
 	private Proceso proceso;
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "cobranza_proceso_exportacion_id", nullable = true)
+	private CobranzaProcesoExportacion cobranzaProcesoExportacion;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "moneda_id", nullable = false)
@@ -36,7 +41,7 @@ public class CobranzaMovimiento extends BaseEntity {
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "servicio_id", nullable = false)
 	private Servicio servicio;
 
@@ -75,6 +80,15 @@ public class CobranzaMovimiento extends BaseEntity {
 
 	public void setProceso(Proceso proceso) {
 		this.proceso = proceso;
+	}
+
+	public CobranzaProcesoExportacion getCobranzaProcesoExportacion() {
+		return cobranzaProcesoExportacion;
+	}
+
+	public void setCobranzaProcesoExportacion(
+			CobranzaProcesoExportacion cobranzaProcesoExportacion) {
+		this.cobranzaProcesoExportacion = cobranzaProcesoExportacion;
 	}
 
 	public Moneda getMoneda() {

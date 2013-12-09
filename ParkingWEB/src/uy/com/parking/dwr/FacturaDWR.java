@@ -22,6 +22,7 @@ import uy.com.parking.entities.Factura;
 import uy.com.parking.entities.FacturaLinea;
 import uy.com.parking.entities.Moneda;
 import uy.com.parking.entities.Servicio;
+import uy.com.parking.entities.ServicioTipo;
 import uy.com.parking.transferObjects.CobranzaMovimientoTO;
 import uy.com.parking.transferObjects.FacturaLineaTO;
 import uy.com.parking.transferObjects.FacturaTO;
@@ -295,6 +296,11 @@ public class FacturaDWR {
 			
 			Servicio servicio = new Servicio();
 			servicio.setId(facturaLineaTO.getServicio().getId());
+			
+			ServicioTipo servicioTipo = new ServicioTipo();
+			servicioTipo.setId(facturaLineaTO.getServicio().getServicioTipo().getId());
+			
+			servicio.setServicioTipo(servicioTipo);
 			
 			facturaLinea.setServicio(servicio);
 			

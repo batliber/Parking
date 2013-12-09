@@ -17,12 +17,12 @@
 	<div class="divMenuBar">
 		<div class="activeMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="registro">Registro</a></div></div>
 		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="facturacion">Facturaci&oacute;n</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="abitab">ABITAB</a></div></div>
 		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="cobranza">Cobranza</a></div></div>
-		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="vehiculos">Veh&iacute;culos</a></div></div>
 		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="clientes">Clientes</a></div></div>
+		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="vehiculos">Veh&iacute;culos</a></div></div>
 		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="servicios">Servicios</a></div></div>
 		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="reportes">Reportes</a></div></div>
-		<div class="inactiveMenuBarItem"><div><a href="#" onclick="javascript:menuItemOnClick(event, this)" id="abitab">ABITAB</a></div></div>
 		<div class="divUserInfo">
 			<div class="divLogout" style="float: right;" onclick="javascript:divLogoutOnClick(event, this)">&nbsp;</div>
 			<div id="divActiveUser" style="float: right;">&nbsp;</div>

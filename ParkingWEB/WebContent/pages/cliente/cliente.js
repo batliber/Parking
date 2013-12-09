@@ -1,4 +1,8 @@
 $(document).ready(function() {
+	reloadData();
+});
+
+function reloadData() {
 	ClienteDWR.list(
 		{
 			callback: function(data) {
@@ -18,35 +22,36 @@ $(document).ready(function() {
 									+ data[i].nombre 
 								+ "</div>"
 							+ "</td>"
+							+ "<td class='tdClienteDomicilio'>"
+								+ "<div class='divClienteDomicilio'>" 
+									+ (data[i].domicilio != null ? data[i].domicilio : "&nbsp;")
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdClienteTelefono'>"
+								+ "<div class='divClienteTelefono'>" 
+									+ (data[i].telefono != null ? data[i].telefono : "&nbsp;")
+								+ "</div>"
+							+ "</td>"
 						+ "</tr>"
 					);
 				}
 			}, async: false
 		}
 	);
-});
+}
 
 function trClienteOnClick(event, element) {
 	document.getElementById("iFrameCliente").src = "./cliente_edit.jsp?id=" + $(element).attr("id");
 	showPopUp(document.getElementById("divIFrameCliente"));
 }
 
-function inputDeleteOnClick(event, element, id) {
-	var cliente = {
-		id: id
-	};
-	
-	ClienteDWR.remove(
-		cliente,
-		{
-			callback: function(data) {
-				$("#tableClientes > tbody:last > tr[id|='" + id + "']").remove();
-			}, async: false
-		}
-	);
-}
-
 function inputNewOnClick(event, element) {
 	document.getElementById("iFrameCliente").src = "./cliente_edit.jsp";
 	showPopUp(document.getElementById("divIFrameCliente"));
+}
+
+function divCloseOnClick(event, element) {
+	closePopUp(event, element.parentNode.parentNode);
+	
+	reloadData();
 }

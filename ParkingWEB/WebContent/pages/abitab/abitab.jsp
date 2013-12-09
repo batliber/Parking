@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="/ParkingWEB/dwr/engine.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/GeneracionArchivoABITABDWR.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/CobranzaMovimientoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/global.js"></script>

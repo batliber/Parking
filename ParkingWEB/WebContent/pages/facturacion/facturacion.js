@@ -30,7 +30,8 @@ function inputClienteDocumentoOnChange(event, element) {
 									$("#tableFacturaLineas > tbody:last").append(
 										"<tr class='trCobranzaMovimiento' id='" + dataCobranza[i].id + "'>"
 											+ "<td>&nbsp;</td>"
-											+ "<td id='" + dataCobranza[i].servicio.id + "'>" 
+											+ "<td id='" + dataCobranza[i].servicio.id + "' " 
+												+ "stid='" + dataCobranza[i].servicio.servicioTipo.id + "'>" 
 												+ dataCobranza[i].servicio.descripcion  
 											+ "</td>"
 											+ "<td>" + dataCobranza[i].importe + "</td>"
@@ -78,7 +79,9 @@ function inputAgregarServicioOnClick(event, element) {
 				var options = "<option>Seleccione...</option>";
 				for (var i=0; i<data.length; i++) {
 					options += 
-						"<option value='" + data[i].id + "' id='" + data[i].servicio.id + "'>" 
+						"<option value='" + data[i].id + "' " 
+							+ "id='" + data[i].servicio.id + "'"
+							+ "stid='" + data[i].servicio.servicioTipo.id + "'>" 
 							+ data[i].servicio.descripcion 
 						+ "</option>";
 				}
@@ -223,7 +226,10 @@ function inputGenerarFacturaOnClick(event, element) {
 			unidades: $(tds[3]).html(),
 			importeTotal: $(tds[4]).html(),
 			servicio: {
-				id: $(tds[1]).attr("id")
+				id: $(tds[1]).attr("id"),
+				servicioTipo: {
+					id: $(tds[1]).attr("stid")
+				}
 			},
 			uact: 1,
 			fact: new Date(),
@@ -244,7 +250,10 @@ function inputGenerarFacturaOnClick(event, element) {
 			unidades: $($(tds[3]).children(0)).val(),
 			importeTotal: $($(tds[4]).children(0)).val(),
 			servicio: {
-				id: $($(tds[1]).children()[0]).find("option:selected").attr("id")
+				id: $($(tds[1]).children()[0]).find("option:selected").attr("id"),
+				servicioTipo: {
+					id: $($(tds[1]).children()[0]).find("option:selected").attr("stid")
+				}
 			},
 			uact: 1,
 			fact: new Date(),
@@ -253,6 +262,8 @@ function inputGenerarFacturaOnClick(event, element) {
 		
 		numeroLinea++;
 	}
+	
+	alert(JSON.stringify(factura));
 	
 	FacturaDWR.facturarCobranzaMovimientos(
 		factura

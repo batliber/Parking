@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#inputGenerarArchivo").prop("disabled", true);
+//	$("#inputGenerarArchivo").prop("disabled", true);
 	$("#inputImportarArchivo").prop("disabled", true);
 });
 
@@ -8,10 +8,13 @@ function inputArchivoOnChange(event) {
 }
 
 function inputGenerarArchivoOnClick(event, element) {
-	GeneracionArchivoABITABDWR.generarArchivoABITAB(
+	CobranzaMovimientoDWR.generarArchivoCobranzaAbitabByFecha(
+		new Date(),
 		{
 			callback: function(data) {
-				
+				if (data != null) {
+					alert("Archivo generado: " + data);
+				}
 			}, async: false
 		}
 	);

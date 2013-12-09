@@ -1,6 +1,7 @@
 package uy.com.parking.dwr;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.naming.Context;
@@ -38,6 +39,46 @@ public class CobranzaMovimientoDWR {
 			for (CobranzaMovimiento cobranzaMovimiento : 
 				iCobranzaMovimientoBean.listSinFacturarByCliente(
 					ClienteDWR.transform(clienteTO, false))) {
+				result.add(transform(cobranzaMovimiento));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public String generarArchivoCobranzaAbitabByFecha(Date fecha) {
+		String result = null;
+		
+		try {
+			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
+			
+			result = iCobranzaMovimientoBean.generarArchivoCobranzaAbitabByFecha(fecha);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public void generarCobranzaMovimientosByFecha(Date fecha) {
+		try {
+			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
+			
+			iCobranzaMovimientoBean.generarCobranzaMovimientosByFecha(fecha);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Collection<CobranzaMovimientoTO> listDeudas() {
+		Collection<CobranzaMovimientoTO> result = new LinkedList<CobranzaMovimientoTO>();
+		
+		try {
+			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
+			
+			for (CobranzaMovimiento cobranzaMovimiento : iCobranzaMovimientoBean.listDeudas()) {
 				result.add(transform(cobranzaMovimiento));
 			}
 		} catch (Exception e) {
@@ -93,15 +134,19 @@ public class CobranzaMovimientoDWR {
 		
 		cobranzaMovimientoTO.setCliente(ClienteDWR.transform(cobranzaMovimiento.getCliente(), false));
 		
-		cobranzaMovimientoTO.setCobranzaTipoDocumento(
-			CobranzaTipoDocumentoDWR.transform(
-				cobranzaMovimiento.getCobranzaTipoDocumento(), false
-			)
-		);
+		if (cobranzaMovimiento.getCobranzaTipoDocumento() != null) {
+			cobranzaMovimientoTO.setCobranzaTipoDocumento(
+				CobranzaTipoDocumentoDWR.transform(
+					cobranzaMovimiento.getCobranzaTipoDocumento(), false
+				)
+			);
+		}
 		
 		cobranzaMovimientoTO.setMoneda(MonedaDWR.transform(cobranzaMovimiento.getMoneda(), false));
 		
-		cobranzaMovimientoTO.setProceso(ProcesoDWR.transform(cobranzaMovimiento.getProceso(), false));
+		if (cobranzaMovimiento.getProceso() != null) {
+			cobranzaMovimientoTO.setProceso(ProcesoDWR.transform(cobranzaMovimiento.getProceso(), false));
+		}
 		
 		cobranzaMovimientoTO.setServicio(ServicioDWR.transform(cobranzaMovimiento.getServicio(), false));
 	

@@ -12,6 +12,7 @@
 		<class>uy.com.parking.entities.Cliente</class>
 		<class>uy.com.parking.entities.ClienteServicioPrecio</class>
 		<class>uy.com.parking.entities.CobranzaMovimiento</class>
+		<class>uy.com.parking.entities.CobranzaProcesoExportacion</class>
 		<class>uy.com.parking.entities.CobranzaTipoDocumento</class>
 		<class>uy.com.parking.entities.Departamento</class>
 		<class>uy.com.parking.entities.Factura</class>
@@ -30,6 +31,7 @@
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<!-- 
+			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
 			 -->
 		</properties>

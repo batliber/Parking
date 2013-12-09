@@ -16,11 +16,10 @@
 <body>
 	<div class="divButtonBar">
 		<div class="divButton"><input type="submit" value="Agregar" onclick="javascript:inputNewOnClick(event)"/></div>
-		<div class="divButton"><input type="submit" value="Eliminar" onclick="javascript:inputDeleteOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Acciones</div>
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Acciones</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
@@ -29,10 +28,14 @@
 				<tr>
 					<td class="tdClienteDocumento"><div>Documento</div></td>
 					<td class="tdClienteNombre"><div>Nombre</div></td>
+					<td class="tdClienteDomicilio"><div>Domicilio</div></td>
+					<td class="tdClienteTelefono"><div>Tel&eacute;fono</div></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 				</tr>
@@ -42,7 +45,7 @@
 	<div id="divIFrameCliente" style="display: none;">
 		<div class="divTitleBar">
 			<div class="divTitleBarText" style="float:left;">Cliente</div>
-			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
+			<div class="divTitleBarCloseButton" onclick="javascript:divCloseOnClick(event, this)">&nbsp;</div>
 		</div>
 		<iframe id="iFrameCliente" frameborder="0" src="#"></iframe>
 	</div>

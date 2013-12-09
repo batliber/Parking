@@ -17,11 +17,12 @@
 </head>
 <body>
 	<div class="divButtonBar">
-		<div class="divButton"><input type="submit" value="Grabar cliente" onclick="javascript:inputGrabarClienteOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" id="inputGuardarCliente" value="Guardar" onclick="javascript:inputGuardarOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" id="inputEliminarCliente" value="Eliminar" onclick="javascript:inputEliminarOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Cliente</div>
+		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Cliente</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">

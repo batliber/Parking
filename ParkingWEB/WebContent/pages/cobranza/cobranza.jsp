@@ -5,7 +5,7 @@
 	<title>Cobranza</title>
 	<script type="text/javascript" src="/ParkingWEB/dwr/engine.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>
-	<script type="text/javascript" src="/ParkingWEB/dwr/interface/CobranzaDWR.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/CobranzaMovimientoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/global.js"></script>
@@ -15,13 +15,32 @@
 </head>
 <body>
 	<div class="divButtonBar">
+		<div class="divButton"><input type="submit" value="Actualizar" onclick="javascript:inputActualizarOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Acciones</div>
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Acciones</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
+		<table id="tableCobranzaMovimientos" border="0" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<td class="tdCobranzaMovimientoClienteDocumento">Documento</td>
+					<td class="tdCobranzaMovimientoClienteNombre">Nombre</td>
+					<td class="tdCobranzaMovimientoMoneda">Moneda</td>
+					<td class="tdCobranzaMovimientoImporte">Importe</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

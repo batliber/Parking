@@ -1,6 +1,8 @@
 var cliente = null;
 
 $(document).ready(function() {
+	$("#inputEliminarCliente").prop("disabled", true);
+	
 	if (id != null) {
 		ClienteDWR.getById(
 			id,
@@ -10,7 +12,7 @@ $(document).ready(function() {
 					
 					$("#inputClienteDocumento").val(data.documento);
 					$("#inputClienteNombre").val(data.nombre);
-					$("#inputClienteDomiclio").val(data.domicilio != null ? data.domicilio : "");
+					$("#inputClienteDomicilio").val(data.domicilio != null ? data.domicilio : "");
 					$("#inputClienteTelefono").val(data.telefono != null ? data.telefono : "");
 					
 					$("#tableClienteVehiculos > tbody:last > tr").remove();
@@ -23,18 +25,21 @@ $(document).ready(function() {
 							+ "</tr>"
 						);
 					}
+					
+					$("#inputEliminarCliente").prop("disabled", false);
 				}, async: false
 			}
 		);
 	}
 });
 
-function inputGrabarClienteOnClick(event) {
+function inputGuardarOnClick(event) {
 	if (id != null) {
 		cliente.nombre = $("#inputClienteNombre").val();
-		cliente.uact = 1;
+		cliente.documento = $("#inputClienteDocumento").val();
+		cliente.domicilio = $("#inputClienteDomicilio").val();
+		cliente.telefono = $("#inputClienteTelefono").val();
 		cliente.fact = new Date();
-		cliente.term = 1;
 		
 		ClienteDWR.update(
 			cliente,
@@ -47,13 +52,30 @@ function inputGrabarClienteOnClick(event) {
 	} else {
 		cliente = {
 			nombre: $("#inputClienteNombre").val(),
-			vehiculos: [],
-			uact: 1,
+			documento: $("#inputClienteDocumento").val(),
+			domicilio: $("#inputClienteDomicilio").val(),
+			telefono: $("#inputClienteTelefono").val(),
 			fact: new Date(),
-			term: 1
+			vehiculos: []
 		};
 		
 		ClienteDWR.add(
+			cliente,
+			{
+				callback: function(data) {
+					$("#inputEliminarCliente").prop("disabled", false);
+				}, async: false
+			}
+		);
+	}
+}
+
+function inputEliminarOnClick(event) {
+	if ((id != null) && confirm("Se eliminará el Cliente")) {
+		cliente.fechaBaja = new Date();
+		cliente.fact = new Date();
+		
+		ClienteDWR.update(
 			cliente,
 			{
 				callback: function(data) {
