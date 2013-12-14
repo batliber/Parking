@@ -2,3 +2,31 @@
 	margin-left: 2px;
 	width: 400px;
 }
+
+#inputClienteApellido {
+	margin-left: 2px;
+	width: 400px;
+}
+
+#inputClienteDomicilio {
+	margin-left: 2px;
+	width: 400px;
+}
+
+#tableClienteServicios thead tr .tdClienteServiciosAcciones {
+	width: 50px;
+}
+
+#tableClienteServicios thead tr .tdClienteServiciosServicio {
+	width: 450px;
+}
+
+#tableClienteServicios thead tr .tdClienteServiciosPrecio {
+	width: 75px;
+}
+
+#tableClienteServicios tbody tr .tdClienteServiciosAcciones {
+	background-image: url('/ParkingWEB/images/cross.png');
+	background-repeat: no-repeat;
+	background-position: right;
+}

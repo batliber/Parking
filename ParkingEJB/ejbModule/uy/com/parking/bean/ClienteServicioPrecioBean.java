@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.ClienteServicioPrecio;
@@ -87,6 +88,27 @@ public class ClienteServicioPrecioBean implements IClienteServicioPrecioBean {
 		return result;
 	}
 
+	public Collection<ClienteServicioPrecio> listVigentesByCliente(Cliente cliente) {
+		Collection<ClienteServicioPrecio> result = new LinkedList<ClienteServicioPrecio>();
+		
+		try {
+			TypedQuery<ClienteServicioPrecio> query = 
+				entityManager.createQuery(
+					"SELECT csp FROM ClienteServicioPrecio csp"
+					+ " WHERE csp.cliente.id = :clienteId"
+					+ " AND csp.validoHasta = null",
+					ClienteServicioPrecio.class
+				);
+			query.setParameter("clienteId", cliente.getId());
+			
+			result = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(ClienteServicioPrecio clienteServicioPrecio) {
 		try {
 			entityManager.persist(clienteServicioPrecio);

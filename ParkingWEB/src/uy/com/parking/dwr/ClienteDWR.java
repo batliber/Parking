@@ -12,7 +12,9 @@ import org.directwebremoting.annotations.RemoteProxy;
 import uy.com.parking.bean.ClienteBean;
 import uy.com.parking.bean.IClienteBean;
 import uy.com.parking.entities.Cliente;
+import uy.com.parking.entities.ClienteServicioPrecio;
 import uy.com.parking.entities.Vehiculo;
+import uy.com.parking.transferObjects.ClienteServicioPrecioTO;
 import uy.com.parking.transferObjects.ClienteTO;
 import uy.com.parking.transferObjects.VehiculoTO;
 
@@ -76,6 +78,12 @@ public class ClienteDWR {
 	public void add(ClienteTO clienteTO) {
 		this.update(clienteTO);
 	}
+	
+	public void addConClienteServicioPrecios(
+		ClienteTO clienteTO, 
+		Collection<ClienteServicioPrecioTO> clienteServicioPreciosTO) {
+		this.updateConClienteServicioPrecios(clienteTO, clienteServicioPreciosTO);
+	}
 
 	public void remove(ClienteTO clienteTO) {
 		try {
@@ -99,12 +107,36 @@ public class ClienteDWR {
 			e.printStackTrace();
 		}
 	}
+	
+	public void updateConClienteServicioPrecios(
+		ClienteTO clienteTO, 
+		Collection<ClienteServicioPrecioTO> clienteServicioPreciosTO) {
+		try {
+			IClienteBean iClienteBean = lookupBean();
+			
+			Collection<ClienteServicioPrecio> clienteServicioPrecios = 
+				new LinkedList<ClienteServicioPrecio>();
+			
+			for (ClienteServicioPrecioTO clienteServicioPrecioTO : clienteServicioPreciosTO) {
+				clienteServicioPrecios.add(ClienteServicioPrecioDWR.transform(clienteServicioPrecioTO));
+			}
+			
+			iClienteBean.updateConClienteServicioPrecios(
+				transform(clienteTO, true),
+				clienteServicioPrecios
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static ClienteTO transform(Cliente cliente, boolean transformCollections) {
 		ClienteTO clienteTO = new ClienteTO();
 		
+		clienteTO.setApellido(cliente.getApellido());
 		clienteTO.setDocumento(cliente.getDocumento());
 		clienteTO.setDomicilio(cliente.getDomicilio());
+		clienteTO.setFechaAlta(cliente.getFechaAlta());
 		clienteTO.setFechaBaja(cliente.getFechaBaja());
 		clienteTO.setNombre(cliente.getNombre());
 		clienteTO.setTelefono(cliente.getTelefono());
@@ -129,8 +161,10 @@ public class ClienteDWR {
 	public static Cliente transform(ClienteTO clienteTO, boolean transformCollections) {
 		Cliente cliente = new Cliente();
 		
+		cliente.setApellido(clienteTO.getApellido());
 		cliente.setDocumento(clienteTO.getDocumento());
 		cliente.setDomicilio(clienteTO.getDomicilio());
+		cliente.setFechaAlta(clienteTO.getFechaAlta());
 		cliente.setFechaBaja(clienteTO.getFechaBaja());
 		cliente.setNombre(clienteTO.getNombre());
 		cliente.setTelefono(clienteTO.getTelefono());

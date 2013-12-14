@@ -21,6 +21,9 @@ public class Cliente extends BaseEntity {
 	@Column(name = "nombre")
 	private String nombre;
 
+	@Column(name = "apellido")
+	private String apellido;
+
 	@Column(name = "documento")
 	private String documento;
 
@@ -29,6 +32,9 @@ public class Cliente extends BaseEntity {
 
 	@Column(name = "telefono")
 	private String telefono;
+
+	@Column(name = "fecha_alta")
+	private Date fechaAlta;
 
 	@Column(name = "fecha_baja")
 	private Date fechaBaja;
@@ -44,6 +50,14 @@ public class Cliente extends BaseEntity {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 	public Date getFechaBaja() {
@@ -76,6 +90,14 @@ public class Cliente extends BaseEntity {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 
 	public Collection<Vehiculo> getVehiculos() {

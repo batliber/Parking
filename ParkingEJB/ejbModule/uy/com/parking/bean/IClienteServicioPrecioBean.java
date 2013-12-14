@@ -20,6 +20,8 @@ public interface IClienteServicioPrecioBean {
 	
 	public ClienteServicioPrecio getPrecioVigenteByClienteServicioMoneda(Cliente cliente, Servicio servicio, Moneda moneda);
 	
+	public Collection<ClienteServicioPrecio> listVigentesByCliente(Cliente cliente);
+	
 	public void save(ClienteServicioPrecio clienteServicioPrecio);
 	
 	public void remove(ClienteServicioPrecio clienteServicioPrecio);

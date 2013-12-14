@@ -1,5 +1,5 @@
 #tableCobranzaMovimientos {
-	width: 524px;
+	width: 726px;
 	height: 318px;
 }
 
@@ -15,6 +15,10 @@
 	width: 200px;
 }
 
+#tableCobranzaMovimientos thead tr .tdCobranzaMovimientoClienteApellido {
+	width: 200px;
+}
+
 #tableCobranzaMovimientos thead tr .tdCobranzaMovimientoMoneda {
 	width: 100px;
 }
@@ -27,7 +31,7 @@
 	position: fixed;
 	margin-top: 17px;
 	overflow: auto;
-	width: 521px;
+	width: 723px;
 	height: 299px;
 }
 
@@ -38,6 +42,12 @@
 }
 
 #tableCobranzaMovimientos tbody tr td .divCobranzaMovimientoClienteNombre {
+	text-align: left;
+	margin-left: 2px;
+	width: 198px;
+}
+
+#tableCobranzaMovimientos tbody tr td .divCobranzaMovimientoClienteApellido {
 	text-align: left;
 	margin-left: 2px;
 	width: 198px;

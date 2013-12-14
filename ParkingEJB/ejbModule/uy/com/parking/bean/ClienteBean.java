@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Cliente;
+import uy.com.parking.entities.ClienteServicioPrecio;
 import uy.com.parking.entities.Vehiculo;
 
 @Stateless
@@ -108,6 +109,28 @@ public class ClienteBean implements IClienteBean {
 			cliente.setVehiculos(vehiculos);
 			
 			entityManager.merge(cliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateConClienteServicioPrecios(
+		Cliente cliente, Collection<ClienteServicioPrecio> clienteServicioPrecios) {
+		try {
+			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
+			for (Vehiculo vehiculo : cliente.getVehiculos()) {
+				vehiculos.add(entityManager.find(Vehiculo.class, vehiculo.getId()));
+			}
+			
+			cliente.setVehiculos(vehiculos);
+			
+			Cliente managedCliente = entityManager.merge(cliente);
+			
+			for (ClienteServicioPrecio clienteServicioPrecio : clienteServicioPrecios) {
+				clienteServicioPrecio.setCliente(managedCliente);
+				
+				entityManager.merge(clienteServicioPrecio);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

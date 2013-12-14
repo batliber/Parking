@@ -1,5 +1,5 @@
 #tableClientes {
-	width: 602px;
+	width: 895px;
 	height: 318px;
 }
 
@@ -15,6 +15,10 @@
 	width: 200px;
 }
 
+#tableClientes thead tr .tdClienteApellido {
+	width: 200px;
+}
+
 #tableClientes thead tr .tdClienteDomicilio {
 	width: 200px;
 }
@@ -23,11 +27,15 @@
 	width: 89px;
 }
 
+#tableClientes thead tr .tdClienteFechaAlta {
+	width: 89px;
+}
+
 #tableClientes tbody {
 	position: fixed;
 	margin-top: 17px;
 	overflow: auto;
-	width: 600px;
+	width: 891px;
 	height: 299px;
 }
 
@@ -43,6 +51,12 @@
 	width: 198px;
 }
 
+#tableClientes tbody tr td .divClienteApellido {
+	text-align: left;
+	margin-left: 2px;
+	width: 198px;
+}
+
 #tableClientes tbody tr td .divClienteDomicilio {
 	text-align: left;
 	margin-left: 2px;
@@ -51,6 +65,12 @@
 
 #tableClientes tbody tr td .divClienteTelefono {
 	text-align: left;
+	margin-left: 2px;
+	width: 87px;
+}
+
+#tableClientes tbody tr td .divClienteFechaAlta {
+	text-align: center;
 	margin-left: 2px;
 	width: 87px;
 }

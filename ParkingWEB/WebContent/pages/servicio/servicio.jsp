@@ -15,13 +15,18 @@
 	<link rel="stylesheet" type="text/css" href="./servicio.css"/>
 </head>
 <body>
-	<div class="divButtonBar">&nbsp;</div>
-	<div class="divButtonTitleBar">&nbsp;</div>
+	<div class="divButtonBar">
+		<div class="divButton"><input type="submit" value="Agregar" onclick="javascript:inputNewOnClick(event)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
+	</div>
+	<div class="divButtonTitleBar">
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Acciones</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+	</div>
 	<div class="divMainWindow">
 		<table id="tableServicios" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
-					<td><div>&nbsp;</div></td>
 					<td><div>Descripci&oacute;n</div></td>
 					<td><div>Moneda</div></td>
 					<td><div>Precio</div></td>
@@ -32,7 +37,6 @@
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
-					<td><div>&nbsp;</div></td>
 				</tr>
 			</tbody>
 		</table>
@@ -40,7 +44,7 @@
 	<div id="divIFrameServicioPrecio" style="display: none;">
 		<div class="divTitleBar">
 			<div class="divTitleBarText" style="float:left;">Servicio</div>
-			<div class="divTitleBarCloseButton" onclick="javascript:closePopUp(event, this.parentNode.parentNode)">&nbsp;</div>
+			<div class="divTitleBarCloseButton" onclick="javascript:divCloseOnClick(event, this)">&nbsp;</div>
 		</div>
 		<iframe id="iFrameServicioPrecio" frameborder="0" src="#"></iframe>
 	</div>

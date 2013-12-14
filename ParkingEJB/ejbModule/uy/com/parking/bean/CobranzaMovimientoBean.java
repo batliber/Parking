@@ -269,79 +269,84 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				Configuration.getInstance().getProperty("archivoONL.controlCuotas");
 			
 			for (CobranzaMovimiento cobranzaMovimiento : this.listDeudas()) {
-				if (lineasMoneda.containsKey(cobranzaMovimiento.getMoneda().getId())) {
-					lineasMoneda.put(
-						cobranzaMovimiento.getMoneda().getId(),
-						lineasMoneda.get(cobranzaMovimiento.getMoneda().getId()) + 1
-					);
+				if (cobranzaMovimiento.getImporte() < 0) {
+					if (lineasMoneda.containsKey(cobranzaMovimiento.getMoneda().getId())) {
+						lineasMoneda.put(
+							cobranzaMovimiento.getMoneda().getId(),
+							lineasMoneda.get(cobranzaMovimiento.getMoneda().getId()) + 1
+						);
+						
+						importesMoneda.put(
+							cobranzaMovimiento.getMoneda().getId(), 
+							importesMoneda.get(cobranzaMovimiento.getMoneda().getId()) 
+								+ (-1 * cobranzaMovimiento.getImporte())
+						);
+					} else {
+						lineasMoneda.put(cobranzaMovimiento.getMoneda().getId(), 1);
+						
+						importesMoneda.put(
+							cobranzaMovimiento.getMoneda().getId(), 
+							(-1 * cobranzaMovimiento.getImporte())
+						);
+					}
+						
+					String clienteDocumento = cobranzaMovimiento.getCliente().getDocumento();
+					String clienteId = __CAMPO_VACIO;
+					String clienteNombre = cobranzaMovimiento.getCliente().getNombre();
+					String clienteApellido = cobranzaMovimiento.getCliente().getNombre();
+					if (cobranzaMovimiento.getCliente().getApellido() != null) {
+						clienteApellido = cobranzaMovimiento.getCliente().getApellido();
+					}
+					String clienteDocuemnto = __CAMPO_VACIO;
 					
-					importesMoneda.put(
-						cobranzaMovimiento.getMoneda().getId(), 
-						importesMoneda.get(cobranzaMovimiento.getMoneda().getId()) 
-							+ (-1 * cobranzaMovimiento.getImporte())
-					);
-				} else {
-					lineasMoneda.put(cobranzaMovimiento.getMoneda().getId(), 1);
+					// 1 - Factura | 2 - Nota de crédito
+					String tipoDocumento = Configuration.getInstance().getProperty("archivoONL.tipoDocumento");
 					
-					importesMoneda.put(
-						cobranzaMovimiento.getMoneda().getId(), 
-						(-1 * cobranzaMovimiento.getImporte())
-					);
+					String importe = decimalFormat.format(-1 * cobranzaMovimiento.getImporte() * 100);
+					
+					// 1 - Pesos | 2 - Dólares
+					String tipoMoneda = cobranzaMovimiento.getMoneda().getId().toString();
+					
+					String linea =
+						tipoDeGestion + __SEPARADOR_CAMPO
+						+ empresaId + __SEPARADOR_CAMPO
+						+  nroEmpresa + __SEPARADOR_CAMPO
+						+  subEmpresa + __SEPARADOR_CAMPO
+						+  numeroLote + __SEPARADOR_CAMPO
+						+  clienteDocumento + __SEPARADOR_CAMPO
+						+  clienteId + __SEPARADOR_CAMPO
+						+  clienteNombre + __SEPARADOR_CAMPO
+						+  clienteApellido + __SEPARADOR_CAMPO
+						+  clienteDocuemnto + __SEPARADOR_CAMPO
+						+  tipoDocumento + __SEPARADOR_CAMPO
+						+  fechaVencimiento + __SEPARADOR_CAMPO
+						+  fechaCorte + __SEPARADOR_CAMPO
+						+  fechaEmision + __SEPARADOR_CAMPO
+						+  importe + __SEPARADOR_CAMPO
+						+  importeMaximo + __SEPARADOR_CAMPO
+						+  importeMinimo + __SEPARADOR_CAMPO
+						+  tipoMoneda + __SEPARADOR_CAMPO
+						+  bonificacion + __SEPARADOR_CAMPO
+						+  descuento + __SEPARADOR_CAMPO
+						+  diasGracia + __SEPARADOR_CAMPO
+						+  mora + __SEPARADOR_CAMPO
+						+  cotizacion + __SEPARADOR_CAMPO
+						+  cuota + __SEPARADOR_CAMPO
+						+  remitente + __SEPARADOR_CAMPO
+						+  RUC + __SEPARADOR_CAMPO
+						+  razonSocial + __SEPARADOR_CAMPO
+						+  direccion + __SEPARADOR_CAMPO
+						+  codigoPostal + __SEPARADOR_CAMPO
+						+  concepto1 + __SEPARADOR_CAMPO
+						+  concepto2 + __SEPARADOR_CAMPO
+						+  concepto3 + __SEPARADOR_CAMPO
+						+  concepto4 + __SEPARADOR_CAMPO
+						+  observacion1 + __SEPARADOR_CAMPO
+						+  observacion2 + __SEPARADOR_CAMPO
+						+  controlCuotas;
+					
+					printWriter.println(linea);
 				}
-					
-				String clienteDocumento = cobranzaMovimiento.getCliente().getDocumento();
-				String clienteId = __CAMPO_VACIO;
-				String clienteNombre = cobranzaMovimiento.getCliente().getNombre();
-				String clienteApellido = cobranzaMovimiento.getCliente().getNombre();
-				String clienteDocuemnto = __CAMPO_VACIO;
-				
-				// 1 - Factura | 2 - Nota de crédito
-				String tipoDocumento = Configuration.getInstance().getProperty("archivoONL.tipoDocumento");;
-				
-				String importe = decimalFormat.format(-1 * cobranzaMovimiento.getImporte() * 100);
-				
-				// 1 - Pesos | 2 - Dólares
-				String tipoMoneda = cobranzaMovimiento.getMoneda().getId().toString();
-				
-				String linea =
-					tipoDeGestion + __SEPARADOR_CAMPO
-					+ empresaId + __SEPARADOR_CAMPO
-					+  nroEmpresa + __SEPARADOR_CAMPO
-					+  subEmpresa + __SEPARADOR_CAMPO
-					+  numeroLote + __SEPARADOR_CAMPO
-					+  clienteDocumento + __SEPARADOR_CAMPO
-					+  clienteId + __SEPARADOR_CAMPO
-					+  clienteNombre + __SEPARADOR_CAMPO
-					+  clienteApellido + __SEPARADOR_CAMPO
-					+  clienteDocuemnto + __SEPARADOR_CAMPO
-					+  tipoDocumento + __SEPARADOR_CAMPO
-					+  fechaVencimiento + __SEPARADOR_CAMPO
-					+  fechaCorte + __SEPARADOR_CAMPO
-					+  fechaEmision + __SEPARADOR_CAMPO
-					+  importe + __SEPARADOR_CAMPO
-					+  importeMaximo + __SEPARADOR_CAMPO
-					+  importeMinimo + __SEPARADOR_CAMPO
-					+  tipoMoneda + __SEPARADOR_CAMPO
-					+  bonificacion + __SEPARADOR_CAMPO
-					+  descuento + __SEPARADOR_CAMPO
-					+  diasGracia + __SEPARADOR_CAMPO
-					+  mora + __SEPARADOR_CAMPO
-					+  cotizacion + __SEPARADOR_CAMPO
-					+  cuota + __SEPARADOR_CAMPO
-					+  remitente + __SEPARADOR_CAMPO
-					+  RUC + __SEPARADOR_CAMPO
-					+  razonSocial + __SEPARADOR_CAMPO
-					+  direccion + __SEPARADOR_CAMPO
-					+  codigoPostal + __SEPARADOR_CAMPO
-					+  concepto1 + __SEPARADOR_CAMPO
-					+  concepto2 + __SEPARADOR_CAMPO
-					+  concepto3 + __SEPARADOR_CAMPO
-					+  concepto4 + __SEPARADOR_CAMPO
-					+  observacion1 + __SEPARADOR_CAMPO
-					+  observacion2 + __SEPARADOR_CAMPO
-					+  controlCuotas;
-				
-				printWriter.println(linea);
 			}
 			
 			// Cálculo de totales

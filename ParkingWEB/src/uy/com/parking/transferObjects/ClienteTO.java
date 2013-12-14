@@ -9,9 +9,11 @@ import org.directwebremoting.annotations.DataTransferObject;
 public class ClienteTO extends BaseTO {
 
 	private String nombre;
+	private String apellido;
 	private String documento;
 	private String domicilio;
 	private String telefono;
+	private Date fechaAlta;
 	private Date fechaBaja;
 	private Collection<VehiculoTO> vehiculos;
 
@@ -21,6 +23,14 @@ public class ClienteTO extends BaseTO {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 	public String getDocumento() {
@@ -45,6 +55,14 @@ public class ClienteTO extends BaseTO {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 
 	public Date getFechaBaja() {

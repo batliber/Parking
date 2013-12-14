@@ -263,8 +263,6 @@ function inputGenerarFacturaOnClick(event, element) {
 		numeroLinea++;
 	}
 	
-	alert(JSON.stringify(factura));
-	
 	FacturaDWR.facturarCobranzaMovimientos(
 		factura
 		, cobranzaMovimientos

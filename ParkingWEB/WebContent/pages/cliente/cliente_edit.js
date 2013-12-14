@@ -1,5 +1,7 @@
 var cliente = null;
 
+var servicios = 0;
+
 $(document).ready(function() {
 	$("#inputEliminarCliente").prop("disabled", true);
 	
@@ -12,8 +14,35 @@ $(document).ready(function() {
 					
 					$("#inputClienteDocumento").val(data.documento);
 					$("#inputClienteNombre").val(data.nombre);
+					$("#inputClienteApellido").val(data.apellido != null ? data.apellido : "");
 					$("#inputClienteDomicilio").val(data.domicilio != null ? data.domicilio : "");
 					$("#inputClienteTelefono").val(data.telefono != null ? data.telefono : "");
+					
+					ClienteServicioPrecioDWR.listVigentesByCliente(
+						cliente,
+						{
+							callback: function(dataServicios) {
+								for (var j=0; j<dataServicios.length; j++) {
+									$("#tableClienteServicios > tbody:last").append(
+										"<tr class='trClienteServicio' id='" + dataServicios[j].id + "'>"
+											+ "<td class='tdClienteServiciosAcciones'>&nbsp;</td>"
+											+ "<td class='tdClienteServiciosServicio'"
+												+ " id='" + dataServicios[j].servicio.id + "'"
+												+ " stid='" + dataServicios[j].servicio.servicioTipo.id + "'>"
+												+ dataServicios[j].servicio.descripcion
+											+ "</td>"
+											+ "<td class='tdClienteServiciosPrecio'"
+												+ " precio='" + dataServicios[j].precio + "'>"
+												+ "<input type='text'"
+													 + " value='" + dataServicios[j].precio + "'"
+													 + " class='inputClienteServicioPrecio'/>"
+											+ "</td>"
+										+ "</tr>"
+									);
+								}
+							}, async: false
+						}
+					);
 					
 					$("#tableClienteVehiculos > tbody:last > tr").remove();
 					
@@ -34,15 +63,72 @@ $(document).ready(function() {
 });
 
 function inputGuardarOnClick(event) {
+	var clienteServicioPrecios = [];
+	
+	var trsClienteServicio = $(".trClienteServicio");
+	for (var i=0; i<trsClienteServicio.length; i++) {
+		var tds = $(trsClienteServicio[i]).children();
+		
+		var clienteServicioPrecio = {
+			moneda: {
+				id: 1
+			},
+			precio: $($(tds[2]).children(0)).val(),
+			uact: 1,
+			fact: new Date(),
+			term: 1
+		};
+		
+		if ($(trsClienteServicio[i]).attr("id") != null) {
+			var clienteServicioPrecioAnterior = {
+				id: $(trsClienteServicio[i]).attr("id"),
+				validoHasta: new Date(),
+				precio: $(tds[2]).attr("precio"),
+				moneda: {
+					id: 1
+				},
+				servicio: {
+					id: $(tds[1]).attr("id"),
+					servicioTipo: {
+						id: $(tds[1]).attr("stid")
+					}
+				},
+				uact: 1,
+				fact: new Date(),
+				term: 1
+			};
+			
+			clienteServicioPrecio.servicio = {
+				id: $(tds[1]).attr("id"),
+				servicioTipo: {
+					id: $(tds[1]).attr("stid")
+				}
+			};
+			
+			clienteServicioPrecios[clienteServicioPrecios.length] = clienteServicioPrecioAnterior;
+		} else {
+			clienteServicioPrecio.servicio = {
+				id: $($(tds[1]).children()[0]).find("option:selected").attr("id"),
+				servicioTipo: {
+					id: $($(tds[1]).children()[0]).find("option:selected").attr("stid")
+				}
+			};
+		}
+			
+		clienteServicioPrecios[clienteServicioPrecios.length] = clienteServicioPrecio;
+	}
+	
 	if (id != null) {
 		cliente.nombre = $("#inputClienteNombre").val();
+		cliente.apellido = $("#inputClienteApellido").val();
 		cliente.documento = $("#inputClienteDocumento").val();
 		cliente.domicilio = $("#inputClienteDomicilio").val();
 		cliente.telefono = $("#inputClienteTelefono").val();
 		cliente.fact = new Date();
 		
-		ClienteDWR.update(
+		ClienteDWR.updateConClienteServicioPrecios(
 			cliente,
+			clienteServicioPrecios,
 			{
 				callback: function(data) {
 					
@@ -52,15 +138,20 @@ function inputGuardarOnClick(event) {
 	} else {
 		cliente = {
 			nombre: $("#inputClienteNombre").val(),
+			apellido: $("#inputClienteApellido").val(),
 			documento: $("#inputClienteDocumento").val(),
 			domicilio: $("#inputClienteDomicilio").val(),
 			telefono: $("#inputClienteTelefono").val(),
+			fechaAlta: new Date(),
+			uact: 1,
 			fact: new Date(),
+			term: 1,
 			vehiculos: []
 		};
 		
-		ClienteDWR.add(
+		ClienteDWR.addConClienteServicioPrecios(
 			cliente,
+			clienteServicioPrecios,
 			{
 				callback: function(data) {
 					$("#inputEliminarCliente").prop("disabled", false);
@@ -84,4 +175,95 @@ function inputEliminarOnClick(event) {
 			}
 		);
 	}
+}
+
+function inputAgregarVehiculoOnClick(event) {
+	DepartamentoDWR.list(
+		{
+			callback: function(data) {
+				var row = 
+					"<tr>"
+						+ "<td class='tdClienteVehiculoMatricula'>"
+							+ "<input type='text'/>"
+						+ "</td>"
+						+ "<td class='tdClienteVehiculoDepartamento'>"
+							+ "<select>";
+				
+				for (var i=0; i<data.length; i++) {
+					row +=
+								"<option value='" + data[i].id + "'>" + data[i].nombre + "</option>";
+				}
+				
+				row +=
+							"</select>"
+						+ "</td>"
+						+ "<td>"
+							+ "<input type='text'/>"
+						+ "</td>"
+					+ "</tr>";
+				
+				$("#tableClienteVehiculos > tbody:last").append(row);
+			}, async: false
+		}
+	);
+}
+
+function inputAgregarServicioOnClick(event) {
+	ServicioPrecioDWR.listVigentes(
+		{
+			callback: function(data) {
+				var options = "<option>Seleccione...</option>";
+				for (var i=0; i<data.length; i++) {
+					options += 
+						"<option value='" + data[i].id + "' " 
+							+ "id='" + data[i].servicio.id + "'"
+							+ "stid='" + data[i].servicio.servicioTipo.id + "'>" 
+							+ data[i].servicio.descripcion 
+						+ "</option>";
+				}
+				
+				$("#tableClienteServicios > tbody:last").append(
+					"<tr class='trClienteServicio'>"
+						+ "<td class='tdClienteServiciosAcciones'"
+							+ " onclick='javascript:tdAccionesOnClick(event, this)'>"
+							+ "&nbsp;"
+						+ "</td>"
+						+ "<td class='tdClienteServiciosServicio'>"
+							+ "<select id='selectServicio" + servicios
+								+ "' onchange='javascript:selectServicioOnChange(event, this)'>"
+								+ options
+							+ "</select>" 
+						+ "</td>"
+						+ "<td class='tdClienteServiciosPrecio'>"
+							+ "<input type='text'"
+								+ " value='0' class='inputClienteServicioPrecio'/>"
+						+ "</td>"
+					+ "</tr>"
+				);
+				
+				servicios++;
+			}, async: false
+		}
+	);
+}
+
+function tdAccionesOnClick(event, element) {
+	$(element).parent().remove();
+}
+
+function selectServicioOnChange(event, element) {
+	var tds = $(element).parent().siblings();
+	$($(tds[1]).children()[0]).val(0);
+	
+	ServicioPrecioDWR.getById(
+		$(element).val()
+		, {
+			callback: function(data) {
+				var tds = $(element).parent().siblings();
+				
+				$($(tds[1]).children()[0]).val(data.precio.toFixed(2));
+				$($(tds[1]).children()[0]).focus();
+			}, async: false
+		}
+	);
 }

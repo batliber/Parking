@@ -22,6 +22,11 @@ function reloadData() {
 									+ data[i].nombre 
 								+ "</div>"
 							+ "</td>"
+							+ "<td class='tdClienteApellido'>"
+								+ "<div class='divClienteApellido'>" 
+									+ (data[i].apellido != null ? data[i].apellido : "&nbsp;")
+								+ "</div>"
+							+ "</td>"
 							+ "<td class='tdClienteDomicilio'>"
 								+ "<div class='divClienteDomicilio'>" 
 									+ (data[i].domicilio != null ? data[i].domicilio : "&nbsp;")
@@ -30,6 +35,11 @@ function reloadData() {
 							+ "<td class='tdClienteTelefono'>"
 								+ "<div class='divClienteTelefono'>" 
 									+ (data[i].telefono != null ? data[i].telefono : "&nbsp;")
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdClienteFechaAlta'>"
+								+ "<div class='divClienteFechaAlta'>" 
+									+ formatShortDate(data[i].fechaAlta)
 								+ "</div>"
 							+ "</td>"
 						+ "</tr>"

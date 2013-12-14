@@ -28,12 +28,16 @@
 				<tr>
 					<td class="tdClienteDocumento"><div>Documento</div></td>
 					<td class="tdClienteNombre"><div>Nombre</div></td>
+					<td class="tdClienteApellido"><div>Apellido</div></td>
 					<td class="tdClienteDomicilio"><div>Domicilio</div></td>
 					<td class="tdClienteTelefono"><div>Tel&eacute;fono</div></td>
+					<td class="tdClienteFechaAlta"><div>Ingreso</div></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>

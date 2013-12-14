@@ -21,6 +21,11 @@ function reloadData() {
 									+ data[i].cliente.nombre
 								+ "</div>"
 							+ "</td>"
+							+ "<td class='tdCobranzaMovimientoClienteApellido'>"
+								+ "<div class='divCobranzaMovimientoClienteApellido'>"
+									+ data[i].cliente.apellido
+								+ "</div>"
+							+ "</td>"
 							+ "<td class='tdCobranzaMovimientoMoneda'>"
 								+ "<div class='divCobranzaMovimientoMoneda'>"
 									+ data[i].moneda.descripcion
@@ -34,6 +39,17 @@ function reloadData() {
 						+ "</tr>"
 					);
 				}
+			}, async: false
+		}
+	);
+}
+
+function inputGenerarCobranzaOnClick(event) {
+	CobranzaMovimientoDWR.generarCobranzaMovimientosByFecha(
+		new Date(),
+		{
+			callback: function(data) {
+				reloadData();
 			}, async: false
 		}
 	);

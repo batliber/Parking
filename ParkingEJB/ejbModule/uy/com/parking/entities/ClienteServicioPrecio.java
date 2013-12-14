@@ -2,7 +2,6 @@ package uy.com.parking.entities;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,8 +25,7 @@ public class ClienteServicioPrecio extends BaseEntity {
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = {
-			CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "servicio_id", nullable = false)
 	private Servicio servicio;
 
