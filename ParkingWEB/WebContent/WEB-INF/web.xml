@@ -24,6 +24,15 @@
   </servlet-mapping>
   
   <servlet>
+  	<servlet-name>DownloadServlet</servlet-name>
+  	<servlet-class>uy.com.parking.webComponents.servlets.DownloadServlet</servlet-class>  	
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>DownloadServlet</servlet-name>
+  	<url-pattern>/Download</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>dwr-invoker</servlet-name>
     <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
     <init-param>
@@ -53,6 +62,7 @@
 				uy.com.parking.dwr.UsuarioDWR,
 				uy.com.parking.dwr.VehiculoDWR,
 				
+				uy.com.parking.transferObjects.ArchivoTO,
 				uy.com.parking.transferObjects.CajaMovimientoTO,
 				uy.com.parking.transferObjects.CajaTipoDocumentoTO,
 				uy.com.parking.transferObjects.ClienteServicioPrecioTO,

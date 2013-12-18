@@ -16,6 +16,7 @@ function inputClienteDocumentoOnChange(event, element) {
 				if (data != null) {
 					$("#inputClienteId").val(data.id);
 					$("#divClienteNombre").html(data.nombre);
+					$("#divClienteApellido").html(data.apellido);
 					$("#divClienteDomicilio").html(data.domicilio);
 					$("#divClienteTelefono").html(data.telefono);
 					
@@ -306,6 +307,7 @@ function clearForm(clearAll) {
 	}
 	
 	$("#divClienteNombre").html("&nbsp;");
+	$("#divClienteApellido").html("&nbsp;");
 	$("#divClienteDomicilio").html("&nbsp;");
 	$("#divClienteTelefono").html("&nbsp;");
 	$("#divFacturaNumero").html("&nbsp;");

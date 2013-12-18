@@ -14,9 +14,9 @@
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/global.js"></script>
-	<script type="text/javascript" src="./abitab.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/pages/abitab/abitab.js"></script>
 	<link rel="stylesheet" type="text/css" href="/ParkingWEB/css/global.css"/>
-	<link rel="stylesheet" type="text/css" href="./abitab.css"/>
+	<link rel="stylesheet" type="text/css" href="/ParkingWEB/pages/abitab/abitab.css"/>
 </head>
 <body>
 	<div class="divButtonBar">
@@ -41,6 +41,20 @@
 <% 
 	} 
 %>
+		<div id="divArchivos">
+			<table id="tableArchivos" border="0" cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<td class="tdArchivosNombre">Archivo</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

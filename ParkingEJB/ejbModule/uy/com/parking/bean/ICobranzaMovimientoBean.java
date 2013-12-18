@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.ejb.Remote;
 
+import uy.com.parking.entities.Archivo;
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.CobranzaMovimiento;
 
@@ -20,4 +21,6 @@ public interface ICobranzaMovimientoBean {
 	public Collection<CobranzaMovimiento> listDeudas();
 	
 	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente);
+	
+	public Collection<Archivo> listArchivos();
 }

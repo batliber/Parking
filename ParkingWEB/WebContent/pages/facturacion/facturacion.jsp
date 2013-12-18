@@ -38,6 +38,8 @@
 		<div class="divFullWidth" id="divClienteDocumento"><input type="text" id="inputClienteDocumento" onchange="javascript:inputClienteDocumentoOnChange(event, this)"/></div>
 		<div class="divFormLabel">Nombre:</div>
 		<div class="divFullWidth" id="divClienteNombre">&nbsp;</div>
+		<div class="divFormLabel">Apellido:</div>
+		<div class="divFullWidth" id="divClienteApellido">&nbsp;</div>
 		<div class="divFormLabel">Domicilio:</div>
 		<div class="divFullWidth" id="divClienteDomicilio">&nbsp;</div>
 		<div class="divFormLabel">Tel&eacute;fono:</div>

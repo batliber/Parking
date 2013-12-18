@@ -1,8 +1,10 @@
 package uy.com.parking.bean;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import uy.com.parking.entities.Archivo;
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.ClienteServicioPrecio;
 import uy.com.parking.entities.CobranzaMovimiento;
@@ -29,6 +32,7 @@ import uy.com.parking.entities.CobranzaTipoDocumento;
 import uy.com.parking.entities.Moneda;
 import uy.com.parking.entities.Proceso;
 import uy.com.parking.entities.Servicio;
+import uy.com.parking.entities.ServicioPrecio;
 import uy.com.parking.util.Configuration;
 
 @Stateless
@@ -373,11 +377,22 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 	
 	public void generarCobranzaMovimientosByFecha(Date fecha) {
 		try {
+			// Obtencion de cilentes
+			TypedQuery<Cliente> queryClientes = entityManager.createQuery(
+				"SELECT c"
+				+ " FROM Cliente c"
+				+ " WHERE c.fechaBaja IS NULL", 
+				Cliente.class
+			);
+			
+			Collection<Cliente> clientes = queryClientes.getResultList();
+			
 			// Obtención de Precios de "Estacionamiento Mensual" por cliente 
 			TypedQuery<ClienteServicioPrecio> query = entityManager.createQuery(
 				"SELECT csp"
 				+ " FROM ClienteServicioPrecio csp"
-				+ " WHERE validoHasta is null"
+				+ " WHERE csp.validoHasta IS NULL"
+				+ " AND csp.cliente.fechaBaja IS NULL"
 				+ " AND csp.servicio.id = :servicioId",
 				ClienteServicioPrecio.class
 			);
@@ -385,6 +400,21 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				"servicioId", 
 				new Long(Configuration.getInstance().getProperty("Servicio.ParkingMensual"))
 			);
+			
+			// Obtencion de Precio de "Estacionamiento Mensual"
+			TypedQuery<ServicioPrecio> queryServicioPrecio = entityManager.createQuery(
+				"SELECT sp"
+				+ " FROM ServicioPrecio sp"
+				+ " WHERE sp.validoHasta IS NULL"
+				+ " AND sp.servicio.id = :servicioId",
+				ServicioPrecio.class
+			);
+			queryServicioPrecio.setParameter(
+				"servicioId", 
+				new Long(Configuration.getInstance().getProperty("Servicio.ParkingMensual"))
+			);
+			
+			ServicioPrecio servicioPrecio = queryServicioPrecio.getSingleResult();
 			
 			// Obtencion de tipo de documento "Deuda parking ABITAB"
 			CobranzaTipoDocumento cobranzaTipoDocumento = 
@@ -421,28 +451,53 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				"fechaHasta", gregorianCalendar.getTime()
 			);
 			
-			Collection<Cliente> clientesProcesados = 
-				queryCliente.getResultList();
+			Collection<Cliente> clientesProcesados = queryCliente.getResultList();
 			
 			List<ClienteServicioPrecio> resultList = query.getResultList();
 			
 			Date hoy = GregorianCalendar.getInstance().getTime();
 			
+			// Clientes con precio particular
 			for (ClienteServicioPrecio clienteServicioPrecio : resultList) {
 				if (!clientesProcesados.contains(clienteServicioPrecio.getCliente())) {
 					// Creación de CobranzaMovimiento por cada Cliente
 					CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
 					cobranzaMovimiento.setCliente(clienteServicioPrecio.getCliente());
 					cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumento);
-					cobranzaMovimiento.setFact(hoy);
 					cobranzaMovimiento.setFecha(hoy);
 					cobranzaMovimiento.setImporte(
 						clienteServicioPrecio.getPrecio() * cobranzaTipoDocumento.getSigno()
 					);
 					cobranzaMovimiento.setMoneda(clienteServicioPrecio.getMoneda());
 					cobranzaMovimiento.setServicio(clienteServicioPrecio.getServicio());
-					cobranzaMovimiento.setTerm(new Long(1));
+					
 					cobranzaMovimiento.setUact(new Long(1));
+					cobranzaMovimiento.setFact(hoy);
+					cobranzaMovimiento.setTerm(new Long(1));
+					
+					entityManager.persist(cobranzaMovimiento);
+				}
+				
+				clientes.remove(clienteServicioPrecio.getCliente());
+			}
+			
+			// Clientes sin precio particular
+			for (Cliente cliente : clientes) {
+				if (!clientesProcesados.contains(cliente)) {
+					// Creación de CobranzaMovimiento por cada Cliente
+					CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
+					cobranzaMovimiento.setCliente(cliente);
+					cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumento);
+					cobranzaMovimiento.setFecha(hoy);
+					cobranzaMovimiento.setImporte(
+						servicioPrecio.getPrecio() * cobranzaTipoDocumento.getSigno()
+					);
+					cobranzaMovimiento.setMoneda(servicioPrecio.getMoneda());
+					cobranzaMovimiento.setServicio(servicioPrecio.getServicio());
+					
+					cobranzaMovimiento.setUact(new Long(1));
+					cobranzaMovimiento.setFact(hoy);
+					cobranzaMovimiento.setTerm(new Long(1));
 					
 					entityManager.persist(cobranzaMovimiento);
 				}
@@ -508,6 +563,31 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 			
 			for (CobranzaMovimiento cobranzaMovimiento : query.getResultList()) {
 				result.add(cobranzaMovimiento);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public Collection<Archivo> listArchivos() {
+		Collection<Archivo> result = new LinkedList<Archivo>();
+		
+		try {
+			File folder = new File(Configuration.getInstance().getProperty("importacion.carpeta"));
+			
+			for (String file : folder.list(
+				new FilenameFilter() {
+					public boolean accept(File arg0, String arg1) {
+						return !(new File(arg0.getAbsolutePath() + File.separator + arg1).isDirectory());
+					}
+				}
+			)) {
+				Archivo archivo = new Archivo();
+				archivo.setNombre(file);
+				
+				result.add(archivo);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

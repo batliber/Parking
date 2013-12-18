@@ -12,7 +12,9 @@ import org.directwebremoting.annotations.RemoteProxy;
 
 import uy.com.parking.bean.CobranzaMovimientoBean;
 import uy.com.parking.bean.ICobranzaMovimientoBean;
+import uy.com.parking.entities.Archivo;
 import uy.com.parking.entities.CobranzaMovimiento;
+import uy.com.parking.transferObjects.ArchivoTO;
 import uy.com.parking.transferObjects.ClienteTO;
 import uy.com.parking.transferObjects.CobranzaMovimientoTO;
 import uy.com.parking.transferObjects.ProcesoDWR;
@@ -80,6 +82,22 @@ public class CobranzaMovimientoDWR {
 			
 			for (CobranzaMovimiento cobranzaMovimiento : iCobranzaMovimientoBean.listDeudas()) {
 				result.add(transform(cobranzaMovimiento));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public Collection<ArchivoTO> listArchivos() {
+		Collection<ArchivoTO> result = new LinkedList<ArchivoTO>();
+		
+		try {
+			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
+			
+			for (Archivo archivo : iCobranzaMovimientoBean.listArchivos()) {
+				result.add(transform(archivo));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,5 +174,13 @@ public class CobranzaMovimientoDWR {
 		cobranzaMovimientoTO.setUact(cobranzaMovimiento.getUact());
 		
 		return cobranzaMovimientoTO;
+	}
+
+	public static ArchivoTO transform(Archivo archivo) {
+		ArchivoTO archivoTO = new ArchivoTO();
+		
+		archivoTO.setNombre(archivo.getNombre());
+		
+		return archivoTO;
 	}
 }

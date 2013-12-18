@@ -300,11 +300,17 @@ public class FacturaBean implements IFacturaBean {
 		try {
 			this.save(result);
 			
+			Date hoy = GregorianCalendar.getInstance().getTime();
+			
 			for (CobranzaMovimiento cobranzaMovimiento : cobranzaMovimientos) {
 				CobranzaMovimiento cobranzaMovimientoManaged = 
 					entityManager.find(CobranzaMovimiento.class, cobranzaMovimiento.getId());
 				
 				cobranzaMovimientoManaged.setFactura(result);
+				
+				cobranzaMovimientoManaged.setUact(new Long(1));
+				cobranzaMovimientoManaged.setFact(hoy);
+				cobranzaMovimientoManaged.setTerm(new Long(1));
 				
 				entityManager.merge(cobranzaMovimientoManaged);
 			}

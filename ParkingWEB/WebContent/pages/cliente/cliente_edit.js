@@ -22,7 +22,10 @@ $(document).ready(function() {
 						cliente,
 						{
 							callback: function(dataServicios) {
-								for (var j=0; j<dataServicios.length; j++) {
+								$("#tableClienteServicios > tbody:last > tr").remove();
+								
+								var j = 0;
+								for (j=0; j<dataServicios.length; j++) {
 									$("#tableClienteServicios > tbody:last").append(
 										"<tr class='trClienteServicio' id='" + dataServicios[j].id + "'>"
 											+ "<td class='tdClienteServiciosAcciones'>&nbsp;</td>"
@@ -37,6 +40,16 @@ $(document).ready(function() {
 													 + " value='" + dataServicios[j].precio + "'"
 													 + " class='inputClienteServicioPrecio'/>"
 											+ "</td>"
+										+ "</tr>"
+									);
+								}
+								
+								if (j == 0) {
+									$("#tableClienteServicios > tbody:last").append(
+										"<tr>"
+											+ "<td>&nbsp;</td>"
+											+ "<td>&nbsp;</td>"
+											+ "<td>&nbsp;</td>"
 										+ "</tr>"
 									);
 								}

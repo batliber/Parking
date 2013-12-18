@@ -28,7 +28,7 @@ function reloadData() {
 							+ "</td>"
 							+ "<td class='tdCobranzaMovimientoMoneda'>"
 								+ "<div class='divCobranzaMovimientoMoneda'>"
-									+ data[i].moneda.descripcion
+									+ data[i].moneda.abreviacion
 								+ "</div>"
 							+ "</td>"
 							+ "<td class='tdCobranzaMovimientoImporte'>"
