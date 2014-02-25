@@ -42,6 +42,7 @@
 		<div class="divFormLabel">Apellido:</div><div id="divClienteApellido"><input type="text" id="inputClienteApellido"/></div>
 		<div class="divFormLabel">Domicilio:</div><div id="divClienteDomicilio"><input type="text" id="inputClienteDomicilio"/></div>
 		<div class="divFormLabel">Tel&eacute;fono:</div><div id="divClienteTelefono"><input type="text" id="inputClienteTelefono"/></div>
+		<div class="divFormLabel">Fecha de ingreso:</div><div id="divClienteFechaAlta"><input type="text" id="inputClienteFechaAlta"/></div>
 		<div id="divClienteVehiculos" style="display: none;">
 			<table id="tableClienteVehiculos" border="0" cellspacing="0" cellpadding="0">
 				<thead>

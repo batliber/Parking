@@ -17,6 +17,7 @@ $(document).ready(function() {
 					$("#inputClienteApellido").val(data.apellido != null ? data.apellido : "");
 					$("#inputClienteDomicilio").val(data.domicilio != null ? data.domicilio : "");
 					$("#inputClienteTelefono").val(data.telefono != null ? data.telefono : "");
+					$("#inputClienteFechaAlta").val(data.fechaAlta != null ? formatShortDate(data.fechaAlta, true) : "");
 					
 					ClienteServicioPrecioDWR.listVigentesByCliente(
 						cliente,
@@ -137,6 +138,7 @@ function inputGuardarOnClick(event) {
 		cliente.documento = $("#inputClienteDocumento").val();
 		cliente.domicilio = $("#inputClienteDomicilio").val();
 		cliente.telefono = $("#inputClienteTelefono").val();
+		cliente.fechaAlta = parseShortDate($("#inputClienteFechaAlta").val());
 		cliente.fact = new Date();
 		
 		ClienteDWR.updateConClienteServicioPrecios(
@@ -155,7 +157,7 @@ function inputGuardarOnClick(event) {
 			documento: $("#inputClienteDocumento").val(),
 			domicilio: $("#inputClienteDomicilio").val(),
 			telefono: $("#inputClienteTelefono").val(),
-			fechaAlta: new Date(),
+			fechaAlta: parseShortDate($("#inputClienteFechaAlta").val()),
 			uact: 1,
 			fact: new Date(),
 			term: 1,
