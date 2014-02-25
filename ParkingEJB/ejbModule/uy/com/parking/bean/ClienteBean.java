@@ -26,7 +26,7 @@ public class ClienteBean implements IClienteBean {
 		
 		try {
 			Query query = entityManager.createQuery(
-				"SELECT c FROM Cliente c WHERE c.fechaBaja IS NULL"
+				"SELECT c FROM Cliente c WHERE c.fechaBaja IS NULL ORDER BY c.apellido ASC"
 			);
 			
 			for (Object object : query.getResultList()) {

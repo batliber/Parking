@@ -512,11 +512,12 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 		
 		try {
 			Query query = entityManager.createQuery(
-				"SELECT cm.moneda.id, cm.cliente.id, cm.servicio.id, SUM(cm.importe)"
+				"SELECT cm.moneda.id, cm.cliente.id, cm.servicio.id, SUM(cm.importe), cm.cliente.apellido"
 				+ " FROM CobranzaMovimiento cm"
 				+ " WHERE cm.factura IS NULL"
 				+ " AND cm.cliente.fechaBaja IS NULL"
-				+ " GROUP BY cm.moneda.id, cm.cliente.id, cm.servicio.id"
+				+ " GROUP BY cm.moneda.id, cm.cliente.id, cm.servicio.id, cm.cliente.apellido"
+				+ " ORDER BY cm.cliente.apellido ASC"
 			);
 
 			for (Object object : query.getResultList()) {

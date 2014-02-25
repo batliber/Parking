@@ -33,6 +33,11 @@ $(document).ready(function() {
 
 function inputGrabarServicioPrecioOnClick(event) {
 	if (id != null) {
+		servicioPrecio.servicio.descripcion = $("#inputServicioDescripcion").val();
+		servicioPrecio.uact = 1;
+		servicioPrecio.fact = new Date();
+		servicioPrecio.term = 1;
+		
 		if (servicioPrecio.precio != $("#inputServicioPrecioPrecio").val()) {
 			servicioPrecio.validoHasta = new Date();
 			
@@ -49,10 +54,6 @@ function inputGrabarServicioPrecioOnClick(event) {
 			servicioPrecio.validoHasta = null;
 			
 			servicioPrecio.precio = $("#inputServicioPrecioPrecio").val();
-			servicioPrecio.servicio.descripcion = $("#inputServicioDescripcion").val();
-			servicioPrecio.uact = 1;
-			servicioPrecio.fact = new Date();
-			servicioPrecio.term = 1;
 			
 			ServicioPrecioDWR.add(
 				servicioPrecio,
@@ -63,11 +64,6 @@ function inputGrabarServicioPrecioOnClick(event) {
 				}
 			);
 		} else {
-			servicioPrecio.servicio.descripcion = $("#inputServicioDescripcion").val();
-			servicioPrecio.uact = 1;
-			servicioPrecio.fact = new Date();
-			servicioPrecio.term = 1;
-			
 			ServicioPrecioDWR.update(
 				servicioPrecio,
 				{
@@ -85,6 +81,9 @@ function inputGrabarServicioPrecioOnClick(event) {
 			},
 			servicio: {
 				descripcion: $("#inputServicioDescripcion").val(),
+				servicioTipo: {
+					id: 1
+				},
 				uact: 1,
 				fact: new Date(),
 				term: 1
