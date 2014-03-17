@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ClienteDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/DepartamentoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ServicioPrecioDWR.js"></script>
-	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ClienteServicioPrecioDWR.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/VehiculoServicioPrecioDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="./cliente_edit.js"></script>
@@ -25,15 +25,11 @@
 		<div class="divButtonBarSeparator">&nbsp;</div>
 		<div class="divButton"><input type="submit" id="inputAgregarVehiculo" value="Agregar veh&iacute;culo" onclick="javascript:inputAgregarVehiculoOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
-		<div class="divButton"><input type="submit" id="inputAgregarServicio" value="Agregar servicio" onclick="javascript:inputAgregarServicioOnClick(event)"/></div>
-		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
 		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Cliente</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Veh&iacute;culos</div>
-		<div class="divButtonTitleBarSeparator">&nbsp;</div>
-		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Servicios</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
@@ -43,36 +39,22 @@
 		<div class="divFormLabel">Domicilio:</div><div id="divClienteDomicilio"><input type="text" id="inputClienteDomicilio"/></div>
 		<div class="divFormLabel">Tel&eacute;fono:</div><div id="divClienteTelefono"><input type="text" id="inputClienteTelefono"/></div>
 		<div class="divFormLabel">Fecha de ingreso:</div><div id="divClienteFechaAlta"><input type="text" id="inputClienteFechaAlta"/></div>
-		<div id="divClienteVehiculos" style="display: none;">
+		<br>
+		<div id="divClienteVehiculos">
 			<table id="tableClienteVehiculos" border="0" cellspacing="0" cellpadding="0">
 				<thead>
 					<tr>
-						<td><div>Mat&iacute;cula</div></td>
-						<td><div>Departamento</div></td>
-						<td><div>Marca/Modelo</div></td>
+						<td class="tdVehiculoServicioPrecioAcciones">&nbsp;</td>
+						<td class="tdVehiculoServicioPrecioMatricula">Matr&iacute;cula</td>
+						<td class="tdVehiculoServicioPrecioDescripcion">Marca/Modelo</td>
+						<td class="tdVehiculoServicioPrecioServicio">Servicio</td>
+						<td class="tdVehiculoServicioPrecioPrecio">Precio</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr class="trDummyRow">
 						<td><div>&nbsp;</div></td>
 						<td><div>&nbsp;</div></td>
-						<td><div>&nbsp;</div></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<br>
-		<div id="divClienteServicios">
-			<table id="tableClienteServicios" border="0" cellspacing="0" cellpadding="0">
-				<thead>
-					<tr>
-						<td class="tdClienteServiciosAcciones">&nbsp;</td>
-						<td class="tdClienteServiciosServicio">Servicio</td>
-						<td class="tdClienteServiciosPrecio">Precio</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
 						<td><div>&nbsp;</div></td>
 						<td><div>&nbsp;</div></td>
 						<td><div>&nbsp;</div></td>

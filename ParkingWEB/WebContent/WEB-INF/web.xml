@@ -45,7 +45,6 @@
 				uy.com.parking.dwr.CajaMovimientoDWR,
 				uy.com.parking.dwr.CajaTipoDocumentoDWR,
 				uy.com.parking.dwr.ClienteDWR,
-				uy.com.parking.dwr.ClienteServicioPrecioDWR,
 				uy.com.parking.dwr.CobranzaMovimientoDWR,
 				uy.com.parking.dwr.CobranzaTipoDocumentoDWR,
 				uy.com.parking.dwr.DepartamentoDWR,
@@ -61,11 +60,11 @@
 				uy.com.parking.dwr.ServicioTipoDWR,
 				uy.com.parking.dwr.UsuarioDWR,
 				uy.com.parking.dwr.VehiculoDWR,
+				uy.com.parking.dwr.VehiculoServicioPrecioDWR,
 				
 				uy.com.parking.transferObjects.ArchivoTO,
 				uy.com.parking.transferObjects.CajaMovimientoTO,
 				uy.com.parking.transferObjects.CajaTipoDocumentoTO,
-				uy.com.parking.transferObjects.ClienteServicioPrecioTO,
 				uy.com.parking.transferObjects.ClienteTO,
 				uy.com.parking.transferObjects.CobranzaMovimientoTO,
 				uy.com.parking.transferObjects.CobranzaTipoDocumentoTO,
@@ -80,7 +79,8 @@
 				uy.com.parking.transferObjects.ServicioPrecioTO,
 				uy.com.parking.transferObjects.ServicioTipoTO,
 				uy.com.parking.transferObjects.UsuarioTO,
-				uy.com.parking.transferObjects.VehiculoTO
+				uy.com.parking.transferObjects.VehiculoTO,
+				uy.com.parking.transferObjects.VehiculoServicioPrecioTO
 			</param-value>
     </init-param>
   </servlet>

@@ -5,6 +5,7 @@
 	<title>Factura</title>
 	<script type="text/javascript">
 		var matricula = "<%= request.getParameter("m") != null ? request.getParameter("m") : "" %>";
+		var id = "<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>";
 	</script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/engine.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>

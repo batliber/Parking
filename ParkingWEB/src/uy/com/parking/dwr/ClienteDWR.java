@@ -12,10 +12,10 @@ import org.directwebremoting.annotations.RemoteProxy;
 import uy.com.parking.bean.ClienteBean;
 import uy.com.parking.bean.IClienteBean;
 import uy.com.parking.entities.Cliente;
-import uy.com.parking.entities.ClienteServicioPrecio;
 import uy.com.parking.entities.Vehiculo;
-import uy.com.parking.transferObjects.ClienteServicioPrecioTO;
+import uy.com.parking.entities.VehiculoServicioPrecio;
 import uy.com.parking.transferObjects.ClienteTO;
+import uy.com.parking.transferObjects.VehiculoServicioPrecioTO;
 import uy.com.parking.transferObjects.VehiculoTO;
 
 @RemoteProxy
@@ -79,10 +79,10 @@ public class ClienteDWR {
 		this.update(clienteTO);
 	}
 	
-	public void addConClienteServicioPrecios(
+	public void addConVehiculoServicioPrecios(
 		ClienteTO clienteTO, 
-		Collection<ClienteServicioPrecioTO> clienteServicioPreciosTO) {
-		this.updateConClienteServicioPrecios(clienteTO, clienteServicioPreciosTO);
+		Collection<VehiculoServicioPrecioTO> vehiculoServicioPreciosTO) {
+		this.updateConVehiculoServicioPrecios(clienteTO, vehiculoServicioPreciosTO);
 	}
 
 	public void remove(ClienteTO clienteTO) {
@@ -108,22 +108,22 @@ public class ClienteDWR {
 		}
 	}
 	
-	public void updateConClienteServicioPrecios(
+	public void updateConVehiculoServicioPrecios(
 		ClienteTO clienteTO, 
-		Collection<ClienteServicioPrecioTO> clienteServicioPreciosTO) {
+		Collection<VehiculoServicioPrecioTO> vehiculoServicioPreciosTO) {
 		try {
 			IClienteBean iClienteBean = lookupBean();
 			
-			Collection<ClienteServicioPrecio> clienteServicioPrecios = 
-				new LinkedList<ClienteServicioPrecio>();
+			Collection<VehiculoServicioPrecio> vehiculoServicioPrecios = 
+				new LinkedList<VehiculoServicioPrecio>();
 			
-			for (ClienteServicioPrecioTO clienteServicioPrecioTO : clienteServicioPreciosTO) {
-				clienteServicioPrecios.add(ClienteServicioPrecioDWR.transform(clienteServicioPrecioTO));
+			for (VehiculoServicioPrecioTO vehiculoServicioPrecioTO : vehiculoServicioPreciosTO) {
+				vehiculoServicioPrecios.add(VehiculoServicioPrecioDWR.transform(vehiculoServicioPrecioTO));
 			}
 			
-			iClienteBean.updateConClienteServicioPrecios(
+			iClienteBean.updateConVehiculoServicioPrecios(
 				transform(clienteTO, true),
-				clienteServicioPrecios
+				vehiculoServicioPrecios
 			);
 		} catch (Exception e) {
 			e.printStackTrace();

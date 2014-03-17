@@ -13,6 +13,8 @@ public interface IDepartamentoBean {
 	
 	public Departamento getById(Long id);
 	
+	public Departamento getByMatricula(String matricula);
+	
 	public void save(Departamento departamento);
 	
 	public void remove(Departamento departamento);

@@ -17,6 +17,7 @@ import uy.com.parking.entities.ServicioPrecio;
 import uy.com.parking.transferObjects.MonedaTO;
 import uy.com.parking.transferObjects.ServicioPrecioTO;
 import uy.com.parking.transferObjects.ServicioTO;
+import uy.com.parking.util.Configuration;
 
 @RemoteProxy
 public class ServicioPrecioDWR {
@@ -99,6 +100,16 @@ public class ServicioPrecioDWR {
 		}
 		
 		return result;
+	}
+	
+	public ServicioPrecioTO getPrecioVigenteParkingMensual() {
+		ServicioTO servicioTO = new ServicioTO();
+		servicioTO.setId(new Long(Configuration.getInstance().getProperty("Servicio.ParkingMensual")));
+		
+		MonedaTO monedaTO = new MonedaTO();
+		monedaTO.setId(new Long(Configuration.getInstance().getProperty("Moneda.PesosUruguayos")));
+		
+		return this.getPrecioVigenteByServicioMoneda(servicioTO, monedaTO);
 	}
 	
  	public void add(ServicioPrecioTO servicioPrecioTO) {

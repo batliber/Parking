@@ -1,9 +1,12 @@
 package uy.com.parking.bean;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -12,8 +15,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Cliente;
-import uy.com.parking.entities.ClienteServicioPrecio;
 import uy.com.parking.entities.Vehiculo;
+import uy.com.parking.entities.VehiculoServicioPrecio;
 
 @Stateless
 public class ClienteBean implements IClienteBean {
@@ -114,22 +117,50 @@ public class ClienteBean implements IClienteBean {
 		}
 	}
 
-	public void updateConClienteServicioPrecios(
-		Cliente cliente, Collection<ClienteServicioPrecio> clienteServicioPrecios) {
+	public void updateConVehiculoServicioPrecios(
+		Cliente cliente, Collection<VehiculoServicioPrecio> vehiculoServicioPrecios) {
 		try {
-			Collection<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
-			for (Vehiculo vehiculo : cliente.getVehiculos()) {
-				vehiculos.add(entityManager.find(Vehiculo.class, vehiculo.getId()));
+			Date hoy = GregorianCalendar.getInstance().getTime();
+			
+			if (cliente.getId() != null) {
+				TypedQuery<VehiculoServicioPrecio> query = 
+					entityManager.createQuery(
+						"SELECT vsp FROM VehiculoServicioPrecio vsp WHERE vsp.vehiculo.id = :vehiculoId AND vsp.validoHasta IS NULL",
+						VehiculoServicioPrecio.class
+					);
+				
+				Cliente clienteAnterior = entityManager.find(Cliente.class, cliente.getId());
+				
+				for (Vehiculo vehiculo : clienteAnterior.getVehiculos()) {
+					query.setParameter("vehiculoId", vehiculo.getId());
+					
+					for (VehiculoServicioPrecio vehiculoServicioPrecio : query.getResultList()) {
+						vehiculoServicioPrecio.setValidoHasta(hoy);
+						
+						vehiculoServicioPrecio.setUact(new Long(1));
+						vehiculoServicioPrecio.setFact(hoy);
+						vehiculoServicioPrecio.setTerm(new Long(1));
+						
+						entityManager.merge(vehiculoServicioPrecio);
+					}
+				}
 			}
-			
-			cliente.setVehiculos(vehiculos);
-			
+
 			Cliente managedCliente = entityManager.merge(cliente);
 			
-			for (ClienteServicioPrecio clienteServicioPrecio : clienteServicioPrecios) {
-				clienteServicioPrecio.setCliente(managedCliente);
+			Map<String, Vehiculo> mapVehiculos = new HashMap<String, Vehiculo>();
+			for (Vehiculo vehiculo : managedCliente.getVehiculos()) {
+				mapVehiculos.put(vehiculo.getMatricula(), vehiculo);
+			}
+			
+			for (VehiculoServicioPrecio vehiculoServicioPrecio : vehiculoServicioPrecios) {
+				vehiculoServicioPrecio.setVehiculo(mapVehiculos.get(vehiculoServicioPrecio.getVehiculo().getMatricula()));
 				
-				entityManager.merge(clienteServicioPrecio);
+				vehiculoServicioPrecio.setUact(new Long(1));
+				vehiculoServicioPrecio.setFact(hoy);
+				vehiculoServicioPrecio.setTerm(new Long(1));
+				
+				entityManager.merge(vehiculoServicioPrecio);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

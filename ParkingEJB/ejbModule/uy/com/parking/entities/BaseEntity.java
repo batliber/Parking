@@ -58,4 +58,9 @@ public class BaseEntity implements Serializable {
 	public void setTerm(Long term) {
 		this.term = term;
 	}
+
+	
+	public boolean equals(BaseEntity baseEntity) {
+		return baseEntity.getId().longValue() == this.id.longValue();
+	}
 }

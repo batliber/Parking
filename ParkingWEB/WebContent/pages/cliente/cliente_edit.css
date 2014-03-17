@@ -13,20 +13,57 @@
 	width: 400px;
 }
 
-#tableClienteServicios thead tr .tdClienteServiciosAcciones {
+#tableClienteVehiculos thead tr .tdVehiculoServicioPrecioAcciones {
 	width: 50px;
 }
 
-#tableClienteServicios thead tr .tdClienteServiciosServicio {
-	width: 450px;
+#tableClienteVehiculos thead tr .tdVehiculoServicioPrecioMatricula {
+	width: 80px;
 }
 
-#tableClienteServicios thead tr .tdClienteServiciosPrecio {
-	width: 75px;
+#tableClienteVehiculos thead tr .tdVehiculoServicioPrecioDescripcion {
+	width: 200px;
 }
 
-#tableClienteServicios tbody tr .tdClienteServiciosAcciones {
+#tableClienteVehiculos thead tr .tdVehiculoServicioPrecioServicio {
+	width: 300px;
+}
+
+#tableClienteVehiculos thead tr .tdVehiculoServicioPrecioPrecio {
+	width: 80px;
+}
+
+#tableClienteVehiculos tbody tr .tdVehiculoServicioPrecioAcciones {
 	background-image: url('/ParkingWEB/images/cross.png');
 	background-repeat: no-repeat;
 	background-position: right;
+	width: 50px;
+}
+
+#tableClienteVehiculos tbody tr td .divVehiculoServicioPrecioMatricula {
+	width: 80px;
+}
+
+#tableClienteVehiculos tbody tr td .inputVehiculoServicioPrecioMatricula {
+	width: 75px;
+}
+
+#tableClienteVehiculos tbody tr td .divVehiculoServicioPrecioDescripcion {
+	width: 200px;
+}
+
+#tableClienteVehiculos tbody tr td .inputVehiculoServicioPrecioDescripcion {
+	width: 195px;
+}
+
+#tableClienteVehiculos tbody tr td .divVehiculoServicioPrecioServicio {
+	width: 298px;
+}
+
+#tableClienteVehiculos tbody tr td .divVehiculoServicioPrecioPrecio {
+	width: 80px;
+}
+
+#tableClienteVehiculos tbody tr td .inputVehiculoServicioPrecioPrecio {
+	width: 75px;
 }

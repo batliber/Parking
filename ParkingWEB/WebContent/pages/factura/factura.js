@@ -17,6 +17,17 @@ $(document).ready(function() {
 				}, async: false
 			}
 		);
+	} else if (id != null && id != "") {
+		FacturaDWR.getById(
+			id,
+			{
+				callback: function(data)  {
+					factura = data;
+					
+					showFactura();
+				}, async: false
+			}
+		);
 	} else {
 		$("#divFacturaNumero").append("<input id='inputFacturaNumero' type='text' onchange='javascript:inputFacturaNumeroOnChange(event)'/>");
 		
@@ -26,7 +37,7 @@ $(document).ready(function() {
 
 function showFactura() {
 	$("#divFacturaFecha").text(formatShortDate(factura.fecha));
-	$("#divFacturaClienteNombre").text(factura.cliente.nombre);
+	$("#divFacturaClienteNombre").text(factura.cliente.nombre + " " + factura.cliente.apellido);
 	$("#divFacturaMonedaDescripcion").text(factura.moneda.descripcion);
 	
 	$("#tableFacturaLineas > tbody:last > tr").remove();

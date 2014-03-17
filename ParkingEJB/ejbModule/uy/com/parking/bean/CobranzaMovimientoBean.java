@@ -25,7 +25,6 @@ import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Archivo;
 import uy.com.parking.entities.Cliente;
-import uy.com.parking.entities.ClienteServicioPrecio;
 import uy.com.parking.entities.CobranzaMovimiento;
 import uy.com.parking.entities.CobranzaProcesoExportacion;
 import uy.com.parking.entities.CobranzaTipoDocumento;
@@ -33,6 +32,7 @@ import uy.com.parking.entities.Moneda;
 import uy.com.parking.entities.Proceso;
 import uy.com.parking.entities.Servicio;
 import uy.com.parking.entities.ServicioPrecio;
+import uy.com.parking.entities.VehiculoServicioPrecio;
 import uy.com.parking.util.Configuration;
 
 @Stateless
@@ -388,13 +388,12 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 			Collection<Cliente> clientes = queryClientes.getResultList();
 			
 			// Obtención de Precios de "Estacionamiento Mensual" por cliente 
-			TypedQuery<ClienteServicioPrecio> query = entityManager.createQuery(
-				"SELECT csp"
-				+ " FROM ClienteServicioPrecio csp"
-				+ " WHERE csp.validoHasta IS NULL"
-				+ " AND csp.cliente.fechaBaja IS NULL"
-				+ " AND csp.servicio.id = :servicioId",
-				ClienteServicioPrecio.class
+			TypedQuery<VehiculoServicioPrecio> query = entityManager.createQuery(
+				"SELECT vsp"
+				+ " FROM VehiculoServicioPrecio vsp"
+				+ " WHERE vsp.validoHasta IS NULL"
+				+ " AND vsp.servicio.id = :servicioId",
+				VehiculoServicioPrecio.class
 			);
 			query.setParameter(
 				"servicioId", 
@@ -414,7 +413,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				new Long(Configuration.getInstance().getProperty("Servicio.ParkingMensual"))
 			);
 			
-			ServicioPrecio servicioPrecio = queryServicioPrecio.getSingleResult();
+//			ServicioPrecio servicioPrecio = queryServicioPrecio.getSingleResult();
 			
 			// Obtencion de tipo de documento "Deuda parking ABITAB"
 			CobranzaTipoDocumento cobranzaTipoDocumento = 
@@ -453,55 +452,59 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 			
 			Collection<Cliente> clientesProcesados = queryCliente.getResultList();
 			
-			List<ClienteServicioPrecio> resultList = query.getResultList();
+			List<VehiculoServicioPrecio> resultList = query.getResultList();
 			
 			Date hoy = GregorianCalendar.getInstance().getTime();
 			
 			// Clientes con precio particular
-			for (ClienteServicioPrecio clienteServicioPrecio : resultList) {
-				if (!clientesProcesados.contains(clienteServicioPrecio.getCliente())) {
-					// Creación de CobranzaMovimiento por cada Cliente
-					CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
-					cobranzaMovimiento.setCliente(clienteServicioPrecio.getCliente());
-					cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumento);
-					cobranzaMovimiento.setFecha(hoy);
-					cobranzaMovimiento.setImporte(
-						clienteServicioPrecio.getPrecio() * cobranzaTipoDocumento.getSigno()
-					);
-					cobranzaMovimiento.setMoneda(clienteServicioPrecio.getMoneda());
-					cobranzaMovimiento.setServicio(clienteServicioPrecio.getServicio());
-					
-					cobranzaMovimiento.setUact(new Long(1));
-					cobranzaMovimiento.setFact(hoy);
-					cobranzaMovimiento.setTerm(new Long(1));
-					
-					entityManager.persist(cobranzaMovimiento);
+			for (VehiculoServicioPrecio vehiculoServicioPrecio : resultList) {
+				for (Cliente cliente : vehiculoServicioPrecio.getVehiculo().getClientes()) {
+					if (cliente.getFechaBaja() == null) {
+						if (!clientesProcesados.contains(cliente)) {
+							// Creación de CobranzaMovimiento por cada Cliente
+							CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
+							cobranzaMovimiento.setCliente(cliente);
+							cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumento);
+							cobranzaMovimiento.setFecha(hoy);
+							cobranzaMovimiento.setImporte(
+								vehiculoServicioPrecio.getPrecio() * cobranzaTipoDocumento.getSigno()
+							);
+							cobranzaMovimiento.setMoneda(vehiculoServicioPrecio.getMoneda());
+							cobranzaMovimiento.setServicio(vehiculoServicioPrecio.getServicio());
+							
+							cobranzaMovimiento.setUact(new Long(1));
+							cobranzaMovimiento.setFact(hoy);
+							cobranzaMovimiento.setTerm(new Long(1));
+							
+							entityManager.persist(cobranzaMovimiento);
+						}
+						
+						clientes.remove(cliente);
+					}
 				}
-				
-				clientes.remove(clienteServicioPrecio.getCliente());
 			}
 			
-			// Clientes sin precio particular
-			for (Cliente cliente : clientes) {
-				if (!clientesProcesados.contains(cliente)) {
-					// Creación de CobranzaMovimiento por cada Cliente
-					CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
-					cobranzaMovimiento.setCliente(cliente);
-					cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumento);
-					cobranzaMovimiento.setFecha(hoy);
-					cobranzaMovimiento.setImporte(
-						servicioPrecio.getPrecio() * cobranzaTipoDocumento.getSigno()
-					);
-					cobranzaMovimiento.setMoneda(servicioPrecio.getMoneda());
-					cobranzaMovimiento.setServicio(servicioPrecio.getServicio());
-					
-					cobranzaMovimiento.setUact(new Long(1));
-					cobranzaMovimiento.setFact(hoy);
-					cobranzaMovimiento.setTerm(new Long(1));
-					
-					entityManager.persist(cobranzaMovimiento);
-				}
-			}
+//			// Clientes sin precio particular
+//			for (Cliente cliente : clientes) {
+//				if (!clientesProcesados.contains(cliente)) {
+//					// Creación de CobranzaMovimiento por cada Cliente
+//					CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
+//					cobranzaMovimiento.setCliente(cliente);
+//					cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumento);
+//					cobranzaMovimiento.setFecha(hoy);
+//					cobranzaMovimiento.setImporte(
+//						servicioPrecio.getPrecio() * cobranzaTipoDocumento.getSigno()
+//					);
+//					cobranzaMovimiento.setMoneda(servicioPrecio.getMoneda());
+//					cobranzaMovimiento.setServicio(servicioPrecio.getServicio());
+//					
+//					cobranzaMovimiento.setUact(new Long(1));
+//					cobranzaMovimiento.setFact(hoy);
+//					cobranzaMovimiento.setTerm(new Long(1));
+//					
+//					entityManager.persist(cobranzaMovimiento);
+//				}
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -10,7 +10,6 @@
 		<class>uy.com.parking.entities.CajaMovimiento</class>
 		<class>uy.com.parking.entities.CajaTipoDocumento</class>
 		<class>uy.com.parking.entities.Cliente</class>
-		<class>uy.com.parking.entities.ClienteServicioPrecio</class>
 		<class>uy.com.parking.entities.CobranzaMovimiento</class>
 		<class>uy.com.parking.entities.CobranzaProcesoExportacion</class>
 		<class>uy.com.parking.entities.CobranzaTipoDocumento</class>
@@ -27,6 +26,7 @@
 		<class>uy.com.parking.entities.ServicioTipo</class>
 		<class>uy.com.parking.entities.Usuario</class>
 		<class>uy.com.parking.entities.Vehiculo</class>
+		<class>uy.com.parking.entities.VehiculoServicioPrecio</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

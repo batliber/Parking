@@ -1,13 +1,13 @@
 .divVia {
 	float: left;
-	width: 105mm;
+	width: 95mm;
 	height: 160mm;
 	border-right: solid 1px white;
 }
 
 .divCabezal {
 	width: 100%;
-	height: 18%;
+	height: 17%;
 }
 
 .divFechaNumero {
@@ -17,7 +17,7 @@
 
 #divFecha {
 	float: left;
-	width: 75%;
+	width: 72%;
 	height: 100%;
 	text-align: right;
 }
@@ -68,7 +68,7 @@
 
 .divFacturaLineas {
 	width: 100%;
-	height: 45%;
+	height: 40%;
 }
 
 #tableFacturaLineas {

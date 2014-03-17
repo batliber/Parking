@@ -5,11 +5,11 @@ import java.util.Date;
 import org.directwebremoting.annotations.DataTransferObject;
 
 @DataTransferObject
-public class ClienteServicioPrecioTO extends BaseTO {
+public class VehiculoServicioPrecioTO extends BaseTO {
 
 	private Double precio;
 	private Date validoHasta;
-	private ClienteTO cliente;
+	private VehiculoTO vehiculo;
 	private ServicioTO servicio;
 	private MonedaTO moneda;
 
@@ -29,12 +29,12 @@ public class ClienteServicioPrecioTO extends BaseTO {
 		this.validoHasta = validoHasta;
 	}
 
-	public ClienteTO getCliente() {
-		return cliente;
+	public VehiculoTO getVehiculo() {
+		return vehiculo;
 	}
 
-	public void setCliente(ClienteTO cliente) {
-		this.cliente = cliente;
+	public void setVehiculo(VehiculoTO vehiculo) {
+		this.vehiculo = vehiculo;
 	}
 
 	public ServicioTO getServicio() {

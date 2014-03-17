@@ -43,6 +43,20 @@ public class DepartamentoDWR {
 		return result;
 	}
 	
+	public DepartamentoTO getByMatricula(String matricula) {
+		DepartamentoTO result = null;
+		
+		try {
+			IDepartamentoBean iDepartamentoBean = lookupBean();
+			
+			result = transform(iDepartamentoBean.getByMatricula(matricula));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void add(DepartamentoTO departamentoTO) {
 		this.update(departamentoTO);
 	}

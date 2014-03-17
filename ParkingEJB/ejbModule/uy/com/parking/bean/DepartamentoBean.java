@@ -2,11 +2,13 @@ package uy.com.parking.bean;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import uy.com.parking.entities.Departamento;
 
@@ -37,6 +39,29 @@ public class DepartamentoBean implements IDepartamentoBean {
 		
 		try {
 			result = entityManager.find(Departamento.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public Departamento getByMatricula(String matricula) {
+		Departamento result = null;
+		
+		try {
+			TypedQuery<Departamento> query = 
+				entityManager.createQuery(
+					"SELECT d FROM Departamento d WHERE d.prefijo = :prefijo", 
+					Departamento.class
+				);
+			query.setParameter("prefijo", matricula.toUpperCase().substring(0, 1));
+			
+			List<Departamento> resultList = query.getResultList();
+			
+			if (resultList.size() > 0) {
+				result = resultList.get(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,0 +1,81 @@
+#tableFacturas {
+	width: 585px;
+	height: 318px;
+}
+
+#tableFacturas thead {
+	position: fixed;
+}
+
+#tableFacturas thead tr .tdFacturaNumero {
+	width: 90px;
+}
+
+#tableFacturas thead tr .tdFacturaFecha {
+	width: 90px;
+}
+
+#tableFacturas thead tr .tdFacturaCliente {
+	width: 200px;
+}
+
+#tableFacturas thead tr .tdFacturaMoneda {
+	width: 90px;
+}
+
+#tableFacturas thead tr .tdFacturaImporte {
+	width: 90px;
+}
+
+#tableFacturas tbody {
+	position: fixed;
+	margin-top: 17px;
+	overflow: auto;
+	width: 600px;
+	height: 299px;
+}
+
+#tableFacturas tbody tr td .divFacturaNumero {
+	text-align: left;
+	margin-left: 2px;
+	width: 88px;
+}
+
+#tableFacturas tbody tr td .divFacturaFecha {
+	text-align: center;
+	margin-left: 2px;
+	width: 88px;
+}
+
+#tableFacturas tbody tr td .divFacturaCliente {
+	text-align: left;
+	margin-left: 2px;
+	width: 198px;
+}
+
+#tableFacturas tbody tr td .divFacturaMoneda {
+	text-align: left;
+	margin-left: 2px;
+	width: 88px;
+}
+
+#tableFacturas tbody tr td .divFacturaImporte {
+	text-align: left;
+	margin-left: 2px;
+	width: 88px;
+}
+
+#divIFrameFactura {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	z-index: 3;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#iFrameFactura {
+	width: 640px;
+	height: 320px;
+	border: none;
+}

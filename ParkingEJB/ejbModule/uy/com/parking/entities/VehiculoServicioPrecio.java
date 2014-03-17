@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cliente_servicio_precio")
-public class ClienteServicioPrecio extends BaseEntity {
+@Table(name = "vehiculo_servicio_precio")
+public class VehiculoServicioPrecio extends BaseEntity {
 
 	private static final long serialVersionUID = -3481616900019566253L;
 
@@ -22,8 +22,8 @@ public class ClienteServicioPrecio extends BaseEntity {
 	private Date validoHasta;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "cliente_id", nullable = false)
-	private Cliente cliente;
+	@JoinColumn(name = "vehiculo_id", nullable = false)
+	private Vehiculo vehiculo;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "servicio_id", nullable = false)
@@ -49,12 +49,12 @@ public class ClienteServicioPrecio extends BaseEntity {
 		this.validoHasta = validoHasta;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Vehiculo getVehiculo() {
+		return vehiculo;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
 	}
 
 	public Servicio getServicio() {

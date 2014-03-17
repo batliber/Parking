@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.ejb.Remote;
 
 import uy.com.parking.entities.Cliente;
-import uy.com.parking.entities.ClienteServicioPrecio;
+import uy.com.parking.entities.VehiculoServicioPrecio;
 
 @Remote
 public interface IClienteBean {
@@ -22,7 +22,7 @@ public interface IClienteBean {
 	
 	public void update(Cliente cliente);
 	
-	public void updateConClienteServicioPrecios(
-		Cliente cliente, Collection<ClienteServicioPrecio> clienteServicioPrecios
+	public void updateConVehiculoServicioPrecios(
+		Cliente cliente, Collection<VehiculoServicioPrecio> vehiculoServicioPrecios
 	);
 }

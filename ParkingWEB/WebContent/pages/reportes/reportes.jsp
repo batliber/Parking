@@ -5,6 +5,7 @@
 	<title>Reportes</title>
 	<script type="text/javascript" src="/ParkingWEB/dwr/engine.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/FacturaDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/global.js"></script>
@@ -22,6 +23,35 @@
 		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Reportes</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
-	<div class="divMainWindow">&nbsp;</div>
+	<div class="divMainWindow">
+		<table id="tableFacturas" border="0" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<td class="tdFacturaNumero"><div>N&uacute;mero</div></td>
+					<td class="tdFacturaFecha"><div>Fecha</div></td>
+					<td class="tdFacturaCliente"><div>Cliente</div></td>
+					<td class="tdFacturaMoneda"><div>Moneda</div></td>
+					<td class="tdFacturaImporte"><div>Importe</div></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id="divIFrameFactura" style="display: none;">
+		<div class="divTitleBar">
+			<div class="divTitleBarText" style="float:left;">Factura</div>
+			<div class="divTitleBarCloseButton" onclick="javascript:divCloseOnClick(event, this)">&nbsp;</div>
+		</div>
+		<iframe id="iFrameFactura" frameborder="0" src="#"></iframe>
+	</div>
+	<div id="divModalBackground">&nbsp;</div>
 </body>
 </html>
