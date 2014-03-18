@@ -18,6 +18,8 @@ public interface ICobranzaMovimientoBean {
 	
 	public void generarCobranzaMovimientosByFecha(Date fecha);
 	
+	public void deshacerCobranzaMovimientosByFecha(Date fecha);
+	
 	public Collection<CobranzaMovimiento> listDeudas();
 	
 	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente);

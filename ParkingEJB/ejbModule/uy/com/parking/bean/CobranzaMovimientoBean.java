@@ -510,6 +510,46 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 		}
 	}
 
+	public void deshacerCobranzaMovimientosByFecha(Date fecha) {
+		try {
+			TypedQuery<Date> queryFact =
+				entityManager.createQuery(
+					"SELECT MAX(cm.fact) FROM CobranzaMovimiento cm"
+					+ " WHERE cm.cobranzaTipoDocumento.id = :cobranzaMovimientoId"
+					+ " AND cm.cobranzaProcesoExportacion IS NULL"
+					+ " AND cm.factura IS NULL"
+					, Date.class
+				);
+			queryFact.setParameter(
+				"cobranzaMovimientoId", new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.deudaParkingABITAB"))
+			);
+			
+			Collection<Date> resultListFact = queryFact.getResultList();
+			
+			if (!resultListFact.isEmpty()) {
+				TypedQuery<CobranzaMovimiento> query = 
+					entityManager.createQuery(
+						"SELECT cm FROM CobranzaMovimiento cm"
+						+ " WHERE cm.cobranzaTipoDocumento.id = :cobranzaMovimientoId"
+						+ " AND cm.cobranzaProcesoExportacion IS NULL"
+						+ " AND cm.factura IS NULL"
+						+ " AND cm.fact >= :cobranzaMovimientoFact"
+						, CobranzaMovimiento.class
+					);
+				query.setParameter(
+					"cobranzaMovimientoId", new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.deudaParkingABITAB"))
+				);
+				query.setParameter("cobranzaMovimientoFact", resultListFact.toArray(new Date[]{})[0]);
+				
+				for (CobranzaMovimiento cobranzaMovimiento : query.getResultList()) {
+					entityManager.remove(cobranzaMovimiento);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Collection<CobranzaMovimiento> listDeudas() {
 		Collection<CobranzaMovimiento> result = new LinkedList<CobranzaMovimiento>();
 		

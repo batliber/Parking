@@ -74,6 +74,16 @@ public class CobranzaMovimientoDWR {
 		}
 	}
 	
+	public void deshacerCobranzaMovimientosByFecha(Date fecha) {
+		try {
+			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
+			
+			iCobranzaMovimientoBean.deshacerCobranzaMovimientosByFecha(fecha);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Collection<CobranzaMovimientoTO> listDeudas() {
 		Collection<CobranzaMovimientoTO> result = new LinkedList<CobranzaMovimientoTO>();
 		

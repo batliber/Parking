@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ClienteDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ServicioPrecioDWR.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/CobranzaTipoDocumentoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/CobranzaMovimientoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/FacturaDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/RegistroDWR.js"></script>

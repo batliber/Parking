@@ -3,6 +3,7 @@
 	width: 95mm;
 	height: 160mm;
 	border-right: solid 1px white;
+	font-size: 10pt;
 }
 
 .divCabezal {
@@ -68,11 +69,11 @@
 
 .divFacturaLineas {
 	width: 100%;
-	height: 40%;
+	height: 39%;
 }
 
 #tableFacturaLineas {
-	width: 100%;
+	width: 97%;
 	height: 100%;
 }
 
@@ -81,7 +82,7 @@
 }
 
 .tdConcepto {
-	
+	height: 28px;
 }
 
 .tdImporte {

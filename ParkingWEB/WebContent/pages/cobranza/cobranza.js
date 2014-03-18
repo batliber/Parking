@@ -55,6 +55,19 @@ function inputGenerarCobranzaOnClick(event) {
 	);
 }
 
+function inputDeshacerCobranzaOnClick(event) {
+	if (confirm("¿Desea anular la última cobranza generada? Esta acción no puede deshacerse.")) {
+		CobranzaMovimientoDWR.deshacerCobranzaMovimientosByFecha(
+			new Date(),
+			{
+				callback: function(data) {
+					reloadData();
+				}, async: false
+			}
+		);
+	}
+}
+
 function inputActualizarOnClick(event) {
 	reloadData();
 }

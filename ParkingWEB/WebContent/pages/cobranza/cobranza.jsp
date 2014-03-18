@@ -16,11 +16,12 @@
 <body>
 	<div class="divButtonBar">
 		<div class="divButton"><input type="submit" value="Generar cobranza" onclick="javascript:inputGenerarCobranzaOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" value="Deshacer cobranza" onclick="javascript:inputDeshacerCobranzaOnClick(event)"/></div>
 		<div class="divButton"><input type="submit" value="Actualizar" onclick="javascript:inputActualizarOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Acciones</div>
+		<div id="divButtonTitleTripleSize" class="divButtonTitleBarTitle">Acciones</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">

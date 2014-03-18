@@ -240,29 +240,49 @@ function inputGenerarFacturaOnClick(event, element) {
 		numeroLinea++;
 	}
 	
-	var trsServicioAdicional = $(".trServicioAdicional");
-	for (var i=0; i<trsServicioAdicional.length; i++) {
-		var tds = $(trsServicioAdicional[i]).children();
-		
-		factura.facturaLineas[factura.facturaLineas.length] = {
-			numero: numeroLinea,
-			detalle: $($(tds[1]).children()[0]).find("option:selected").text(),
-			importeUnitario: $(tds[2]).html(),
-			unidades: $($(tds[3]).children(0)).val(),
-			importeTotal: $($(tds[4]).children(0)).val(),
-			servicio: {
-				id: $($(tds[1]).children()[0]).find("option:selected").attr("id"),
-				servicioTipo: {
-					id: $($(tds[1]).children()[0]).find("option:selected").attr("stid")
+	CobranzaTipoDocumentoDWR.getTipoDocumentoCobranzaManual(
+		{
+			callback: function(data) {
+				var trsServicioAdicional = $(".trServicioAdicional");
+				for (var i=0; i<trsServicioAdicional.length; i++) {
+					var tds = $(trsServicioAdicional[i]).children();
+					
+					var facturaLinea = {
+						numero: numeroLinea,
+						detalle: $($(tds[1]).children()[0]).find("option:selected").text(),
+						importeUnitario: $(tds[2]).html(),
+						unidades: $($(tds[3]).children(0)).val(),
+						importeTotal: $($(tds[4]).children(0)).val(),
+						servicio: {
+							id: $($(tds[1]).children()[0]).find("option:selected").attr("id"),
+							servicioTipo: {
+								id: $($(tds[1]).children()[0]).find("option:selected").attr("stid")
+							}
+						},
+						uact: 1,
+						fact: new Date(),
+						term: 1	
+					};
+					
+					factura.facturaLineas[factura.facturaLineas.length] = facturaLinea;
+					
+					cobranzaMovimientos[cobranzaMovimientos.length] = {
+						fecha: factura.fecha,
+						importe: facturaLinea.importeTotal,
+						cobranzaTipoDocumento: data,
+						moneda: factura.moneda,
+						cliente: factura.cliente,
+						servicio: facturaLinea.servicio,
+						uact: 1,
+						fact: new Date(),
+						term: 1
+					};
+					
+					numeroLinea++;
 				}
-			},
-			uact: 1,
-			fact: new Date(),
-			term: 1
-		};
-		
-		numeroLinea++;
-	}
+			}, async: false
+		}
+	);
 	
 	FacturaDWR.facturarCobranzaMovimientos(
 		factura
