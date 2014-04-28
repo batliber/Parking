@@ -1,3 +1,5 @@
+var __PORCENTAJE_IVA = 0.22;
+
 var servicios = 0;
 
 $(document).ready(function() {
@@ -31,13 +33,19 @@ function inputClienteDocumentoOnChange(event, element) {
 									$("#tableFacturaLineas > tbody:last").append(
 										"<tr class='trCobranzaMovimiento' id='" + dataCobranza[i].id + "'>"
 											+ "<td>&nbsp;</td>"
-											+ "<td id='" + dataCobranza[i].servicio.id + "' " 
-												+ "stid='" + dataCobranza[i].servicio.servicioTipo.id + "'>" 
-												+ dataCobranza[i].servicio.descripcion  
+											+ "<td class='tdServicio'"
+												+ "id='" + dataCobranza[i].servicio.id + "' " 
+												+ "stid='" + dataCobranza[i].servicio.servicioTipo.id + "' "
+												+ "title='" + dataCobranza[i].cobranzaTipoDocumento.descripcion + "'>"
+												+ dataCobranza[i].servicio.descripcion
 											+ "</td>"
-											+ "<td>" + dataCobranza[i].importe + "</td>"
-											+ "<td>1</td>"
-											+ "<td>" + dataCobranza[i].importe + "</td>"
+											+ "<td class='tdImporteUnitario'>" 
+												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(2) 
+											+ "</td>"
+											+ "<td class='tdCantidad'>1</td>"
+											+ "<td class='tdTotal'>" 
+												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(2)
+											+ "</td>"
 										+ "</tr>"
 									);
 								}
@@ -98,7 +106,7 @@ function inputAgregarServicioOnClick(event, element) {
 								+ options
 							+ "</select>" 
 						+ "</td>"
-						+ "<td>&nbsp;</td>"
+						+ "<td class='tdImporteUnitario'>&nbsp;</td>"
 						+ "<td>"
 							+ "<input type='text' value='0' class='inputCantidad'" 
 								+ " onchange='javascript:inputCantidadOnChange(event, this)'/>" 
@@ -134,7 +142,7 @@ function selectServicioOnChange(event, element) {
 			callback: function(data) {
 				var tds = $(element).parent().siblings();
 				
-				$(tds[1]).html(data.precio.toFixed(2));
+				$(tds[1]).html((data.precio / (1 + __PORCENTAJE_IVA)).toFixed(2));
 				
 				$($(tds[2]).children()[0]).focus();
 			}, async: false
@@ -175,7 +183,7 @@ function calcularPieDeFactura() {
 		importeSubtotal += 1 * $($($(trsServicioAdicional[i]).children()[4]).children()[0]).val();
 	}
 	
-	var importeIVA = importeSubtotal * 0.22;
+	var importeIVA = importeSubtotal * __PORCENTAJE_IVA;
 	var importeTotal = importeSubtotal + importeIVA;
 	
 	$("#divImporteSubtotal").html(importeSubtotal.toFixed(2));

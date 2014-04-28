@@ -51,3 +51,15 @@ function inputGenerarArchivoOnClick(event, element) {
 function inputImportarArchivoOnClick(event, element) {
 	$("#formSubirArchivo").submit();
 }
+
+function inputDeshacerUltimaImportacionOnClick(event, element) {
+	if (confirm("¿Desea deshacer la última importación?")) {
+		CobranzaMovimientoDWR.deshacerUltimaImportacion(
+			{
+				callback: function(data) {
+					reloadData();
+				}, async: false
+			}
+		);
+	}
+}

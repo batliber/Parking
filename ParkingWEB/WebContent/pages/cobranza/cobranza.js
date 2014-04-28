@@ -33,7 +33,7 @@ function reloadData() {
 							+ "</td>"
 							+ "<td class='tdCobranzaMovimientoImporte'>"
 								+ "<div class='divCobranzaMovimientoImporte'>"
-									+ data[i].importe
+									+ data[i].importe.toFixed(2)
 								+ "</div>"
 							+ "</td>"
 						+ "</tr>"

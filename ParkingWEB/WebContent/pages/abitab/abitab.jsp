@@ -21,11 +21,15 @@
 <body>
 	<div class="divButtonBar">
 		<div class="divButton"><input type="submit" id="inputGenerarArchivo" value="Generar archivo" onclick="javascript:inputGenerarArchivoOnClick(event, this)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
 		<div class="divButton"><input type="submit" id="inputImportarArchivo" value="Importar archivo" onclick="javascript:inputImportarArchivoOnClick(event, this)"/></div>
+		<div class="divButton"><input type="submit" id="inputDeshacerUltimaImportacion" value="Deshacer importaci&oacute;n" onclick="javascript:inputDeshacerUltimaImportacionOnClick(event, this)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Archivos</div>
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Generar</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Importar</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">

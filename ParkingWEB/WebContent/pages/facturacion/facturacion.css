@@ -30,3 +30,34 @@
 	background-repeat: no-repeat;
 	background-position: right;
 }
+
+#tableFacturaLineas tbody tr .tdAcciones {
+	width: 50px;
+}
+
+#tableFacturaLineas tbody tr .tdServicio {
+	width: 450px;
+}
+
+#tableFacturaLineas tbody tr .tdImporteUnitario {
+	width: 75px;
+	text-align: right;
+}
+
+#tableFacturaLineas tbody tr .tdCantidad {
+	width: 140px;
+	text-align: right;
+}
+
+#tableFacturaLineas tbody tr .tdTotal {
+	width: 140px;
+	text-align: right;
+}
+
+.inputCantidad {
+	text-align: right;
+}
+
+.inputTotal {
+	text-align: right;
+}

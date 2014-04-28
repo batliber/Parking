@@ -67,6 +67,8 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 			
 			Date hoy = gregorianCalendar.getTime();
 			
+			Long diaDelMesVencimiento = new Long(Configuration.getInstance().getProperty("Cobranza.diaMesVencimiento"));
+			
 			Proceso proceso = new Proceso();
 			proceso.setFechaInicio(hoy);
 			proceso.setNombreArchivo(nombreArchivo);
@@ -78,6 +80,23 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 			entityManager.persist(proceso);
 			
 			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+			
+			CobranzaTipoDocumento cobranzaTipoDocumentoCobranzaParkingABITAB = 
+				iCobranzaTipoDocumentoBean.getById(
+					new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.cobranzaParkingABITAB"))
+				);
+			
+			CobranzaTipoDocumento cobranzaTipoDocumentoRecargoDeudaParkingABITAB =
+				iCobranzaTipoDocumentoBean.getById(
+					new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.recargoDeudaParkingABITAB"))
+				);
+			
+			Servicio servicio = iServicioBean.getById(
+					new Long(Configuration.getInstance().getProperty("Servicio.ParkingMensual"))
+				);
+			
+			Double porcentajeRecargo = 
+				new Double(Configuration.getInstance().getProperty("Cobranza.PorcentajeRecargo"));
 			
 			String line = null;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -96,38 +115,64 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 //				String subAgencia = fields[10].trim();
 				String fechaPago = fields[11].trim();
 				
-				CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
-				
 				Cliente cliente = iClienteBean.getByDocumento(clienteDocumento);
 				
-				cobranzaMovimiento.setCliente(cliente);
-				
-				CobranzaTipoDocumento cobranzaTipoDocumento = iCobranzaTipoDocumentoBean.getById(new Long(1));
-				
-				cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumento);
-				
-				cobranzaMovimiento.setFecha(format.parse(fechaPago));
-				
-				Double importe = new Double(importeAbonado) * 0.01;
-				cobranzaMovimiento.setImporte(importe * cobranzaTipoDocumento.getSigno());
-				
-				Moneda moneda = iMonedaBean.getById(new Long(monedaArchivo));
-				
-				cobranzaMovimiento.setMoneda(moneda);
-				cobranzaMovimiento.setProceso(proceso);
-				
-				Servicio servicio = iServicioBean.getById(new Long(7));
-				
-				cobranzaMovimiento.setServicio(servicio);
-				
-				cobranzaMovimiento.setFact(hoy);
-				cobranzaMovimiento.setTerm(new Long(1));
-				cobranzaMovimiento.setUact(new Long(1));
-				
-				entityManager.persist(cobranzaMovimiento);
+				if (cliente != null) {
+					Moneda moneda = iMonedaBean.getById(new Long(monedaArchivo));
+					
+					Date fecha = format.parse(fechaPago);
+					GregorianCalendar gregorianCalendarFechaPago = new GregorianCalendar();
+					gregorianCalendarFechaPago.setTime(fecha);
+					
+					Double importe = new Double(importeAbonado) * 0.01;
+					
+					// Procesamiento de recargos
+					if (gregorianCalendarFechaPago.get(GregorianCalendar.DAY_OF_MONTH) > diaDelMesVencimiento) {
+						CobranzaMovimiento cobranzaMovimientoRecargo = new CobranzaMovimiento();
+						cobranzaMovimientoRecargo.setCliente(cliente);
+						cobranzaMovimientoRecargo.setCobranzaTipoDocumento(
+							cobranzaTipoDocumentoRecargoDeudaParkingABITAB
+						);
+						cobranzaMovimientoRecargo.setFecha(fecha);
+						
+						Double importeRecargo = importe * (porcentajeRecargo / (1 + porcentajeRecargo));
+						cobranzaMovimientoRecargo.setImporte(
+							importeRecargo * cobranzaTipoDocumentoRecargoDeudaParkingABITAB.getSigno()
+						);
+						
+						cobranzaMovimientoRecargo.setMoneda(moneda);
+						cobranzaMovimientoRecargo.setProceso(proceso);
+						cobranzaMovimientoRecargo.setServicio(servicio);
+						
+						cobranzaMovimientoRecargo.setUact(new Long(1));
+						cobranzaMovimientoRecargo.setFact(hoy);
+						cobranzaMovimientoRecargo.setTerm(new Long(1));
+						
+						entityManager.persist(cobranzaMovimientoRecargo);
+						
+						importe = importe - importeRecargo;
+					}
+					
+					CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
+					cobranzaMovimiento.setCliente(cliente);
+					cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumentoCobranzaParkingABITAB);
+					cobranzaMovimiento.setFecha(fecha);
+					
+					cobranzaMovimiento.setImporte(importe * cobranzaTipoDocumentoCobranzaParkingABITAB.getSigno());
+					
+					cobranzaMovimiento.setMoneda(moneda);
+					cobranzaMovimiento.setProceso(proceso);
+					cobranzaMovimiento.setServicio(servicio);
+					
+					cobranzaMovimiento.setFact(hoy);
+					cobranzaMovimiento.setTerm(new Long(1));
+					cobranzaMovimiento.setUact(new Long(1));
+					
+					entityManager.persist(cobranzaMovimiento);
+				}
 			}
 			
-			proceso.setFechaFin(gregorianCalendar.getTime());
+			proceso.setFechaFin(GregorianCalendar.getInstance().getTime());
 			
 			entityManager.merge(proceso);
 		} catch (Exception e) {
@@ -550,6 +595,43 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 		}
 	}
 	
+	public void deshacerUltimaImportacion() {
+		try {
+			TypedQuery<Proceso> query = entityManager.createQuery(
+				"SELECT p"
+				+ " FROM Proceso p"
+				+ " ORDER BY p.fact DESC",
+				Proceso.class
+			);
+			query.setMaxResults(1);
+			
+			Collection<Proceso> procesos = query.getResultList();
+			if (procesos.size() > 0) {
+				Proceso proceso = procesos.toArray(new Proceso[]{})[0];
+				
+				TypedQuery<CobranzaMovimiento> queryCobranzaMovimientos = entityManager.createQuery(
+					"SELECT cm"
+					+ " FROM CobranzaMovimiento cm"
+					+ " WHERE cm.proceso.id = :procesoId"
+					, CobranzaMovimiento.class
+				);
+				queryCobranzaMovimientos.setParameter("procesoId", proceso.getId());
+				
+				for (CobranzaMovimiento cobranzaMovimiento : queryCobranzaMovimientos.getResultList()) {
+					entityManager.remove(cobranzaMovimiento);
+				}
+				
+				File file = new File(proceso.getNombreArchivo());
+				
+				file.delete();
+				
+				entityManager.remove(proceso);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Collection<CobranzaMovimiento> listDeudas() {
 		Collection<CobranzaMovimiento> result = new LinkedList<CobranzaMovimiento>();
 		
@@ -559,8 +641,20 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				+ " FROM CobranzaMovimiento cm"
 				+ " WHERE cm.factura IS NULL"
 				+ " AND cm.cliente.fechaBaja IS NULL"
+				+ " AND cm.cobranzaTipoDocumento.id IN ("
+					+ " :cobranzaTipoDocumentoDeudaParkingABITAB,"
+					+ " :cobranzaTipoDocumentoCobranzaParkingABITAB"
+				+ " )"
 				+ " GROUP BY cm.moneda.id, cm.cliente.id, cm.servicio.id, cm.cliente.apellido"
 				+ " ORDER BY cm.cliente.apellido ASC"
+			);
+			query.setParameter(
+				"cobranzaTipoDocumentoDeudaParkingABITAB",
+				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.deudaParkingABITAB"))
+			);
+			query.setParameter(
+				"cobranzaTipoDocumentoCobranzaParkingABITAB",
+				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.cobranzaParkingABITAB"))
 			);
 
 			for (Object object : query.getResultList()) {

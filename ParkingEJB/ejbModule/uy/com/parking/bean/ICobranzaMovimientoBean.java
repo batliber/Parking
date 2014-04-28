@@ -20,6 +20,8 @@ public interface ICobranzaMovimientoBean {
 	
 	public void deshacerCobranzaMovimientosByFecha(Date fecha);
 	
+	public void deshacerUltimaImportacion();
+	
 	public Collection<CobranzaMovimiento> listDeudas();
 	
 	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente);
