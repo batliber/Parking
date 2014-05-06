@@ -36,7 +36,10 @@
 		<div style="display: none;"><input type="hidden" id="inputFacturaId"/></div>
 		<div style="display: none;"><input type="hidden" id="inputClienteId"/></div>
 		<div class="divFormLabel">Documento:</div>
-		<div class="divFullWidth" id="divClienteDocumento"><input type="text" id="inputClienteDocumento" onchange="javascript:inputClienteDocumentoOnChange(event, this)"/></div>
+		<div class="divFullWidth" id="divClienteDocumento">
+			<input type="text" id="inputClienteDocumento" 
+				onchange="javascript:inputClienteDocumentoOnChange(event, this)"/>
+		</div>
 		<div class="divFormLabel">Nombre:</div>
 		<div class="divFullWidth" id="divClienteNombre">&nbsp;</div>
 		<div class="divFormLabel">Apellido:</div>

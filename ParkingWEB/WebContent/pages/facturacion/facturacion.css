@@ -5,6 +5,25 @@
 	padding-top: 2px;
 }
 
+#inputClienteNombre {
+	width: 400px;
+	margin-left: 2px;
+}
+
+#inputClienteApellido {
+	width: 400px;
+	margin-left: 2px;
+}
+
+#inputClienteDomicilio {
+	width: 400px;
+	margin-left: 2px;
+}
+
+#inputClienteTelefono {
+	
+}
+
 #tableFacturaLineas thead tr .tdAcciones {
 	width: 50px;
 }

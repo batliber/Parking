@@ -1,9 +1,20 @@
 var __PORCENTAJE_IVA = 0.22;
+var __CLIENTE_GENERICO_DOCUMENTO = 1;
+var __CLIENTE_GENERICO_ID = 0;
 
 var servicios = 0;
 
 $(document).ready(function() {
 	clearForm();
+	
+	ClienteDWR.getByDocumento(
+		__CLIENTE_GENERICO_DOCUMENTO,
+		{
+			callback: function(data) {
+				__CLIENTE_GENERICO_ID = data.id;
+			}, async: false
+		}
+	);
 	
 	$("#inputClienteDocumento").focus();
 });
@@ -40,11 +51,11 @@ function inputClienteDocumentoOnChange(event, element) {
 												+ dataCobranza[i].servicio.descripcion
 											+ "</td>"
 											+ "<td class='tdImporteUnitario'>" 
-												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(2) 
+												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(0) 
 											+ "</td>"
 											+ "<td class='tdCantidad'>1</td>"
 											+ "<td class='tdTotal'>" 
-												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(2)
+												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(0)
 											+ "</td>"
 										+ "</tr>"
 									);
@@ -73,8 +84,14 @@ function inputClienteDocumentoOnChange(event, element) {
 				} else {
 					alert("No se encuentra el Cliente.");
 					
-					$("#inputClienteDocumento").val("");
-					$("#inputClienteDocumento").focus();
+					$("#divClienteNombre").html("<input type='text' id='inputClienteNombre'/>");
+					$("#divClienteApellido").html("<input type='text' id='inputClienteApellido'/>");
+					$("#divClienteDomicilio").html("<input type='text' id='inputClienteDomicilio'/>");
+					$("#divClienteTelefono").html("<input type='text' id='inputClienteTelefono'/>");
+					
+					$("#inputAgregarServicio").prop("disabled", false);
+					$("#inputGenerarFactura").prop("disabled", false);
+					$("#inputImprimirFactura").prop("disabled", true);
 				}
 			}, async: false
 		}
@@ -186,9 +203,9 @@ function calcularPieDeFactura() {
 	var importeIVA = importeSubtotal * __PORCENTAJE_IVA;
 	var importeTotal = importeSubtotal + importeIVA;
 	
-	$("#divImporteSubtotal").html(importeSubtotal.toFixed(2));
-	$("#divImporteIVA").html(importeIVA.toFixed(2));
-	$("#divImporteTotal").html(importeTotal.toFixed(2));
+	$("#divImporteSubtotal").html(importeSubtotal.toFixed(0));
+	$("#divImporteIVA").html(importeIVA.toFixed(0));
+	$("#divImporteTotal").html(importeTotal.toFixed(0));
 }
 
 function inputCancelarOnClick(event, element) {
@@ -200,12 +217,20 @@ function inputCancelarOnClick(event, element) {
 function inputGenerarFacturaOnClick(event, element) {
 	var factura = {
 		fecha: new Date(),
+		nombre: $("#inputClienteId").val() != "" ? 
+			$("#divClienteNombre").text() : $("#inputClienteNombre").val(),
+		apellido: $("#inputClienteId").val() != "" ?
+			$("#divClienteApellido").text() : $("#inputClienteApellido").val(),
+		domicilio: $("#inputClienteId").val() != "" ?
+			$("#divClienteDomicilio").text() : $("#inputClienteDomicilio").val(),
+		telefono: $("#inputClienteId").val() != "" ?
+			$("#divClienteTelefono").text() : $("#inputClienteTelefono").val(),
 		rut: $("#inputClienteDocumento").val(),
 		importeSubtotal: $("#divImporteSubtotal").html(),
 		importeIVA: $("#divImporteIVA").html(),
 		importeTotal: $("#divImporteTotal").html(),
 		cliente: {
-			id: $("#inputClienteId").val()
+			id: $("#inputClienteId").val() != "" ? $("#inputClienteId").val() : __CLIENTE_GENERICO_ID
 		},
 		moneda: {
 			id: 1
@@ -299,6 +324,11 @@ function inputGenerarFacturaOnClick(event, element) {
 			callback: function(data) {
 				$("#inputFacturaId").val(data.id);
 				$("#divFacturaNumero").html(data.numero);
+				
+				$("#divClienteNombre").html(data.nombre);
+				$("#divClienteApellido").html(data.apellido);
+				$("#divClienteDomicilio").html(data.domicilio);
+				$("#divClienteTelefono").html(data.telefono);
 				
 				$("#tableFacturaLineas > tbody:last > tr").remove();
 				

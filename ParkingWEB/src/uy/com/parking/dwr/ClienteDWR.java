@@ -67,7 +67,11 @@ public class ClienteDWR {
 		try {
 			IClienteBean iClienteBean = lookupBean();
 			
-			result = transform(iClienteBean.getByDocumento(documento), true);
+			Cliente cliente = iClienteBean.getByDocumento(documento);
+			
+			if (cliente != null) {
+				result = transform(cliente, true);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
