@@ -43,12 +43,12 @@
 			<div id="divFecha"><%= format.format(facturaTO.getFecha()) %></div>
 			<div id="divNumero"><%= facturaTO.getNumero() %></div>
 		</div>
-		<div id="divNombre" class="divNombre"><%= facturaTO.getCliente().getNombre() + " " + facturaTO.getCliente().getApellido() %></div>
+		<div id="divNombre" class="divNombre"><%= facturaTO.getNombre() + " " + facturaTO.getApellido() %></div>
 		<div id="divDireccion" class="divDireccion">
-			<%= facturaTO.getCliente().getDomicilio() != null ? facturaTO.getCliente().getDomicilio() : "&nbsp;" %>
+			<%= facturaTO.getDomicilio() != null ? facturaTO.getDomicilio() : "&nbsp;" %>
 		</div>
 		<div class="divRUT">
-			<div id="divDocumento"><%= facturaTO.getCliente().getDocumento() %></div>
+			<div id="divDocumento"><%= facturaTO.getDocumento() %></div>
 			<div id="divConsumidorFinal">&nbsp;</div>
 			<div id="divTipoDocumento">&nbsp;</div>
 		</div>

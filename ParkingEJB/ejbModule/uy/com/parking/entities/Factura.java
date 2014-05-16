@@ -24,8 +24,8 @@ public class Factura extends BaseEntity {
 	@Column(name = "fecha")
 	private Date fecha;
 
-	@Column(name = "rut")
-	private String rut;
+	@Column(name = "documento")
+	private String documento;
 
 	@Column(name = "nombre")
 	private String nombre;
@@ -125,12 +125,12 @@ public class Factura extends BaseEntity {
 		this.facturaLineas = facturaLineas;
 	}
 
-	public String getRut() {
-		return rut;
+	public String getDocumento() {
+		return documento;
 	}
 
-	public void setRut(String rut) {
-		this.rut = rut;
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	public String getNombre() {

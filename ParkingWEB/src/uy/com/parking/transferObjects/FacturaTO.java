@@ -10,7 +10,7 @@ public class FacturaTO extends BaseTO {
 
 	private Long numero;
 	private Date fecha;
-	private String rut;
+	private String documento;
 	private String nombre;
 	private String apellido;
 	private String domicilio;
@@ -38,12 +38,12 @@ public class FacturaTO extends BaseTO {
 		this.fecha = fecha;
 	}
 
-	public String getRut() {
-		return rut;
+	public String getDocumento() {
+		return documento;
 	}
 
-	public void setRut(String rut) {
-		this.rut = rut;
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	public String getNombre() {

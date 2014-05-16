@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 function showFactura() {
 	$("#divFacturaFecha").text(formatShortDate(factura.fecha));
-	$("#divFacturaClienteNombre").text(factura.cliente.nombre + " " + factura.cliente.apellido);
+	$("#divFacturaClienteNombre").text(factura.nombre + " " + factura.apellido);
 	$("#divFacturaMonedaDescripcion").text(factura.moneda.descripcion);
 	
 	$("#tableFacturaLineas > tbody:last > tr").remove();

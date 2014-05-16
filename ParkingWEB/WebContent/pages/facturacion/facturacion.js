@@ -225,7 +225,7 @@ function inputGenerarFacturaOnClick(event, element) {
 			$("#divClienteDomicilio").text() : $("#inputClienteDomicilio").val(),
 		telefono: $("#inputClienteId").val() != "" ?
 			$("#divClienteTelefono").text() : $("#inputClienteTelefono").val(),
-		rut: $("#inputClienteDocumento").val(),
+		documento: $("#inputClienteDocumento").val(),
 		importeSubtotal: $("#divImporteSubtotal").html(),
 		importeIVA: $("#divImporteIVA").html(),
 		importeTotal: $("#divImporteTotal").html(),

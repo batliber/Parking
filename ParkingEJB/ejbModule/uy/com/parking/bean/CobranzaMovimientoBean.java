@@ -639,8 +639,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 			Query query = entityManager.createQuery(
 				"SELECT cm.moneda.id, cm.cliente.id, cm.servicio.id, SUM(cm.importe), cm.cliente.apellido"
 				+ " FROM CobranzaMovimiento cm"
-				+ " WHERE cm.factura IS NULL"
-				+ " AND cm.cliente.fechaBaja IS NULL"
+				+ " WHERE cm.cliente.fechaBaja IS NULL"
 				+ " AND cm.cobranzaTipoDocumento.id IN ("
 					+ " :cobranzaTipoDocumentoDeudaParkingABITAB,"
 					+ " :cobranzaTipoDocumentoCobranzaParkingABITAB"

@@ -233,6 +233,7 @@ public class FacturaDWR {
 		
 		facturaTO.setCliente(ClienteDWR.transform(factura.getCliente(), false));
 		
+		facturaTO.setDocumento(factura.getDocumento());
 		facturaTO.setDomicilio(factura.getDomicilio());
 		
 		List<FacturaLineaTO> facturaLineas = new LinkedList<FacturaLineaTO>();
@@ -291,6 +292,7 @@ public class FacturaDWR {
 		
 		factura.setCliente(cliente);
 		
+		factura.setDocumento(facturaTO.getDocumento());
 		factura.setDomicilio(facturaTO.getDomicilio());
 		
 		Set<FacturaLinea> facturaLineas = new HashSet<FacturaLinea>();
@@ -336,7 +338,6 @@ public class FacturaDWR {
 		factura.setMoneda(moneda);
 		
 		factura.setNombre(facturaTO.getNombre());
-		factura.setRut(facturaTO.getRut());
 		factura.setTelefono(facturaTO.getTelefono());
 		
 		factura.setFact(facturaTO.getFact());
