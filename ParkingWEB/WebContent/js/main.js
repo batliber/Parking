@@ -1,28 +1,108 @@
 var links = {
-	registro: "/ParkingWEB/pages/registro/registro.jsp",
-	facturacion: "/ParkingWEB/pages/facturacion/facturacion.jsp",
-	facturas: "/ParkingWEB/pages/factura/factura.jsp",
-	caja: "/ParkingWEB/pages/caja/caja.jsp",
-	cobranza: "/ParkingWEB/pages/cobranza/cobranza.jsp",
-	clientes: "/ParkingWEB/pages/cliente/cliente.jsp",
-	vehiculos: "/ParkingWEB/pages/vehiculo/vehiculo.jsp",
-	servicios: "/ParkingWEB/pages/servicio/servicio.jsp",
-	reportes: "/ParkingWEB/pages/reportes/reportes.jsp",
-	abitab: "/ParkingWEB/pages/abitab/abitab.jsp"
+//	registro: {
+//		link: "/ParkingWEB/pages/registro/registro.jsp",
+//		descripcion: "Registro",
+//		nivel: 1
+//	},
+	facturacion: { 
+		link: "/ParkingWEB/pages/facturacion/facturacion.jsp",
+		descripcion: "Facturaci&oacute;n",
+		nivel: 1
+	},
+//	facturas: {
+//		link: "/ParkingWEB/pages/factura/factura.jsp",
+//		descripcion: "Facturas",
+//		nivel: 1
+//	},
+//	caja: {
+//		link: "/ParkingWEB/pages/caja/caja.jsp",
+//		descripcion: "Caja",
+//		nivel: 1
+//	},
+	abitab: {
+		link: "/ParkingWEB/pages/abitab/abitab.jsp",
+		descripcion: "ABITAB",
+		nivel: 2
+	},
+	cobranza: {
+		link: "/ParkingWEB/pages/cobranza/cobranza.jsp",
+		descripcion: "Cobranza",
+		nivel: 2
+	},
+	clientes: {
+		link: "/ParkingWEB/pages/cliente/cliente.jsp",
+		descripcion: "Clientes",
+		nivel: 2
+	},
+//	vehiculos: {
+//		link: "/ParkingWEB/pages/vehiculo/vehiculo.jsp",
+//		descripcion: "Veh&iacute;culos",
+//		nivel: 2
+//	},
+	servicios: {
+		link: "/ParkingWEB/pages/servicio/servicio.jsp",
+		descripcion: "Servicios",
+		nivel: 2
+	},
+	reportes: {
+		link: "/ParkingWEB/pages/reportes/reportes.jsp",
+		descripcion: "Reportes",
+		nivel: 2
+	}
 };
 
 $(document).ready(function() {
 	SeguridadDWR.getActiveUserData(
 		{
 			callback: function(data) {
-				$("#divActiveUser").text(data);
+				var html = "";
+				
+				var nivel = 1;
+				for (var j=0; j<data.grupos.length; j++) {
+					nivel = Math.max(nivel, data.grupos[j].nivel);
+				}
+				
+				var i = 0;
+				for (var id in links) {
+					if (links[id].nivel <= nivel) {
+						html += 
+							"<div class='" + (i == 0 ? "activeMenuBarItem" : "inactiveMenuBarItem") + "'>"
+								+ "<div>"
+									+ "<a href='#' id='" + id + "'"
+										+ " onclick='javascript:menuItemOnClick(event, this)'>"
+										+ links[id].descripcion
+										+ "</a>"
+								+ "</div>"
+							+ "</div>";
+						
+						i++;
+					}
+				}
+				
+				html += 
+					"<div class='divUserInfo'>"
+						+ "<div class='divLogout' style='float: right;'"
+							+ " onclick='javascript:divLogoutOnClick(event, this)'>"
+							+ "&nbsp;"
+						+ "</div>"
+						+ "<div id='divActiveUser' style='float: right;'>"
+							+ data.nombre
+						+ "</div>"
+						+ "<div style='float: right;'>Usuario:</div>"
+					+ "</div>";
+				
+				$(".divMenuBar").html(html);
+				
+				$(".divUserInfo").width(
+					$(".divMenuBar").width() - i * $(".activeMenuBarItem").width() - 18
+				);
 			}, async: false
 		}
 	);
 });
 
 function menuItemOnClick(event, element) {
-	window.frames[0].location = links[element.id];
+	window.frames[0].location = links[element.id].link;
 	
 	var active = $(".activeMenuBarItem");
 	active.removeClass("activeMenuBarItem");

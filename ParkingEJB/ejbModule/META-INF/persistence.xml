@@ -16,6 +16,7 @@
 		<class>uy.com.parking.entities.Departamento</class>
 		<class>uy.com.parking.entities.Factura</class>
 		<class>uy.com.parking.entities.FacturaLinea</class>
+		<class>uy.com.parking.entities.Grupo</class>
 		<class>uy.com.parking.entities.Moneda</class>
 		<class>uy.com.parking.entities.Registro</class>
 		<class>uy.com.parking.entities.RegistroTipo</class>

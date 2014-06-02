@@ -13,7 +13,7 @@ import uy.com.parking.bean.IUsuarioBean;
 import uy.com.parking.bean.SeguridadBean;
 import uy.com.parking.bean.UsuarioBean;
 import uy.com.parking.entities.SeguridadAuditoria;
-import uy.com.parking.entities.Usuario;
+import uy.com.parking.transferObjects.UsuarioTO;
 
 @RemoteProxy
 public class SeguridadDWR {
@@ -28,8 +28,8 @@ public class SeguridadDWR {
 		return (ISeguridadBean) context.lookup(lookupName);
 	}
 	
-	public String getActiveUserData() {
-		String result = null;
+	public UsuarioTO getActiveUserData() {
+		UsuarioTO result = null;
 		
 		HttpSession httpSession = WebContextFactory.get().getSession(false);
 		
@@ -45,9 +45,7 @@ public class SeguridadDWR {
 				
 				IUsuarioBean iUsuarioBean = (IUsuarioBean) context.lookup(lookupName);
 				
-				Usuario usuario = iUsuarioBean.getById(usuarioId);
-				
-				result = usuario.getNombre();
+				result = UsuarioDWR.transform(iUsuarioBean.getById(usuarioId));
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}

@@ -24,6 +24,16 @@
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
+		<div id="divFiltros" style="width: 100%;">
+			<div id="divDesde" style="float: left;height: 22px;width: 300px;">
+				<div class="divFormLabel">Desde:</div>
+				<div><input type="text" id="inputDesde"/></div>
+			</div>
+			<div id="divHasta" style="float: left;height: 22px;width: 300px;">
+				<div class="divFormLabel">Hasta:</div>
+				<div><input type="text" id="inputHasta"/></div>
+			</div>
+		</div>
 		<table id="tableFacturas" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>

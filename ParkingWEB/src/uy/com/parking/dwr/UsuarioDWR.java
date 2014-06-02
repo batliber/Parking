@@ -11,7 +11,9 @@ import org.directwebremoting.annotations.RemoteProxy;
 
 import uy.com.parking.bean.IUsuarioBean;
 import uy.com.parking.bean.UsuarioBean;
+import uy.com.parking.entities.Grupo;
 import uy.com.parking.entities.Usuario;
+import uy.com.parking.transferObjects.GrupoTO;
 import uy.com.parking.transferObjects.UsuarioTO;
 import uy.com.parking.util.MD5Utils;
 
@@ -35,7 +37,7 @@ public class UsuarioDWR {
 			IUsuarioBean iUsuarioBean = lookupBean();
 			
 			for (Usuario usuario : iUsuarioBean.list()) {
-				result.add(this.transform(usuario));
+				result.add(transform(usuario));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +52,7 @@ public class UsuarioDWR {
 		try {
 			IUsuarioBean iUsuarioBean = lookupBean();
 			
-			result = this.transform(iUsuarioBean.getById(id));
+			result = transform(iUsuarioBean.getById(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,7 +66,7 @@ public class UsuarioDWR {
 		try {
 			IUsuarioBean iUsuarioBean = lookupBean();
 			
-			result = this.transform(iUsuarioBean.getByLogin(login));
+			result = transform(iUsuarioBean.getByLogin(login));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,17 +113,24 @@ public class UsuarioDWR {
 		}
 	}
 
-	private UsuarioTO transform(Usuario usuario) {
+	public static UsuarioTO transform(Usuario usuario) {
 		UsuarioTO usuarioTO = new UsuarioTO();
 		
-		usuarioTO.setLogin(usuario.getLogin());
+		Collection<GrupoTO> grupos = new LinkedList<GrupoTO>();
+		for (Grupo grupo : usuario.getGrupos()) {
+			grupos.add(GrupoDWR.transform(grupo));
+		}
+		
+		usuarioTO.setGrupos(grupos);
+		
 		usuarioTO.setContrasena(usuario.getContrasena());
+		usuarioTO.setLogin(usuario.getLogin());
 		usuarioTO.setNombre(usuario.getNombre());
 
-		usuarioTO.setFact(usuario.getFact());
 		usuarioTO.setId(usuario.getId());
-		usuarioTO.setTerm(usuario.getTerm());
 		usuarioTO.setUact(usuario.getUact());
+		usuarioTO.setFact(usuario.getFact());
+		usuarioTO.setTerm(usuario.getTerm());
 		
 		return usuarioTO;
 	}

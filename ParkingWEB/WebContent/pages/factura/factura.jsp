@@ -19,12 +19,11 @@
 </head>
 <body>
 	<div class="divButtonBar">
-		<div class="divButton"><input type="submit" id="inputGrabarFactura" value="Grabar factura" onclick="javascript:inputGrabarFacturaOnClick(event)"/></div>
 		<div class="divButton"><input type="submit" id="inputImprimirFactura" value="Imprimir factura" onclick="javascript:inputImprimirFacturaOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Factura</div>
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Factura</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">

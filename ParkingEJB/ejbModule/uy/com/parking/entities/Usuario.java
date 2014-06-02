@@ -1,7 +1,14 @@
 package uy.com.parking.entities;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +26,16 @@ public class Usuario extends BaseEntity {
 	@Column(name = "nombre")
 	private String nombre;
 
+	@ManyToMany(
+		fetch = FetchType.EAGER, 
+		cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
+	)
+	@JoinTable(
+		name = "seguridad_usuario_grupo", 
+		joinColumns = @JoinColumn(name = "seguridad_usuario_id", referencedColumnName = "id"), 
+		inverseJoinColumns = @JoinColumn(name = "seguridad_grupo_id", referencedColumnName = "id"))
+	private Collection<Grupo> grupos;
+	
 	public String getLogin() {
 		return login;
 	}
@@ -41,5 +58,13 @@ public class Usuario extends BaseEntity {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Collection<Grupo> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(Collection<Grupo> grupos) {
+		this.grupos = grupos;
 	}
 }

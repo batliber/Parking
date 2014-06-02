@@ -1,4 +1,11 @@
 $(document).ready(function() {
+	var hoy = new Date();
+	
+	$("#inputHasta").val(formatShortDate(hoy));
+	
+	hoy.setMonth(hoy.getMonth() - 1);
+	$("#inputDesde").val(formatShortDate(hoy));
+	
 	reloadData();
 });
 
