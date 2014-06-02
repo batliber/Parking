@@ -48,6 +48,11 @@ var links = {
 		link: "/ParkingWEB/pages/reportes/reportes.jsp",
 		descripcion: "Reportes",
 		nivel: 2
+	},
+	usuarios: {
+		link: "/ParkingWEB/pages/usuario/usuario.jsp",
+		descripcion: "Usuarios",
+		nivel: 2
 	}
 };
 

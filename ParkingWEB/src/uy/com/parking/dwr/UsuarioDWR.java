@@ -82,10 +82,7 @@ public class UsuarioDWR {
 		try {
 			IUsuarioBean iUsuarioBean = lookupBean();
 			
-			Usuario usuario = new Usuario();
-			usuario.setId(usuarioTO.getId());
-			
-			iUsuarioBean.remove(usuario);
+			iUsuarioBean.remove(transform(usuarioTO));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,19 +92,7 @@ public class UsuarioDWR {
 		try {
 			IUsuarioBean iUsuarioBean = lookupBean();
 			
-			Usuario usuario = new Usuario();
-			
-			usuario.setLogin(usuarioTO.getLogin());
-			
-			usuario.setContrasena(MD5Utils.stringToMD5(usuarioTO.getContrasena()));
-			usuario.setNombre(usuarioTO.getNombre());
-			
-			usuario.setId(usuarioTO.getId());
-			usuario.setFact(usuarioTO.getFact());
-			usuario.setTerm(usuarioTO.getTerm());
-			usuario.setUact(usuarioTO.getUact());
-			
-			iUsuarioBean.update(usuario);
+			iUsuarioBean.update(transform(usuarioTO));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,6 +109,7 @@ public class UsuarioDWR {
 		usuarioTO.setGrupos(grupos);
 		
 		usuarioTO.setContrasena(usuario.getContrasena());
+		usuarioTO.setFechaBaja(usuario.getFechaBaja());
 		usuarioTO.setLogin(usuario.getLogin());
 		usuarioTO.setNombre(usuario.getNombre());
 
@@ -133,5 +119,25 @@ public class UsuarioDWR {
 		usuarioTO.setTerm(usuario.getTerm());
 		
 		return usuarioTO;
+	}
+
+	public static Usuario transform(UsuarioTO usuarioTO) {
+		Usuario usuario = new Usuario();
+		
+		usuario.setLogin(usuarioTO.getLogin());
+		
+		if (usuarioTO.getContrasena() != null && !usuarioTO.getContrasena().isEmpty()) {
+			usuario.setContrasena(MD5Utils.stringToMD5(usuarioTO.getContrasena()));
+		}
+		
+		usuario.setFechaBaja(usuarioTO.getFechaBaja());
+		usuario.setNombre(usuarioTO.getNombre());
+		
+		usuario.setId(usuarioTO.getId());
+		usuario.setFact(usuarioTO.getFact());
+		usuario.setTerm(usuarioTO.getTerm());
+		usuario.setUact(usuarioTO.getUact());
+		
+		return usuario;
 	}
 }

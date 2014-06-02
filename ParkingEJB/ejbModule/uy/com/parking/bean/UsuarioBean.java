@@ -22,7 +22,11 @@ public class UsuarioBean implements IUsuarioBean {
 		Collection<Usuario> result = new LinkedList<Usuario>();
 		
 		try {
-			Query query = entityManager.createQuery("SELECT u FROM Usuario u");
+			Query query = entityManager.createQuery(
+				"SELECT u"
+				+ " FROM Usuario u"
+				+ " WHERE u.fechaBaja IS NULL"
+			);
 			
 			for (Object object : query.getResultList()) {
 				result.add((Usuario) object);
@@ -51,7 +55,13 @@ public class UsuarioBean implements IUsuarioBean {
 		
 		try {
 			TypedQuery<Usuario> typedQuery = 
-				entityManager.createQuery("SELECT u FROM Usuario u WHERE login = :login", Usuario.class);
+				entityManager.createQuery(
+					"SELECT u"
+					+ " FROM Usuario u"
+					+ " WHERE u.fechaBaja IS NULL"
+					+ " AND login = :login"
+					, Usuario.class
+				);
 			typedQuery.setParameter("login", login);
 			
 			List<Usuario> resultList = typedQuery.getResultList();
@@ -85,6 +95,12 @@ public class UsuarioBean implements IUsuarioBean {
 
 	public void update(Usuario usuario) {
 		try {
+			if (usuario.getContrasena() == null) {
+				Usuario usuarioAnterior = entityManager.find(Usuario.class, usuario.getId());
+				
+				usuario.setContrasena(usuarioAnterior.getContrasena());
+			}
+			
 			entityManager.merge(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();

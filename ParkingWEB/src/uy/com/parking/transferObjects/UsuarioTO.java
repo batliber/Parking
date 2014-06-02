@@ -1,6 +1,7 @@
 package uy.com.parking.transferObjects;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.directwebremoting.annotations.DataTransferObject;
 
@@ -10,6 +11,7 @@ public class UsuarioTO extends BaseTO {
 	private String login;
 	private String contrasena;
 	private String nombre;
+	private Date fechaBaja;
 	private Collection<GrupoTO> grupos;
 
 	public String getLogin() {
@@ -34,6 +36,14 @@ public class UsuarioTO extends BaseTO {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Date getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(Date fechaBaja) {
+		this.fechaBaja = fechaBaja;
 	}
 
 	public Collection<GrupoTO> getGrupos() {

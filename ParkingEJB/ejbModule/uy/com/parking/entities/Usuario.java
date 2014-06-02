@@ -1,6 +1,7 @@
 package uy.com.parking.entities;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,16 +27,14 @@ public class Usuario extends BaseEntity {
 	@Column(name = "nombre")
 	private String nombre;
 
-	@ManyToMany(
-		fetch = FetchType.EAGER, 
-		cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
-	)
-	@JoinTable(
-		name = "seguridad_usuario_grupo", 
-		joinColumns = @JoinColumn(name = "seguridad_usuario_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "seguridad_grupo_id", referencedColumnName = "id"))
+	@Column(name = "fecha_baja")
+	private Date fechaBaja;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE,
+			CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "seguridad_usuario_grupo", joinColumns = @JoinColumn(name = "seguridad_usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "seguridad_grupo_id", referencedColumnName = "id"))
 	private Collection<Grupo> grupos;
-	
+
 	public String getLogin() {
 		return login;
 	}
@@ -58,6 +57,14 @@ public class Usuario extends BaseEntity {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Date getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public void setFechaBaja(Date fechaBaja) {
+		this.fechaBaja = fechaBaja;
 	}
 
 	public Collection<Grupo> getGrupos() {
