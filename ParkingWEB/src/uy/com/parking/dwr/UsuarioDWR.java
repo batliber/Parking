@@ -131,6 +131,14 @@ public class UsuarioDWR {
 		}
 		
 		usuario.setFechaBaja(usuarioTO.getFechaBaja());
+		
+		Collection<Grupo> grupos = new LinkedList<Grupo>();
+		for (GrupoTO grupoTO : usuarioTO.getGrupos()) {
+			grupos.add(GrupoDWR.transform(grupoTO));
+		}
+		
+		usuario.setGrupos(grupos);
+		
 		usuario.setNombre(usuarioTO.getNombre());
 		
 		usuario.setId(usuarioTO.getId());

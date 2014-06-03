@@ -3,7 +3,6 @@ package uy.com.parking.entities;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,8 +29,7 @@ public class Usuario extends BaseEntity {
 	@Column(name = "fecha_baja")
 	private Date fechaBaja;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE,
-			CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "seguridad_usuario_grupo", joinColumns = @JoinColumn(name = "seguridad_usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "seguridad_grupo_id", referencedColumnName = "id"))
 	private Collection<Grupo> grupos;
 

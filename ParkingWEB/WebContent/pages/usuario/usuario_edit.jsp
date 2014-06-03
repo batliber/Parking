@@ -30,6 +30,7 @@
 		<div class="divFormLabel">Login:</div><div id="divUsuarioLogin"><input type="text" id="inputUsuarioLogin"/></div>
 		<div class="divFormLabel">Nombre:</div><div id="divUsuarioNombre"><input type="text" id="inputUsuarioNombre"/></div>
 		<div class="divFormLabel">Contrase&ntilde;a:</div><div id="divUsuarioContrasena"><input type="password" id="inputUsuarioContrasena"/></div>
+		<div class="divFormLabel">Nivel:</div><div id="divUsuarioGrupo"><select id="selectUsuarioGrupo"></select></div>
 	</div>
 </body>
 </html>

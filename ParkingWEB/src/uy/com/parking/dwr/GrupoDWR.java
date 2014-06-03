@@ -56,4 +56,18 @@ public class GrupoDWR {
 		
 		return grupoTO;
 	}
+
+	public static Grupo transform(GrupoTO grupoTO) {
+		Grupo grupo = new Grupo();
+		
+		grupo.setDescripcion(grupoTO.getDescripcion());
+		grupo.setNivel(grupoTO.getNivel());
+		
+		grupo.setId(grupoTO.getId());
+		grupo.setUact(grupoTO.getUact());
+		grupo.setFact(grupoTO.getFact());
+		grupo.setTerm(grupoTO.getTerm());
+		
+		return grupo;
+	}
 }

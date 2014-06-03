@@ -3,6 +3,18 @@ var usuario = null;
 $(document).ready(function() {
 	$("#inputEliminarUsuario").prop("disabled", true);
 	
+	GrupoDWR.list(
+		{
+			callback: function(data) {
+				for (var i=0; i<data.length; i++) {
+					$("#selectUsuarioGrupo").append(
+						"<option value='" + data[i].id + "'>" + data[i].descripcion + "</option>"
+					);
+				}				
+			}, async: false
+		}
+	);
+	
 	if (id != null) {
 		UsuarioDWR.getById(
 			id,
@@ -12,6 +24,17 @@ $(document).ready(function() {
 					
 					$("#inputUsuarioLogin").val(data.login);
 					$("#inputUsuarioNombre").val(data.nombre);
+					
+					var nivel = 0;
+					var id = 0;
+					for (var i=0; i<data.grupos.length; i++) {
+						if (data.grupos[i].nivel > nivel) {
+							nivel = data.grupos[i].nivel;
+							id = data.grupos[i].id;
+						}
+					}
+					
+					$("#selectUsuarioGrupo").val(id);
 					
 					$("#inputEliminarUsuario").prop("disabled", false);
 				}, async: false
@@ -28,6 +51,8 @@ function inputGuardarOnClick(event) {
 		
 		usuario.fact = new Date();
 		
+		usuario.grupos = [ { id: $("#selectUsuarioGrupo").val() } ];
+		
 		UsuarioDWR.update(
 			usuario,
 			{
@@ -41,6 +66,7 @@ function inputGuardarOnClick(event) {
 			login: $("#inputUsuarioLogin").val(),
 			nombre: $("#inputUsuarioNombre").val(),
 			contrasena: $("#inputUsuarioContrasena").val(),
+			grupos: [ { id: $("#selectUsuarioGrupo").val() } ],
 			uact: 1,
 			fact: new Date(),
 			term: 1,
