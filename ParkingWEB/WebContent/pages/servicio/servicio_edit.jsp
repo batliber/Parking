@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="/ParkingWEB/dwr/engine.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/util.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/MonedaDWR.js"></script>
+	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ServicioTipoDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/dwr/interface/ServicioPrecioDWR.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="/ParkingWEB/js/util.js"></script>
@@ -27,6 +28,7 @@
 	</div>
 	<div class="divMainWindow">
 		<div class="divFormLabel">Servicio:</div><div id="divServicioNombre"><input type="text" id="inputServicioDescripcion"/></div>
+		<div class="divFormLabel">Tipo:</div><div id="divServicioTipoDescripcion"><select id="selectServicioTipo"></select></div>
 		<div class="divFormLabel">Moneda:</div><div id="divMonedaDescripcion"><select id="selectMoneda"></select></div>
 		<div class="divFormLabel">Precio:</div><div id="divServicioPrecioPrecio"><input type="text" id="inputServicioPrecioPrecio"/></div>
 	</div>

@@ -12,9 +12,26 @@ function reloadData() {
 					$("#tableServicios > tbody:last").append(
 						"<tr id='" + data[i].id + "'"
 							+ "onclick='javascript:trServicioOnClick(event, this);'>"
-							+ "<td class='tdServicioDescripcionServicioPrecio'><div id='divServicioDescripcionServicioPrecio" + data[i].id + "'>" + data[i].servicio.descripcion + "</div></td>"
-							+ "<td class='tdMonedaAbreviacionServicioPrecio'><div id='divMonedaAbreviacionServicioPrecio" + data[i].id + "'>" + data[i].moneda.abreviacion + "</div></td>"
-							+ "<td class='tdPrecioServicioPrecio'><div id='divPrecioServicioPrecio" + data[i].id + "'>"+ new Number(data[i].precio).toFixed(2) + "</div></td>"
+							+ "<td class='tdServicioPrecioServicioDescripcion'>"
+								+ "<div class='divServicioPrecioServicioDescripcion'>" 
+									+ data[i].servicio.descripcion 
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdServicioPrecioMonedaDescripcion'>"
+								+ "<div class='divServicioPrecioMonedaDescripcion'>" 
+									+ data[i].moneda.abreviacion 
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdServicioPrecioPrecio'>"
+								+ "<div class='divServicioPrecioPrecio'>"
+									+ new Number(data[i].precio).toFixed(2) 
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdServicioPrecioServicioServicioTipoDescripcion'>"
+								+ "<div class='divServicioPrecioServicioServicioTipoDescripcion'>" 
+									+ data[i].servicio.servicioTipo.descripcion 
+								+ "</div>"
+							+ "</td>"
 						+ "</tr>"
 					);
 				}

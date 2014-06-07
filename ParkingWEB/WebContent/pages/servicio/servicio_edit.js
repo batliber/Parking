@@ -1,6 +1,18 @@
 var servicioPrecio = null;
 
 $(document).ready(function() {
+	ServicioTipoDWR.list(
+		{
+			callback: function (data) {
+				for (var i=0; i<data.length; i++) {
+					$("#selectServicioTipo").append(
+						"<option value='" + data[i].id + "'>" + data[i].descripcion + "</option>"
+					);
+				}
+			}, async: false
+		}
+	);
+	
 	MonedaDWR.list(
 		{
 			callback: function (data) {
@@ -22,7 +34,8 @@ $(document).ready(function() {
 						servicioPrecio = data;
 						
 						$("#inputServicioDescripcion").val(data.servicio.descripcion);
-						$("#selectMoneda").val(data.moneda.nombre);
+						$("#selectServicioTipo").val(data.servicio.servicioTipo.id);
+						$("#selectMoneda").val(data.moneda.id);
 						$("#inputServicioPrecioPrecio").val(data.precio);
 					}
 				}, async: false
@@ -34,6 +47,12 @@ $(document).ready(function() {
 function inputGrabarServicioPrecioOnClick(event) {
 	if (id != null) {
 		servicioPrecio.servicio.descripcion = $("#inputServicioDescripcion").val();
+		servicioPrecio.servicio.servicioTipo = {
+			id: $("#selectServicioTipo").val()
+		};
+		servicioPrecio.moneda = {
+			id: $("#selectMoneda").val()
+		};
 		servicioPrecio.uact = 1;
 		servicioPrecio.fact = new Date();
 		servicioPrecio.term = 1;
@@ -77,12 +96,12 @@ function inputGrabarServicioPrecioOnClick(event) {
 		servicioPrecio = {
 			precio: $("#inputServicioPrecioPrecio").val(),
 			moneda: {
-				id: 1
+				id: $("#selectMoneda").val()
 			},
 			servicio: {
 				descripcion: $("#inputServicioDescripcion").val(),
 				servicioTipo: {
-					id: 1
+					id: $("#selectServicioTipo").val()
 				},
 				uact: 1,
 				fact: new Date(),

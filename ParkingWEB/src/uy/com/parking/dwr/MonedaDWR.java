@@ -34,17 +34,7 @@ public class MonedaDWR {
 			IMonedaBean iMonedaBean = lookupBean();
 			
 			for (Moneda moneda : iMonedaBean.list()) {
-				MonedaTO monedaTO = new MonedaTO();
-				
-				monedaTO.setAbreviacion(moneda.getAbreviacion());
-				monedaTO.setDescripcion(moneda.getDescripcion());
-
-				monedaTO.setFact(moneda.getFact());
-				monedaTO.setId(moneda.getId());
-				monedaTO.setTerm(moneda.getTerm());
-				monedaTO.setUact(moneda.getUact());
-				
-				result.add(monedaTO);
+				result.add(transform(moneda, false));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,17 +64,7 @@ public class MonedaDWR {
 		try {
 			IMonedaBean iMonedaBean = lookupBean();
 			
-			Moneda moneda = new Moneda();
-			
-			moneda.setAbreviacion(monedaTO.getAbreviacion());
-			moneda.setDescripcion(monedaTO.getDescripcion());			
-			
-			moneda.setId(monedaTO.getId());
-			moneda.setFact(monedaTO.getFact());
-			moneda.setTerm(monedaTO.getTerm());
-			moneda.setUact(monedaTO.getUact());
-			
-			iMonedaBean.update(moneda);
+			iMonedaBean.update(transform(monedaTO, false));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,13 +1,58 @@
-.tdServicioDescripcionServicioPrecio div {
+#tableServicios {
+	width: 700px;
+	height: 318px;
+}
+
+#tableServicios thead {
+	position: fixed;
+}
+
+#tableServicios thead tr .tdServicioPrecioServicioDescripcion {
 	width: 400px;
 }
 
-.tdMonedaAbreviacionServicioPrecio div {
+#tableServicios thead tr .tdServicioPrecioMonedaDescripcion {
 	width: 75px;
 }
 
-.tdPrecioServicioPrecio div {
+#tableServicios thead tr .tdServicioPrecioPrecio {
 	width: 100px;
+}
+
+#tableServicios thead tr .tdServicioPrecioServicioServicioTipoDescripcion {
+	width: 100px;
+}
+
+#tableServicios tbody {
+	position: fixed;
+	margin-top: 17px;
+	overflow: auto;
+	width: 697px;
+	height: 299px;
+}
+
+#tableServicios tbody tr td .divServicioPrecioServicioDescripcion {
+	text-align: left;
+	margin-left: 2px;
+	width: 398px;
+}
+
+#tableServicios tbody tr td .divServicioPrecioMonedaDescripcion {
+	text-align: left;
+	margin-left: 2px;
+	width: 73px;
+}
+
+#tableServicios tbody tr td .divServicioPrecioPrecio {
+	text-align: left;
+	margin-left: 2px;
+	width: 98px;
+}
+
+#tableServicios tbody tr td .divServicioPrecioServicioServicioTipoDescripcion {
+	text-align: left;
+	margin-left: 2px;
+	width: 98px;
 }
 
 #divIFrameServicioPrecio {

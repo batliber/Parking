@@ -27,13 +27,15 @@
 		<table id="tableServicios" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
-					<td><div>Descripci&oacute;n</div></td>
-					<td><div>Moneda</div></td>
-					<td><div>Precio</div></td>
+					<td class="tdServicioPrecioServicioDescripcion"><div>Descripci&oacute;n</div></td>
+					<td class="tdServicioPrecioMonedaDescripcion"><div>Moneda</div></td>
+					<td class="tdServicioPrecioPrecio"><div>Precio</div></td>
+					<td class="tdServicioPrecioServicioServicioTipoDescripcion"><div>Tipo</div></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
