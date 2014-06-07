@@ -38,7 +38,12 @@ public class ServicioPrecioBean implements IServicioPrecioBean {
 		Collection<ServicioPrecio> result = new LinkedList<ServicioPrecio>();
 		
 		try {
-			Query query = entityManager.createQuery("SELECT sp FROM ServicioPrecio sp WHERE sp.validoHasta = null");
+			Query query = entityManager.createQuery(
+				"SELECT sp"
+				+ " FROM ServicioPrecio sp"
+				+ " WHERE sp.validoHasta = null"
+				+ " ORDER BY sp.servicio.servicioTipo.id, sp.servicio.descripcion"
+			);
 			
 			for (Object object : query.getResultList()) {
 				result.add((ServicioPrecio) object);
