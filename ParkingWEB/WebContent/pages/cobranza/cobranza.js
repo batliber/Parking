@@ -71,3 +71,14 @@ function inputDeshacerCobranzaOnClick(event) {
 function inputActualizarOnClick(event) {
 	reloadData();
 }
+
+function inputAjusteOnClick(event) {
+	document.getElementById("iFrameAjuste").src = "./ajuste.jsp";
+	showPopUp(document.getElementById("divIFrameAjuste"));
+}
+
+function divCloseOnClick(event, element) {
+	closePopUp(event, element.parentNode.parentNode);
+	
+	reloadData();
+}

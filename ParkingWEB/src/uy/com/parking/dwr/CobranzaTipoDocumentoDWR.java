@@ -1,5 +1,8 @@
 package uy.com.parking.dwr;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -25,6 +28,24 @@ public class CobranzaTipoDocumentoDWR {
 		return (ICobranzaTipoDocumentoBean) context.lookup(lookupName);
 	}
 	
+	public Collection<CobranzaTipoDocumentoTO> list() {
+		Collection<CobranzaTipoDocumentoTO> result = new LinkedList<CobranzaTipoDocumentoTO>();
+		
+		try {
+			ICobranzaTipoDocumentoBean iCobranzaTipoDocumentoBean = lookupBean();
+			
+			for (CobranzaTipoDocumento cobranzaTipoDocumento : iCobranzaTipoDocumentoBean.list()) {
+				result.add(transform(cobranzaTipoDocumento, false));
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public CobranzaTipoDocumentoTO getTipoDocumentoCobranzaManual() {
 		CobranzaTipoDocumentoTO result = null;
 		
@@ -34,7 +55,30 @@ public class CobranzaTipoDocumentoDWR {
 			result = 
 				transform(
 					iCobranzaTipoDocumentoBean.getById(
-						new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.cobranzaManual"))
+						new Long(Configuration.getInstance().getProperty(
+							"CobranzaTipoDocumento.cobranzaManual")
+						)
+					), false
+				);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public CobranzaTipoDocumentoTO getTipoDocumentoAjusteCobranza() {
+		CobranzaTipoDocumentoTO result = null;
+		
+		try {
+			ICobranzaTipoDocumentoBean iCobranzaTipoDocumentoBean = lookupBean();
+			
+			result = 
+				transform(
+					iCobranzaTipoDocumentoBean.getById(
+						new Long(Configuration.getInstance().getProperty(
+							"CobranzaTipoDocumento.ajusteCobranza")
+						)
 					), false
 				);
 		} catch (Exception e) {

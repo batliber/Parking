@@ -43,7 +43,11 @@
 			<div id="divFecha"><%= format.format(facturaTO.getFecha()) %></div>
 			<div id="divNumero"><%= facturaTO.getNumero() %></div>
 		</div>
-		<div id="divNombre" class="divNombre"><%= facturaTO.getNombre() + " " + facturaTO.getApellido() %></div>
+		<div id="divNombre" class="divNombre">
+			<%= facturaTO.getNombre().equals(facturaTO.getApellido()) ? 
+					facturaTO.getNombre() : 
+					(facturaTO.getNombre() + " " + facturaTO.getApellido()) %>
+		</div>
 		<div id="divDireccion" class="divDireccion">
 			<%= facturaTO.getDomicilio() != null ? facturaTO.getDomicilio() : "&nbsp;" %>
 		</div>

@@ -8,7 +8,9 @@ import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -56,6 +58,90 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 	
 	@EJB
 	private IServicioBean iServicioBean;
+	
+	public Collection<CobranzaMovimiento> listDeudas() {
+		Collection<CobranzaMovimiento> result = new LinkedList<CobranzaMovimiento>();
+		
+		try {
+			Query query = entityManager.createQuery(
+				"SELECT cm.moneda.id, cm.cliente.id, cm.servicio.id, SUM(cm.importe), cm.cliente.apellido"
+				+ " FROM CobranzaMovimiento cm"
+				+ " WHERE cm.cliente.fechaBaja IS NULL"
+				+ " AND cm.cobranzaTipoDocumento.id IN ("
+					+ " :cobranzaTipoDocumentoDeudaParkingABITAB,"
+					+ " :cobranzaTipoDocumentoCobranzaParkingABITAB"
+				+ " )"
+				+ " GROUP BY cm.moneda.id, cm.cliente.id, cm.servicio.id, cm.cliente.apellido"
+				+ " ORDER BY cm.cliente.apellido ASC"
+			);
+			query.setParameter(
+				"cobranzaTipoDocumentoDeudaParkingABITAB",
+				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.deudaParkingABITAB"))
+			);
+			query.setParameter(
+				"cobranzaTipoDocumentoCobranzaParkingABITAB",
+				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.cobranzaParkingABITAB"))
+			);
+
+			for (Object object : query.getResultList()) {
+				Object[] tuple = (Object[]) object;
+				
+				CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
+				
+				Moneda moneda = entityManager.find(Moneda.class, tuple[0]);
+				
+				cobranzaMovimiento.setMoneda(moneda);
+				
+				Cliente cliente = entityManager.find(Cliente.class, tuple[1]);
+				
+				cobranzaMovimiento.setCliente(cliente);
+				
+				Servicio servicio = entityManager.find(Servicio.class, tuple[2]);
+				
+				cobranzaMovimiento.setServicio(servicio);
+				
+				cobranzaMovimiento.setImporte((Double) tuple[3]);
+				
+				result.add(cobranzaMovimiento);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente) {
+		Collection<CobranzaMovimiento> result = new LinkedList<CobranzaMovimiento>();
+		
+		try {
+			TypedQuery<CobranzaMovimiento> query = entityManager.createQuery(
+				"SELECT cm"
+				+ " FROM CobranzaMovimiento cm"
+				+ " WHERE cm.cliente.id = :clienteId"
+				+ " AND cm.factura IS NULL"
+				+ " AND cm.proceso IS NOT NULL",
+				CobranzaMovimiento.class
+			);
+			query.setParameter("clienteId", cliente.getId());
+			
+			for (CobranzaMovimiento cobranzaMovimiento : query.getResultList()) {
+				result.add(cobranzaMovimiento);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public void save(CobranzaMovimiento cobranzaMovimiento) {
+		try {
+			entityManager.persist(cobranzaMovimiento);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void procesarArchivoCobranza(String nombreArchivo) {
 		BufferedReader bufferedReader = null;
@@ -632,97 +718,29 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 		}
 	}
 	
-	public Collection<CobranzaMovimiento> listDeudas() {
-		Collection<CobranzaMovimiento> result = new LinkedList<CobranzaMovimiento>();
-		
-		try {
-			Query query = entityManager.createQuery(
-				"SELECT cm.moneda.id, cm.cliente.id, cm.servicio.id, SUM(cm.importe), cm.cliente.apellido"
-				+ " FROM CobranzaMovimiento cm"
-				+ " WHERE cm.cliente.fechaBaja IS NULL"
-				+ " AND cm.cobranzaTipoDocumento.id IN ("
-					+ " :cobranzaTipoDocumentoDeudaParkingABITAB,"
-					+ " :cobranzaTipoDocumentoCobranzaParkingABITAB"
-				+ " )"
-				+ " GROUP BY cm.moneda.id, cm.cliente.id, cm.servicio.id, cm.cliente.apellido"
-				+ " ORDER BY cm.cliente.apellido ASC"
-			);
-			query.setParameter(
-				"cobranzaTipoDocumentoDeudaParkingABITAB",
-				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.deudaParkingABITAB"))
-			);
-			query.setParameter(
-				"cobranzaTipoDocumentoCobranzaParkingABITAB",
-				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.cobranzaParkingABITAB"))
-			);
-
-			for (Object object : query.getResultList()) {
-				Object[] tuple = (Object[]) object;
-				
-				CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
-				
-				Moneda moneda = entityManager.find(Moneda.class, tuple[0]);
-				
-				cobranzaMovimiento.setMoneda(moneda);
-				
-				Cliente cliente = entityManager.find(Cliente.class, tuple[1]);
-				
-				cobranzaMovimiento.setCliente(cliente);
-				
-				Servicio servicio = entityManager.find(Servicio.class, tuple[2]);
-				
-				cobranzaMovimiento.setServicio(servicio);
-				
-				cobranzaMovimiento.setImporte((Double) tuple[3]);
-				
-				result.add(cobranzaMovimiento);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
-	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente) {
-		Collection<CobranzaMovimiento> result = new LinkedList<CobranzaMovimiento>();
-		
-		try {
-			TypedQuery<CobranzaMovimiento> query = entityManager.createQuery(
-				"SELECT cm"
-				+ " FROM CobranzaMovimiento cm"
-				+ " WHERE cm.cliente.id = :clienteId"
-				+ " AND cm.factura IS NULL"
-				+ " AND cm.proceso IS NOT NULL",
-				CobranzaMovimiento.class
-			);
-			query.setParameter("clienteId", cliente.getId());
-			
-			for (CobranzaMovimiento cobranzaMovimiento : query.getResultList()) {
-				result.add(cobranzaMovimiento);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-
 	public Collection<Archivo> listArchivos() {
 		Collection<Archivo> result = new LinkedList<Archivo>();
 		
 		try {
 			File folder = new File(Configuration.getInstance().getProperty("importacion.carpeta"));
 			
-			for (String file : folder.list(
+			File[] files = folder.listFiles(
 				new FilenameFilter() {
 					public boolean accept(File arg0, String arg1) {
 						return !(new File(arg0.getAbsolutePath() + File.separator + arg1).isDirectory());
 					}
 				}
-			)) {
+			);
+			
+			Arrays.sort(files, new Comparator<File>(){
+				public int compare(File arg0, File arg1) {
+					return - new Long(arg0.lastModified()).compareTo(new Long(arg1.lastModified()));
+				}
+			});
+			
+			for (File file : files) {
 				Archivo archivo = new Archivo();
-				archivo.setNombre(file);
+				archivo.setNombre(file.getName());
 				
 				result.add(archivo);
 			}

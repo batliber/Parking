@@ -84,7 +84,9 @@ public class ServicioDWR {
 		
 		servicio.setDescripcion(servicioTO.getDescripcion());
 		
-		servicio.setServicioTipo(ServicioTipoDWR.transform(servicioTO.getServicioTipo()));
+		if (servicioTO.getServicioTipo() != null) {
+			servicio.setServicioTipo(ServicioTipoDWR.transform(servicioTO.getServicioTipo()));
+		}
 		
 		servicio.setFact(servicioTO.getFact());
 		servicio.setId(servicioTO.getId());

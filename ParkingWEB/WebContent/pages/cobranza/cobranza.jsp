@@ -19,9 +19,13 @@
 		<div class="divButton"><input type="submit" value="Deshacer cobranza" onclick="javascript:inputDeshacerCobranzaOnClick(event)"/></div>
 		<div class="divButton"><input type="submit" value="Actualizar" onclick="javascript:inputActualizarOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
+		<div class="divButton"><input type="submit" value="Ajuste" onclick="javascript:inputAjusteOnClick(event)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleTripleSize" class="divButtonTitleBarTitle">Acciones</div>
+		<div id="divButtonTitleTripleSize" class="divButtonTitleBarTitle">Cobranza</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Ajustes</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
@@ -46,5 +50,13 @@
 			</tbody>
 		</table>
 	</div>
+	<div id="divIFrameAjuste" style="display: none;">
+		<div class="divTitleBar">
+			<div class="divTitleBarText" style="float:left;">Ajuste de cobranza</div>
+			<div class="divTitleBarCloseButton" onclick="javascript:divCloseOnClick(event, this)">&nbsp;</div>
+		</div>
+		<iframe id="iFrameAjuste" frameborder="0" src="#"></iframe>
+	</div>
+	<div id="divModalBackground">&nbsp;</div>
 </body>
 </html>

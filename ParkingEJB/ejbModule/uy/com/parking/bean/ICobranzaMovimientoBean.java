@@ -12,6 +12,12 @@ import uy.com.parking.entities.CobranzaMovimiento;
 @Remote
 public interface ICobranzaMovimientoBean {
 
+	public Collection<CobranzaMovimiento> listDeudas();
+	
+	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente);
+	
+	public void save(CobranzaMovimiento cobranzaMovimiento);
+	
 	public void procesarArchivoCobranza(String nombreArchivo);
 
 	public String generarArchivoCobranzaAbitabByFecha(Date fecha);
@@ -21,10 +27,6 @@ public interface ICobranzaMovimientoBean {
 	public void deshacerCobranzaMovimientosByFecha(Date fecha);
 	
 	public void deshacerUltimaImportacion();
-	
-	public Collection<CobranzaMovimiento> listDeudas();
-	
-	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente);
 	
 	public Collection<Archivo> listArchivos();
 }

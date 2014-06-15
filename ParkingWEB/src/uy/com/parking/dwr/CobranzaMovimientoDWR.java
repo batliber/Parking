@@ -50,6 +50,18 @@ public class CobranzaMovimientoDWR {
 		return result;
 	}
 	
+	public void save(CobranzaMovimientoTO cobranzaMovimientoTO) {
+		try {
+			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
+			
+			CobranzaMovimiento cobranzaMovimiento = transform(cobranzaMovimientoTO);
+			
+			iCobranzaMovimientoBean.save(cobranzaMovimiento);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public String generarArchivoCobranzaAbitabByFecha(Date fecha) {
 		String result = null;
 		
