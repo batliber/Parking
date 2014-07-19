@@ -1,0 +1,19 @@
+#divCajaValores {
+	width: 315px;
+}
+
+#tableCajaValores {
+	float: right;
+}
+
+#tableCajaValores thead tr .tdCajaValoresImporte {
+	width: 75px;
+}
+
+#tableCajaValores tbody tr td div input {
+	text-align: right;
+}
+
+#divTotal {
+	text-align: right;
+}

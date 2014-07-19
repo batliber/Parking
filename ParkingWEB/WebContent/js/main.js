@@ -14,11 +14,11 @@ var links = {
 //		descripcion: "Facturas",
 //		nivel: 1
 //	},
-//	caja: {
-//		link: "/ParkingWEB/pages/caja/caja.jsp",
-//		descripcion: "Caja",
-//		nivel: 1
-//	},
+	caja: {
+		link: "/ParkingWEB/pages/caja/caja.jsp",
+		descripcion: "Caja",
+		nivel: 1
+	},
 	abitab: {
 		link: "/ParkingWEB/pages/abitab/abitab.jsp",
 		descripcion: "ABITAB",

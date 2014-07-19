@@ -47,30 +47,25 @@ function inputClienteDocumentoOnChange(event, element) {
 											+ "<td class='tdServicio'"
 												+ "id='" + dataCobranza[i].servicio.id + "' " 
 												+ "stid='" + dataCobranza[i].servicio.servicioTipo.id + "' "
-												+ "title='" + dataCobranza[i].cobranzaTipoDocumento.descripcion + "'>"
-												+ dataCobranza[i].servicio.descripcion
+												+ "title='" + dataCobranza[i].servicio.descripcion + "'>"
+												+ dataCobranza[i].cobranzaTipoDocumento.descripcion
 											+ "</td>"
 											+ "<td class='tdImporteUnitario'>" 
 												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(0) 
 											+ "</td>"
 											+ "<td class='tdCantidad'>1</td>"
-											+ "<td class='tdTotal'>" 
+											+ "<td class='tdNeto'>"
 												+ (dataCobranza[i].importe / (1 + __PORCENTAJE_IVA)).toFixed(0)
+											+ "</td>"
+											+ "<td class='tdTotal'>" 
+												+ dataCobranza[i].importe.toFixed(0)
 											+ "</td>"
 										+ "</tr>"
 									);
 								}
 								
 								if (i == 0) {
-									$("#tableFacturaLineas > tbody:last").append(
-										"<tr>"
-											+ "<td>&nbsp;</td>"
-											+ "<td>&nbsp;</td>"
-											+ "<td>&nbsp;</td>"
-											+ "<td>&nbsp;</td>"
-											+ "<td>&nbsp;</td>"
-										+ "</tr>"
-									);
+									generarDummyRow();
 								}
 								
 								calcularPieDeFactura();
@@ -99,6 +94,8 @@ function inputClienteDocumentoOnChange(event, element) {
 }
 
 function inputAgregarServicioOnClick(event, element) {
+	$("#tableFacturaLineas > tbody:last > .trDummyRow").remove();
+	
 	ServicioPrecioDWR.listVigentes(
 		{
 			callback: function(data) {
@@ -117,18 +114,19 @@ function inputAgregarServicioOnClick(event, element) {
 						+ "<td class='tdAcciones' onclick='javascript:tdAccionesOnClick(event, this)'>"
 							+ "&nbsp;"
 						+ "</td>"
-						+ "<td>"
+						+ "<td class='tdServicio'>"
 							+ "<select id='selectServicio" + servicios 
 								+ "' onchange='javascript:selectServicioOnChange(event, this)'>"
 								+ options
 							+ "</select>" 
 						+ "</td>"
-						+ "<td class='tdImporteUnitario'>&nbsp;</td>"
-						+ "<td>"
+						+ "<td class='tdImporteUnitario'>0</td>"
+						+ "<td class='tdCantidad'>"
 							+ "<input type='text' value='0' class='inputCantidad'" 
 								+ " onchange='javascript:inputCantidadOnChange(event, this)'/>" 
 						+ "</td>"
-						+ "<td>"
+						+ "<td class='tdNeto'>0</td>"
+						+ "<td class='tdTotal'>"
 							+ "<input type='text' value='0' class='inputTotal'"
 								+ " onchange='javascript: inputTotalOnChange(event, this)'/>"
 						+ "</td>"
@@ -143,13 +141,25 @@ function inputAgregarServicioOnClick(event, element) {
 
 function tdAccionesOnClick(event, element) {
 	$(element).parent().remove();
+	
+	var trs = $("#tableFacturaLineas > tbody:last > tr");
+	if (trs.length == 0) {
+		generarDummyRow();
+	}
 }
 
 function selectServicioOnChange(event, element) {
 	var tds = $(element).parent().siblings();
-	$(tds[1]).html("&nbsp;");
-	$($(tds[2]).children()[0]).val(0);
-	$($(tds[3]).children()[0]).val(0);
+	
+	var tdImporteUnitario = $(tds[1]);
+	var tdCantidad = $(tds[2]);
+	var tdNeto = $(tds[3]);
+	var tdTotal = $(tds[4]);
+	
+	tdImporteUnitario.html("0");
+	$(tdCantidad.children()[0]).val(0);
+	tdNeto.html("0");
+	$(tdTotal.children()[0]).val(0);
 	
 	calcularPieDeFactura();
 	
@@ -157,11 +167,9 @@ function selectServicioOnChange(event, element) {
 		$(element).val()
 		, {
 			callback: function(data) {
-				var tds = $(element).parent().siblings();
+				tdImporteUnitario.html(data.precio.toFixed(0));
 				
-				$(tds[1]).html((data.precio / (1 + __PORCENTAJE_IVA)).toFixed(2));
-				
-				$($(tds[2]).children()[0]).focus();
+				$(tdCantidad.children()[0]).focus();
 			}, async: false
 		}
 	);
@@ -170,7 +178,12 @@ function selectServicioOnChange(event, element) {
 function inputCantidadOnChange(event, element) {
 	var tds = $(element).parent().siblings();
 	
-	$(tds[3]).children("input").val($(element).val() * $(tds[2]).html());
+	var tdImporteUnitario = $(tds[2]);
+	var tdNeto = $(tds[3]);
+	var tdTotal = $(tds[4]);
+	
+	tdNeto.html((tdImporteUnitario.html() * $(element).val() / (1 + __PORCENTAJE_IVA)).toFixed(0));
+	tdTotal.children("input").val($(element).val() * tdImporteUnitario.html());
 	
 	calcularPieDeFactura();
 }
@@ -178,30 +191,40 @@ function inputCantidadOnChange(event, element) {
 function inputTotalOnChange(event, element) {
 	var tds = $(element).parent().siblings();
 	
-	if ($(tds[2]).html() > 0) {
-		$(tds[3]).children("input").val($(element).val() / $(tds[2]).html());
+	var tdImporteUnitario = $(tds[2]);
+	var tdCantidad = $(tds[3]);
+	var tdNeto = $(tds[4]);
+	
+	if ($(element).val() > 0) {
+		tdCantidad.children("input").val(
+			($(element).val() / tdImporteUnitario.html()).toFixed(0)
+		);
+		tdNeto.html(
+			($(element).val() / (1 + __PORCENTAJE_IVA)).toFixed(0)
+		);
 	} else {
-		$(tds[3]).children("input").val(0);
+		tdCantidad.children("input").val(0);
+		tdNeto.html("0");
 	}
 	
 	calcularPieDeFactura();
 }
 
 function calcularPieDeFactura() {
-	var importeSubtotal = 0;
+	var importeTotal = 0;
 	
 	var trsCobranzaMovimientos = $(".trCobranzaMovimiento");
 	for (var i=0; i<trsCobranzaMovimientos.length; i++) {
-		importeSubtotal += 1 * $($(trsCobranzaMovimientos[i]).children()[4]).html();
+		importeTotal += 1 * $($(trsCobranzaMovimientos[i]).children()[5]).html();
 	}
 	
 	var trsServicioAdicional = $(".trServicioAdicional");
 	for (var i=0; i<trsServicioAdicional.length; i++) {
-		importeSubtotal += 1 * $($($(trsServicioAdicional[i]).children()[4]).children()[0]).val();
+		importeTotal += 1 * $($($(trsServicioAdicional[i]).children()[5]).children()[0]).val();
 	}
 	
-	var importeIVA = importeSubtotal * __PORCENTAJE_IVA;
-	var importeTotal = importeSubtotal + importeIVA;
+	var importeSubtotal = importeTotal / (1 + __PORCENTAJE_IVA);
+	var importeIVA = importeTotal - importeSubtotal;
 	
 	$("#divImporteSubtotal").html(importeSubtotal.toFixed(0));
 	$("#divImporteIVA").html(importeIVA.toFixed(0));
@@ -253,16 +276,21 @@ function inputGenerarFacturaOnClick(event, element) {
 			id: $(trsCobranzaMovimientos[i]).attr("id")
 		};
 		
+		var tdServicio = $(tds[1]);
+		var tdImporteUnitario = $(tds[2]);
+		var tdCantidad = $(tds[3]);
+		var tdNeto = $(tds[4]);
+		
 		factura.facturaLineas[factura.facturaLineas.length] = {
 			numero: numeroLinea,
-			detalle: $(tds[1]).html(),
-			importeUnitario: $(tds[2]).html(),
-			unidades: $(tds[3]).html(),
-			importeTotal: $(tds[4]).html(),
+			detalle: tdServicio.html(),
+			importeUnitario: tdImporteUnitario.html(),
+			unidades: tdCantidad.html(),
+			importeTotal: tdNeto.html(),
 			servicio: {
-				id: $(tds[1]).attr("id"),
+				id: tdServicio.attr("id"),
 				servicioTipo: {
-					id: $(tds[1]).attr("stid")
+					id: tdServicio.attr("stid")
 				}
 			},
 			uact: 1,
@@ -280,16 +308,21 @@ function inputGenerarFacturaOnClick(event, element) {
 				for (var i=0; i<trsServicioAdicional.length; i++) {
 					var tds = $(trsServicioAdicional[i]).children();
 					
+					var tdServicio = $(tds[1]);
+					var tdImporteUnitario = $(tds[2]);
+					var tdCantidad = $(tds[3]);
+					var tdNeto = $(tds[4]);
+					
 					var facturaLinea = {
 						numero: numeroLinea,
-						detalle: $($(tds[1]).children()[0]).find("option:selected").text(),
-						importeUnitario: $(tds[2]).html(),
-						unidades: $($(tds[3]).children(0)).val(),
-						importeTotal: $($(tds[4]).children(0)).val(),
+						detalle: $(tdServicio.children()[0]).find("option:selected").text(),
+						importeUnitario: tdImporteUnitario.html(),
+						unidades: $(tdCantidad.children(0)).val(),
+						importeTotal: tdNeto.html(),
 						servicio: {
-							id: $($(tds[1]).children()[0]).find("option:selected").attr("id"),
+							id: $(tdServicio.children()[0]).find("option:selected").attr("id"),
 							servicioTipo: {
-								id: $($(tds[1]).children()[0]).find("option:selected").attr("stid")
+								id: $(tdServicio.children()[0]).find("option:selected").attr("stid")
 							}
 						},
 						uact: 1,
@@ -336,10 +369,21 @@ function inputGenerarFacturaOnClick(event, element) {
 					$("#tableFacturaLineas > tbody:last").append(
 						"<tr class='trCobranzaMovimiento'>"
 							+ "<td>&nbsp;</td>"
-							+ "<td>" + data.facturaLineas[i].detalle + "</td>"
-							+ "<td>" + data.facturaLineas[i].importeUnitario + "</td>"
-							+ "<td>" + data.facturaLineas[i].unidades + "</td>"
-							+ "<td>" + data.facturaLineas[i].importeTotal + "</td>"
+							+ "<td class='tdServicio'>" 
+								+ data.facturaLineas[i].detalle 
+							+ "</td>"
+							+ "<td class='tdImporteUnitario'>" 
+								+ data.facturaLineas[i].importeUnitario 
+							+ "</td>"
+							+ "<td class='tdCantidad'>" 
+								+ data.facturaLineas[i].unidades 
+							+ "</td>"
+							+ "<td class='tdNeto'>" 
+								+ data.facturaLineas[i].importeTotal
+							+ "</td>"
+							+ "<td class='tdTotal'>" 
+								+ (data.facturaLineas[i].importeTotal * (1 + __PORCENTAJE_IVA)).toFixed(0)
+							+ "</td>"
 						+ "</tr>"
 					);
 				}
@@ -372,15 +416,7 @@ function clearForm(clearAll) {
 	
 	$("#tableFacturaLineas > tbody:last > tr").remove();
 	
-	$("#tableFacturaLineas > tbody:last").append(
-		"<tr>"
-			+ "<td>&nbsp;</td>"
-			+ "<td>&nbsp;</td>"
-			+ "<td>&nbsp;</td>"
-			+ "<td>&nbsp;</td>"
-			+ "<td>&nbsp;</td>"
-		+ "</tr>"
-	);
+	generarDummyRow();
 	
 	$("#divImporteSubtotal").html("&nbsp;");
 	$("#divImporteIVA").html("&nbsp;");
@@ -389,4 +425,17 @@ function clearForm(clearAll) {
 	$("#inputAgregarServicio").prop("disabled", true);
 	$("#inputGenerarFactura").prop("disabled", true);
 	$("#inputImprimirFactura").prop("disabled", true);
+}
+
+function generarDummyRow() {
+	$("#tableFacturaLineas > tbody:last").append(
+		"<tr class='trDummyRow'>"
+			+ "<td>&nbsp;</td>"
+			+ "<td>&nbsp;</td>"
+			+ "<td>&nbsp;</td>"
+			+ "<td>&nbsp;</td>"
+			+ "<td>&nbsp;</td>"
+			+ "<td>&nbsp;</td>"
+		+ "</tr>"
+	);
 }

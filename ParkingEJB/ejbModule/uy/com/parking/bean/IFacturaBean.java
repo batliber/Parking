@@ -1,6 +1,7 @@
 package uy.com.parking.bean;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.Remote;
 
@@ -11,6 +12,8 @@ import uy.com.parking.entities.Factura;
 public interface IFacturaBean {
 
 	public Collection<Factura> list();
+	
+	public Collection<Factura> listDesdeHasta(Date desde, Date hasta);
 	
 	public Factura getById(Long id);
 	

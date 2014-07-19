@@ -55,14 +55,16 @@
 				<thead>
 					<tr>
 						<td class="tdAcciones">&nbsp;</td>
-						<td class="tdServicio">Servicio</td>
+						<td class="tdServicio">Concepto</td>
 						<td class="tdImporteUnitario">Importe unit.</td>
 						<td class="tdCantidad">Cantidad</td>
+						<td class="tdNeto">Neto</td>
 						<td class="tdTotal">Total</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr class="trDummyRow">
+						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>

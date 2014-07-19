@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpSession;
 
+import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.annotations.RemoteProxy;
 
 import uy.com.parking.bean.CajaMovimientoBean;
@@ -72,6 +74,30 @@ public class CajaMovimientoDWR {
 				
 				result.add(cajaMovimientoTO);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public CajaMovimientoTO getUltimoMovimientoByCurrentUser() {
+		CajaMovimientoTO result = null;
+		
+		try {
+			HttpSession httpSession = WebContextFactory.get().getSession(false);
+			
+			if ((httpSession != null) && (httpSession.getAttribute("sesion") != null)) {
+				Long usuarioId = (Long) httpSession.getAttribute("sesion");
+				
+				ICajaMovimientoBean iCajaMovimientoBean = lookupBean();
+				
+				CajaMovimiento cajaMovimiento = iCajaMovimientoBean.getUltimoMovimientoByUsuario(usuarioId);
+				if (cajaMovimiento != null) {
+					result = transform(cajaMovimiento);
+				}
+			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,5 +179,28 @@ public class CajaMovimientoDWR {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static CajaMovimientoTO transform(CajaMovimiento cajaMovimiento) {
+		CajaMovimientoTO cajaMovimientoTO = new CajaMovimientoTO();
+		
+		cajaMovimientoTO.setCajaTipoDocumento(
+			CajaTipoDocumentoDWR.transform(
+				cajaMovimiento.getCajaTipoDocumento()
+			)
+		);
+		
+		cajaMovimientoTO.setDocumentoId(cajaMovimiento.getDocumentoId());
+		cajaMovimientoTO.setFecha(cajaMovimiento.getFecha());
+		cajaMovimientoTO.setImporte(cajaMovimiento.getImporte());
+		cajaMovimientoTO.setMoneda(MonedaDWR.transform(cajaMovimiento.getMoneda(), false));
+		cajaMovimientoTO.setObservaciones(cajaMovimiento.getObservaciones());
+		
+		cajaMovimientoTO.setId(cajaMovimiento.getId());
+		cajaMovimientoTO.setUact(cajaMovimiento.getUact());
+		cajaMovimientoTO.setFact(cajaMovimiento.getFact());
+		cajaMovimientoTO.setTerm(cajaMovimiento.getTerm());
+		
+		return cajaMovimientoTO;
 	}
 }

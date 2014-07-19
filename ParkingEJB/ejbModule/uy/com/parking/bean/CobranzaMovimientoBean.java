@@ -69,7 +69,8 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				+ " WHERE cm.cliente.fechaBaja IS NULL"
 				+ " AND cm.cobranzaTipoDocumento.id IN ("
 					+ " :cobranzaTipoDocumentoDeudaParkingABITAB,"
-					+ " :cobranzaTipoDocumentoCobranzaParkingABITAB"
+					+ " :cobranzaTipoDocumentoCobranzaParkingABITAB,"
+					+ " :cobranzaTipoDocumentoAjusteCobranza"
 				+ " )"
 				+ " GROUP BY cm.moneda.id, cm.cliente.id, cm.servicio.id, cm.cliente.apellido"
 				+ " ORDER BY cm.cliente.apellido ASC"
@@ -81,6 +82,10 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 			query.setParameter(
 				"cobranzaTipoDocumentoCobranzaParkingABITAB",
 				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.cobranzaParkingABITAB"))
+			);
+			query.setParameter(
+				"cobranzaTipoDocumentoAjusteCobranza",
+				new Long(Configuration.getInstance().getProperty("CobranzaTipoDocumento.ajusteCobranza"))
 			);
 
 			for (Object object : query.getResultList()) {

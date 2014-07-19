@@ -3,6 +3,8 @@ package uy.com.parking.dwr;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +49,41 @@ public class FacturaDWR {
 			IFacturaBean iFacturaBean = lookupBean();
 			
 			for (Factura factura : iFacturaBean.list()) {
+				result.add(this.transform(factura));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public Collection<FacturaTO> listDesdeHasta(Date desde, Date hasta) {
+		Collection<FacturaTO> result = new LinkedList<FacturaTO>();
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			GregorianCalendar gregorianCalendar = new GregorianCalendar();
+			gregorianCalendar.setTime(desde);
+			
+			gregorianCalendar.set(GregorianCalendar.HOUR_OF_DAY, 0);
+			gregorianCalendar.set(GregorianCalendar.MINUTE, 0);
+			gregorianCalendar.set(GregorianCalendar.SECOND, 0);
+			gregorianCalendar.set(GregorianCalendar.MILLISECOND, 0);
+			
+			Date normalizedDesde = gregorianCalendar.getTime();
+			
+			gregorianCalendar.setTime(hasta);
+			
+			gregorianCalendar.set(GregorianCalendar.HOUR_OF_DAY, 23);
+			gregorianCalendar.set(GregorianCalendar.MINUTE, 59);
+			gregorianCalendar.set(GregorianCalendar.SECOND, 59);
+			gregorianCalendar.set(GregorianCalendar.MILLISECOND, 999);
+			
+			Date normalizedHasta = gregorianCalendar.getTime();
+			
+			for (Factura factura : iFacturaBean.listDesdeHasta(normalizedDesde, normalizedHasta)) {
 				result.add(this.transform(factura));
 			}
 		} catch (Exception e) {

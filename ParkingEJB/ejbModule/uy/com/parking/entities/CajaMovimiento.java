@@ -23,7 +23,7 @@ public class CajaMovimiento extends BaseEntity {
 	@Column(name = "observaciones")
 	private String observaciones;
 
-	@Column(name = "documentoId")
+	@Column(name = "documento_id")
 	private Long documentoId;
 
 	@ManyToOne(optional = false)

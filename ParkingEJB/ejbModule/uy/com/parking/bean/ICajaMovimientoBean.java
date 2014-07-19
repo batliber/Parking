@@ -11,6 +11,8 @@ public interface ICajaMovimientoBean {
 
 	public Collection<CajaMovimiento> list();
 	
+	public CajaMovimiento getUltimoMovimientoByUsuario(Long usuarioId);
+	
 	public void save(CajaMovimiento cajaMovimiento);
 	
 	public void remove(CajaMovimiento cajaMovimiento);

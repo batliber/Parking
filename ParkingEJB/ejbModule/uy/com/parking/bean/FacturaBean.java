@@ -63,11 +63,13 @@ public class FacturaBean implements IFacturaBean {
 		Collection<Factura> result = new LinkedList<Factura>();
 
 		try {
-			Query query = entityManager.createQuery("SELECT f FROM Factura f");
+			TypedQuery<Factura> query = 
+				entityManager.createQuery(
+					"SELECT f FROM Factura f",
+					Factura.class
+				);
 
-			for (Object object : query.getResultList()) {
-				result.add((Factura) object);
-			}
+			result = query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,6 +77,29 @@ public class FacturaBean implements IFacturaBean {
 		return result;
 	}
 
+	public Collection<Factura> listDesdeHasta(Date desde, Date hasta) {
+		Collection<Factura> result = new LinkedList<Factura>();
+
+		try {
+			TypedQuery<Factura> query = 
+				entityManager.createQuery(
+					"SELECT f"
+					+ " FROM Factura f"
+					+ " WHERE f.fecha >= :desde"
+					+ " AND f.fecha <= :hasta",
+					Factura.class
+				);
+			query.setParameter("desde", desde);
+			query.setParameter("hasta", hasta);
+
+			result = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
 	public Factura getById(Long id) {
 		Factura result = null;
 

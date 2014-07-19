@@ -89,11 +89,11 @@
 	width: 25%;
 }
 
-#tdEstacionamiento {
+.tdEstacionamiento {
 	text-align: right;
 }
 
-#tdOtros {
+.tdOtros {
 	text-align: right;
 }
 

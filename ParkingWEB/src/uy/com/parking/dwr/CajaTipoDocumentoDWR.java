@@ -89,4 +89,18 @@ public class CajaTipoDocumentoDWR {
 			e.printStackTrace();
 		}
 	}
+
+	public static CajaTipoDocumentoTO transform(CajaTipoDocumento cajaTipoDocumento) {
+		CajaTipoDocumentoTO cajaTipoDocumentoTO = new CajaTipoDocumentoTO();
+		
+		cajaTipoDocumentoTO.setDescripcion(cajaTipoDocumento.getDescripcion());
+		cajaTipoDocumentoTO.setSigno(cajaTipoDocumento.getSigno());
+		
+		cajaTipoDocumentoTO.setId(cajaTipoDocumento.getId());
+		cajaTipoDocumentoTO.setUact(cajaTipoDocumento.getUact());
+		cajaTipoDocumentoTO.setFact(cajaTipoDocumento.getFact());
+		cajaTipoDocumentoTO.setTerm(cajaTipoDocumento.getTerm());
+		
+		return cajaTipoDocumentoTO;
+	}
 }

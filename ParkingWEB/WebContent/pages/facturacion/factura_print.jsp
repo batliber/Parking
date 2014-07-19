@@ -21,6 +21,7 @@
 <%
 	FacturaTO facturaTO = new FacturaDWR().getById(new Long(request.getParameter("id")));
 
+/*
 	Double importeEstacionamiento = new Double(0);
 	Double importeOtros = new Double(0);
 	
@@ -31,6 +32,7 @@
 			importeOtros += facturaLineaTO.getImporteTotal();
 		}
 	}
+*/
 
 	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -54,7 +56,7 @@
 		<div class="divRUT">
 			<div id="divDocumento"><%= facturaTO.getDocumento() %></div>
 			<div id="divConsumidorFinal">&nbsp;</div>
-			<div id="divTipoDocumento">&nbsp;</div>
+			<div id="divTipoDocumento">Contado</div>
 		</div>
 		<div class="divFacturaLineas">
 			<table id="tableFacturaLineas" border="0" cellspacing="0" cellpadding="0">
@@ -65,14 +67,25 @@
 					</tr>
 				</thead>
 				<tbody>
+	<% for (FacturaLineaTO facturaLineaTO : facturaTO.getFacturaLineas()) { %>
+<!-- 
 					<tr class="trFacturaLinea">
 						<td>&nbsp;</td>
-						<td id="tdEstacionamiento"><%= decimalFormat.format(importeEstacionamiento) %></td>
+						<td id="tdEstacionamiento"><%= "" /* decimalFormat.format(importeEstacionamiento) */ %></td>
 					</tr>
 					<tr class="trFacturaLinea">
 						<td>&nbsp;</td>
-						<td id="tdOtros"><%= decimalFormat.format(importeOtros) %></td>
+						<td id="tdOtros"><%= "" /* decimalFormat.format(importeOtros) */ %></td>
 					</tr>
+					<tr>
+						<td colspan="2">&nbsp;</td>
+					</tr>
+ -->
+ 					<tr class="trFacturaLinea">
+ 						<td><%= facturaLineaTO.getDetalle() %></td>
+ 						<td class="tdEstacionamiento"><%= facturaLineaTO.getImporteTotal() %></td>
+ 					</tr>
+	<% } %>
 					<tr>
 						<td colspan="2">&nbsp;</td>
 					</tr>

@@ -24,6 +24,11 @@
 	
 }
 
+#divFacturaLineas {
+	float: left;
+	width: 1000px;
+}
+
 #tableFacturaLineas thead tr .tdAcciones {
 	width: 50px;
 }
@@ -37,11 +42,15 @@
 }
 
 #tableFacturaLineas thead tr .tdCantidad {
-	width: 140px;
+	width: 100px;
+}
+
+#tableFacturaLineas thead tr .tdNeto {
+	width: 80px;
 }
 
 #tableFacturaLineas thead tr .tdTotal {
-	width: 140px;
+	width: 100px;
 }
 
 #tableFacturaLineas tbody tr .tdAcciones {
@@ -64,19 +73,26 @@
 }
 
 #tableFacturaLineas tbody tr .tdCantidad {
-	width: 140px;
+	width: 100px;
+	text-align: right;
+}
+
+#tableFacturaLineas tbody tr .tdNeto {
+	width: 80px;
 	text-align: right;
 }
 
 #tableFacturaLineas tbody tr .tdTotal {
-	width: 140px;
+	width: 100px;
 	text-align: right;
 }
 
 .inputCantidad {
 	text-align: right;
+	width: 90px;
 }
 
 .inputTotal {
 	text-align: right;
+	width: 90px;
 }

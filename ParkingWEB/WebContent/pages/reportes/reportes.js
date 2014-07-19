@@ -10,7 +10,9 @@ $(document).ready(function() {
 });
 
 function reloadData() {
-	FacturaDWR.list(
+	FacturaDWR.listDesdeHasta(
+		parseShortDate($("#inputDesde").val()),
+		parseShortDate($("#inputHasta").val()),
 		{
 			callback: function(data) {
 				$("#tableFacturas > tbody:last > tr").remove();
@@ -31,7 +33,7 @@ function reloadData() {
 							+ "</td>"
 							+ "<td class='tdFacturaCliente'>"
 								+ "<div class='divFacturaCliente'>" 
-									+ data[i].cliente.nombre + " " + data[i].cliente.apellido
+									+ data[i].apellido + ", " + data[i].nombre
 								+ "</div>"
 							+ "</td>"
 							+ "<td class='tdFacturaMoneda'>"
@@ -50,6 +52,14 @@ function reloadData() {
 			}, async: false
 		}
 	);
+}
+
+function inputDesdeOnChange(event, element) {
+	reloadData();
+}
+
+function inputHastaOnChange(event, element) {
+	reloadData();
 }
 
 function trFacturaOnClick(event, element) {
