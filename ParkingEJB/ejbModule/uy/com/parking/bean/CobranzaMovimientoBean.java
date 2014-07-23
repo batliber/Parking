@@ -140,6 +140,29 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 		return result;
 	}
 
+	public Collection<CobranzaMovimiento> listHistorialByCliente(Cliente cliente) {
+		Collection<CobranzaMovimiento> result = new LinkedList<CobranzaMovimiento>();
+		
+		try {
+			TypedQuery<CobranzaMovimiento> query = entityManager.createQuery(
+				"SELECT cm"
+				+ " FROM CobranzaMovimiento cm"
+				+ " WHERE cm.cliente.id = :clienteId"
+				+ " ORDER BY cm.id DESC",
+				CobranzaMovimiento.class
+			);
+			query.setParameter("clienteId", cliente.getId());
+			
+			for (CobranzaMovimiento cobranzaMovimiento : query.getResultList()) {
+				result.add(cobranzaMovimiento);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(CobranzaMovimiento cobranzaMovimiento) {
 		try {
 			entityManager.persist(cobranzaMovimiento);

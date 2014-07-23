@@ -1,0 +1,74 @@
+.divFullWidth {
+	float: left;
+	width: 500px;
+	height: 18px;
+	padding-top: 2px;
+}
+
+#tableCobranzaMovimientos {
+	width: 718px;
+	height: 178px;
+}
+
+#tableCobranzaMovimientos thead {
+	position: fixed;
+}
+
+#tableCobranzaMovimientos thead tr .tdFecha {
+	width: 75px;
+}
+
+#tableCobranzaMovimientos thead tr .tdCobranzaTipoDocumento {
+	width: 200px;
+}
+
+#tableCobranzaMovimientos thead tr .tdServicio {
+	width: 200px;
+}
+
+#tableCobranzaMovimientos thead tr .tdMoneda {
+	width: 65px;
+}
+
+#tableCobranzaMovimientos thead tr .tdImporte {
+	width: 75px;
+}
+
+#tableCobranzaMovimientos thead tr .tdFacturaNumero {
+	width: 75px;
+}
+
+#tableCobranzaMovimientos tbody {
+	position: fixed;
+	margin-top: 17px;
+	overflow: auto;
+	width: 716px;
+	height: 159px;
+}
+
+#tableCobranzaMovimientos tbody tr .tdFecha {
+	width: 75px;
+	text-align: center;
+}
+
+#tableCobranzaMovimientos tbody tr .tdCobranzaTipoDocumento {
+	width: 200px;
+}
+
+#tableCobranzaMovimientos tbody tr .tdServicio {
+	width: 200px;
+}
+
+#tableCobranzaMovimientos tbody tr .tdMoneda {
+	width: 65px;
+}
+
+#tableCobranzaMovimientos tbody tr .tdImporte {
+	width: 75px;
+	text-align: right;
+}
+
+#tableCobranzaMovimientos tbody tr .tdFacturaNumero {
+	width: 75px;
+	text-align: right;
+}

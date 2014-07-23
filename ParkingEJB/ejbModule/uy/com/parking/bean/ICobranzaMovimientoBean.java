@@ -14,6 +14,8 @@ public interface ICobranzaMovimientoBean {
 
 	public Collection<CobranzaMovimiento> listDeudas();
 	
+	public Collection<CobranzaMovimiento> listHistorialByCliente(Cliente cliente);
+	
 	public Collection<CobranzaMovimiento> listSinFacturarByCliente(Cliente cliente);
 	
 	public void save(CobranzaMovimiento cobranzaMovimiento);

@@ -57,6 +57,13 @@
 		</div>
 		<iframe id="iFrameAjuste" frameborder="0" src="#"></iframe>
 	</div>
+	<div id="divIFrameHistorial" style="display: none;">
+		<div class="divTitleBar">
+			<div class="divTitleBarText" style="float:left;">Historial de cobranza</div>
+			<div class="divTitleBarCloseButton" onclick="javascript:divCloseOnClick(event, this)">&nbsp;</div>
+		</div>
+		<iframe id="iFrameHistorial" frameborder="0" src="#"></iframe>
+	</div>
 	<div id="divModalBackground">&nbsp;</div>
 </body>
 </html>

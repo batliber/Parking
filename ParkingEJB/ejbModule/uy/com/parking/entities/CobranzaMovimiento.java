@@ -45,7 +45,7 @@ public class CobranzaMovimiento extends BaseEntity {
 	@JoinColumn(name = "servicio_id", nullable = false)
 	private Servicio servicio;
 
-	@ManyToOne
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "factura_id", nullable = true)
 	private Factura factura;
 

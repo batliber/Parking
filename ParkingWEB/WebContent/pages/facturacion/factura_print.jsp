@@ -83,7 +83,7 @@
  -->
  					<tr class="trFacturaLinea">
  						<td><%= facturaLineaTO.getDetalle() %></td>
- 						<td class="tdEstacionamiento"><%= facturaLineaTO.getImporteTotal() %></td>
+ 						<td class="tdEstacionamiento"><%= decimalFormat.format(facturaLineaTO.getImporteTotal()) %></td>
  					</tr>
 	<% } %>
 					<tr>

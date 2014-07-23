@@ -1,6 +1,7 @@
 var __PORCENTAJE_IVA = 0.22;
 var __CLIENTE_GENERICO_DOCUMENTO = 1;
 var __CLIENTE_GENERICO_ID = 0;
+var __SERVICIO_REDONDEO = null;
 
 var servicios = 0;
 
@@ -12,6 +13,14 @@ $(document).ready(function() {
 		{
 			callback: function(data) {
 				__CLIENTE_GENERICO_ID = data.id;
+			}, async: false
+		}
+	);
+	
+	ServicioDWR.getServicioRedondeo(
+		{
+			callback: function(data) {
+				__SERVICIO_REDONDEO = data;
 			}, async: false
 		}
 	);
@@ -109,7 +118,7 @@ function inputAgregarServicioOnClick(event, element) {
 						+ "</option>";
 				}
 				
-				$("#tableFacturaLineas > tbody:last").append(
+				html = 
 					"<tr class='trServicioAdicional'>"
 						+ "<td class='tdAcciones' onclick='javascript:tdAccionesOnClick(event, this)'>"
 							+ "&nbsp;"
@@ -130,8 +139,13 @@ function inputAgregarServicioOnClick(event, element) {
 							+ "<input type='text' value='0' class='inputTotal'"
 								+ " onchange='javascript: inputTotalOnChange(event, this)'/>"
 						+ "</td>"
-					+ "</tr>"
-				);
+					+ "</tr>";
+				
+				if ($("#trRedondeo").length > 0) {
+					$("#trRedondeo").before(html);
+				} else {
+					$("#tableFacturaLineas > tbody:last").append(html);
+				}
 				
 				servicios++;
 			}, async: false
@@ -146,6 +160,8 @@ function tdAccionesOnClick(event, element) {
 	if (trs.length == 0) {
 		generarDummyRow();
 	}
+	
+	calcularPieDeFactura();
 }
 
 function selectServicioOnChange(event, element) {
@@ -211,20 +227,55 @@ function inputTotalOnChange(event, element) {
 }
 
 function calcularPieDeFactura() {
+	var importeNoGravado = 0;
 	var importeTotal = 0;
+	
+	$("#trRedondeo").remove();
 	
 	var trsCobranzaMovimientos = $(".trCobranzaMovimiento");
 	for (var i=0; i<trsCobranzaMovimientos.length; i++) {
-		importeTotal += 1 * $($(trsCobranzaMovimientos[i]).children()[5]).html();
+		var tdNeto = $($(trsCobranzaMovimientos[i]).children()[4]);
+		var tdTotal = $($(trsCobranzaMovimientos[i]).children()[5]);
+		
+		importeNoGravado += 1 * tdNeto.html();
+		importeTotal += 1 * tdTotal.html();
 	}
 	
 	var trsServicioAdicional = $(".trServicioAdicional");
 	for (var i=0; i<trsServicioAdicional.length; i++) {
-		importeTotal += 1 * $($($(trsServicioAdicional[i]).children()[5]).children()[0]).val();
+		var tdNeto = $($(trsServicioAdicional[i]).children()[4]);
+		var tdTotal = $($(trsServicioAdicional[i]).children()[5]);
+		
+		importeNoGravado += 1 * tdNeto.html();
+		importeTotal += 1 * $(tdTotal.children()[0]).val();
 	}
 	
 	var importeSubtotal = importeTotal / (1 + __PORCENTAJE_IVA);
 	var importeIVA = importeTotal - importeSubtotal;
+	
+	if (importeNoGravado.toFixed(0) != importeSubtotal.toFixed(0)) {
+		$("#tableFacturaLineas > tbody:last").append(
+			"<tr class='trServicioAdicional' id='trRedondeo'>"
+				+ "<td>&nbsp;</td>"
+				+ "<td class='tdServicio'>"
+					+ "<select id='selectServicio" + servicios + "' disabled='true'>"
+						+ "<option value='" + __SERVICIO_REDONDEO.id + "'" 
+							+ " id='" + __SERVICIO_REDONDEO.id + "'"
+							+ " stid='" + __SERVICIO_REDONDEO.servicioTipo.id + "'>"
+							+ __SERVICIO_REDONDEO.descripcion  
+						+ "</option>"
+					+ "</select>" 
+				+ "</td>"
+				+ "<td class='tdImporteUnitario'>1</td>"
+				+ "<td class='tdCantidad'>"
+					+ "<input type='text' value='1' class='inputCantidad' disabled='true'/>" 
+				+ "</td>"
+				+ "<td class='tdNeto'>1</td>"
+				+ "<td class='tdTotal'>"
+					+ "<input type='text' value='1' class='inputTotal' disabled='true'/>"
+				+ "</td>"
+		);
+	}
 	
 	$("#divImporteSubtotal").html(importeSubtotal.toFixed(0));
 	$("#divImporteIVA").html(importeIVA.toFixed(0));

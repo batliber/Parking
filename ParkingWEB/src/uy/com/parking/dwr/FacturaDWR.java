@@ -49,7 +49,7 @@ public class FacturaDWR {
 			IFacturaBean iFacturaBean = lookupBean();
 			
 			for (Factura factura : iFacturaBean.list()) {
-				result.add(this.transform(factura));
+				result.add(transform(factura));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class FacturaDWR {
 			Date normalizedHasta = gregorianCalendar.getTime();
 			
 			for (Factura factura : iFacturaBean.listDesdeHasta(normalizedDesde, normalizedHasta)) {
-				result.add(this.transform(factura));
+				result.add(transform(factura));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,7 +102,7 @@ public class FacturaDWR {
 			Factura factura = iFacturaBean.getById(id);
 			
 			if (factura != null) {
-				result = this.transform(factura);
+				result = transform(factura);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,7 +120,7 @@ public class FacturaDWR {
 			Factura factura = iFacturaBean.getByNumero(numero);
 			
 			if (factura != null) {
-				result = this.transform(factura);
+				result = transform(factura);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,7 +147,7 @@ public class FacturaDWR {
 			
 			Factura factura = this.transform(facturaTO);
 			
-			result = this.transform(iFacturaBean.saveAndCloseRegistro(factura, matricula));
+			result = transform(iFacturaBean.saveAndCloseRegistro(factura, matricula));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -161,7 +161,7 @@ public class FacturaDWR {
 		try {
 			IFacturaBean iFacturaBean = lookupBean();
 			
-			result = this.transform(iFacturaBean.generateFacturaByMatricula(matricula));
+			result = transform(iFacturaBean.generateFacturaByMatricula(matricula));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -181,7 +181,7 @@ public class FacturaDWR {
 				cobranzaMovimientos.add(CobranzaMovimientoDWR.transform(cobranzaMovimientoTO));
 			}
 			
-			result = this.transform(
+			result = transform(
 				iFacturaBean.facturarCobranzaMovimientos(
 					transform(facturaTO), cobranzaMovimientos
 				)
@@ -263,7 +263,7 @@ public class FacturaDWR {
 		}
 	}
 
-	private FacturaTO transform(Factura factura) {
+	public static FacturaTO transform(Factura factura) {
 		FacturaTO facturaTO = new FacturaTO();
 		
 		facturaTO.setApellido(factura.getApellido());

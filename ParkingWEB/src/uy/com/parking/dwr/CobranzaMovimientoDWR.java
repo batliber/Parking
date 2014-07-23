@@ -32,6 +32,24 @@ public class CobranzaMovimientoDWR {
 		return (ICobranzaMovimientoBean) context.lookup(lookupName);
 	}
 	
+	public Collection<CobranzaMovimientoTO> listHistorialByCliente(ClienteTO clienteTO) {
+		Collection<CobranzaMovimientoTO> result = new LinkedList<CobranzaMovimientoTO>();
+		
+		try {
+			ICobranzaMovimientoBean iCobranzaMovimientoBean = lookupBean();
+			
+			for (CobranzaMovimiento cobranzaMovimiento : 
+				iCobranzaMovimientoBean.listHistorialByCliente(
+					ClienteDWR.transform(clienteTO, false))) {
+				result.add(transform(cobranzaMovimiento));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public Collection<CobranzaMovimientoTO> listSinFacturarByCliente(ClienteTO clienteTO) {
 		Collection<CobranzaMovimientoTO> result = new LinkedList<CobranzaMovimientoTO>();
 		
@@ -188,6 +206,14 @@ public class CobranzaMovimientoDWR {
 			cobranzaMovimientoTO.setCobranzaTipoDocumento(
 				CobranzaTipoDocumentoDWR.transform(
 					cobranzaMovimiento.getCobranzaTipoDocumento(), false
+				)
+			);
+		}
+		
+		if (cobranzaMovimiento.getFactura() != null) {
+			cobranzaMovimientoTO.setFactura(
+				FacturaDWR.transform(
+					cobranzaMovimiento.getFactura()
 				)
 			);
 		}

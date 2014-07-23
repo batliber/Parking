@@ -10,7 +10,8 @@ function reloadData() {
 			callback: function(data) {
 				for (var i=0; i<data.length; i++) {
 					$("#tableCobranzaMovimientos > tbody:last").append(
-						"<tr>"
+						"<tr id='" + data[i].cliente.id 
+							+ "' onclick='javascript:trCobranzaMovimientoOnClick(event, this)'>"
 							+ "<td class='tdCobranzaMovimientoClienteDocumento'>"
 								+ "<div class='divCobranzaMovimientoClienteDocumento'>"
 									+ data[i].cliente.documento
@@ -75,6 +76,11 @@ function inputActualizarOnClick(event) {
 function inputAjusteOnClick(event) {
 	document.getElementById("iFrameAjuste").src = "./ajuste.jsp";
 	showPopUp(document.getElementById("divIFrameAjuste"));
+}
+
+function trCobranzaMovimientoOnClick(event, element) {
+	document.getElementById("iFrameHistorial").src = "./historial.jsp?id=" + $(element).attr("id");;
+	showPopUp(document.getElementById("divIFrameHistorial"));
 }
 
 function divCloseOnClick(event, element) {

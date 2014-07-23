@@ -13,6 +13,7 @@ import uy.com.parking.bean.IServicioBean;
 import uy.com.parking.bean.ServicioBean;
 import uy.com.parking.entities.Servicio;
 import uy.com.parking.transferObjects.ServicioTO;
+import uy.com.parking.util.Configuration;
 
 @RemoteProxy
 public class ServicioDWR {
@@ -36,6 +37,23 @@ public class ServicioDWR {
 			for (Servicio servicio : iServicioBean.list()) {
 				result.add(transform(servicio, false));
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public ServicioTO getServicioRedondeo() {
+		ServicioTO result = null;
+		
+		try {
+			IServicioBean iServicioBean = lookupBean();
+			
+			result = transform(
+				iServicioBean.getById(
+					new Long(Configuration.getInstance().getProperty("Servicio.Redondeo"))
+				), false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

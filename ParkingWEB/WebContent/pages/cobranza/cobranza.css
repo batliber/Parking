@@ -79,3 +79,18 @@
 	height: 320px;
 	border: none;
 }
+
+#divIFrameHistorial {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	z-index: 3;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#iFrameHistorial {
+	width: 740px;
+	height: 320px;
+	border: none;
+}
