@@ -1,5 +1,9 @@
 package uy.com.parking.bean;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,6 +23,7 @@ import uy.com.parking.entities.CajaMovimiento;
 import uy.com.parking.entities.CajaTipoDocumento;
 import uy.com.parking.entities.Cliente;
 import uy.com.parking.entities.CobranzaMovimiento;
+import uy.com.parking.entities.CobranzaTipoDocumento;
 import uy.com.parking.entities.Factura;
 import uy.com.parking.entities.FacturaLinea;
 import uy.com.parking.entities.Moneda;
@@ -27,11 +32,14 @@ import uy.com.parking.entities.RegistroTipo;
 import uy.com.parking.entities.Servicio;
 import uy.com.parking.entities.ServicioPrecio;
 import uy.com.parking.entities.Vehiculo;
+import uy.com.parking.util.Configuration;
 import uy.com.parking.util.Constantes;
 
 @Stateless
 public class FacturaBean implements IFacturaBean {
 
+	private static String __SEPARADOR_CAMPO = ";";
+	
 	@PersistenceContext(unitName = "uy.com.parking.persistenceUnit")
 	private EntityManager entityManager;
 
@@ -86,7 +94,8 @@ public class FacturaBean implements IFacturaBean {
 					"SELECT f"
 					+ " FROM Factura f"
 					+ " WHERE f.fecha >= :desde"
-					+ " AND f.fecha <= :hasta",
+					+ " AND f.fecha <= :hasta"
+					+ " ORDER BY f.numero DESC",
 					Factura.class
 				);
 			query.setParameter("desde", desde);
@@ -132,6 +141,92 @@ public class FacturaBean implements IFacturaBean {
 		return result;
 	}
 
+	public String exportarListDesdeHastaAExcel(Date desde, Date hasta) {
+		String result = null;
+		
+		PrintWriter printWriter = null;
+		
+		try {
+			Collection<Factura> facturas = this.listDesdeHasta(desde, hasta);
+			
+			GregorianCalendar gregorianCalendar = new GregorianCalendar();
+			gregorianCalendar.set(GregorianCalendar.HOUR_OF_DAY, 0);
+			gregorianCalendar.set(GregorianCalendar.MINUTE, 0);
+			gregorianCalendar.set(GregorianCalendar.SECOND, 0);
+			gregorianCalendar.set(GregorianCalendar.MILLISECOND, 0);
+			
+			Date hoy = GregorianCalendar.getInstance().getTime();
+			
+			SimpleDateFormat formatNombreArchivo = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+			DecimalFormat decimalFormat = new DecimalFormat("#.##");
+			
+			// Cálculo de nombre de archivo
+			String nombreArchivo = 
+				formatNombreArchivo.format(hoy)
+				+ "."
+				+ "csv";
+			
+			printWriter = 
+				new PrintWriter(
+					new FileWriter(
+						Configuration.getInstance().getProperty("exportacion.carpeta") + nombreArchivo
+					)
+				);
+			
+			String cabezal =
+				"Número"
+				+ __SEPARADOR_CAMPO
+				+ "Fecha"
+				+ __SEPARADOR_CAMPO
+				+ "Cliente"
+				+ __SEPARADOR_CAMPO
+				+ "Moneda"
+				+ __SEPARADOR_CAMPO
+				+ "Subtotal"
+				+ __SEPARADOR_CAMPO
+				+ "IVA"
+				+ __SEPARADOR_CAMPO
+				+ "Total"
+				+ __SEPARADOR_CAMPO
+				+ "Anulada";
+			
+			printWriter.println(cabezal);
+			
+			for (Factura factura : facturas) {
+				String linea =
+					factura.getNumero()
+					+ __SEPARADOR_CAMPO
+					+ format.format(factura.getFecha())
+					+ __SEPARADOR_CAMPO
+					+ factura.getDocumento() + " - "
+					+ factura.getApellido() + ", " + factura.getNombre()
+					+ __SEPARADOR_CAMPO
+					+ factura.getMoneda().getDescripcion()
+					+ __SEPARADOR_CAMPO
+					+ decimalFormat.format(factura.getImporteSubtotal())
+					+ __SEPARADOR_CAMPO
+					+ decimalFormat.format(factura.getImporteIVA())
+					+ __SEPARADOR_CAMPO
+					+ decimalFormat.format(factura.getImporteTotal())
+					+ __SEPARADOR_CAMPO
+					+ (factura.getAnulada() != null && factura.getAnulada() ? "Si" : "No");
+				
+				printWriter.println(linea);
+			}
+			
+			result = nombreArchivo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (printWriter != null) {
+				printWriter.close();
+			}
+		}
+		
+		return result;
+	}
+	
 	public void save(Factura factura) {
 		try {
 			Query query = entityManager
@@ -356,6 +451,96 @@ public class FacturaBean implements IFacturaBean {
 		return result;
 	}
 
+	public Factura anularFacturaById(Long id) {
+		Factura result = null;
+
+		try {
+			Date hoy = GregorianCalendar.getInstance().getTime();
+			
+			result = entityManager.find(Factura.class, id);
+			
+			result.setAnulada(true);
+			
+			result.setUact(new Long(1));
+			result.setFact(hoy);
+			result.setTerm(new Long(1));
+			
+			TypedQuery<CobranzaMovimiento> query = 
+				entityManager.createQuery(
+					"SELECT cm"
+					+ " FROM CobranzaMovimiento cm"
+					+ " WHERE cm.factura.id = :facturaId",
+					CobranzaMovimiento.class
+				);
+			query.setParameter("facturaId", id);
+			
+			Long cobranzaTipoDocumentoCobranzaParkingABITABId = 
+				new Long(Configuration.getInstance().getProperty(
+					"CobranzaTipoDocumento.cobranzaParkingABITAB")
+				);
+			Long cobranzaTipoDocumentoRecargoCobranzaParkingABITABId = 
+				new Long(Configuration.getInstance().getProperty(
+					"CobranzaTipoDocumento.recargoCobranzaParkingABITAB")
+				);
+			
+			Long cobranzaTipoDocumentoAnulacionFacturaId = 
+				new Long(Configuration.getInstance().getProperty(
+					"CobranzaTipoDocumento.anulacionFactura")
+				);
+			
+			CobranzaTipoDocumento cobranzaTipoDocumentoAnulacionFactura = 
+				entityManager.find(
+					CobranzaTipoDocumento.class, 
+					cobranzaTipoDocumentoAnulacionFacturaId
+				);
+			
+			for (CobranzaMovimiento cobranzaMovimiento : query.getResultList()) {
+				if (cobranzaMovimiento.getCobranzaTipoDocumento().getId().equals(
+						cobranzaTipoDocumentoCobranzaParkingABITABId
+					)
+					|| cobranzaMovimiento.getCobranzaTipoDocumento().getId().equals(
+						cobranzaTipoDocumentoRecargoCobranzaParkingABITABId
+					)
+					) {
+					// Anulación de Cobranza ABITAB
+					cobranzaMovimiento.setFactura(null);
+					
+					cobranzaMovimiento.setUact(new Long(1));
+					cobranzaMovimiento.setFact(hoy);
+					cobranzaMovimiento.setTerm(new Long(1));
+					
+					entityManager.merge(cobranzaMovimiento);
+				} else {
+					// Extorno de Cobranza Manual
+					CobranzaMovimiento cobranzaMovimientoExtorno = new CobranzaMovimiento();
+					cobranzaMovimientoExtorno.setCliente(cobranzaMovimiento.getCliente());
+					cobranzaMovimientoExtorno.setCobranzaTipoDocumento(
+						cobranzaTipoDocumentoAnulacionFactura
+					);
+					cobranzaMovimientoExtorno.setFactura(cobranzaMovimiento.getFactura());
+					cobranzaMovimientoExtorno.setFecha(hoy);
+					cobranzaMovimientoExtorno.setImporte(
+						-1 * cobranzaMovimiento.getImporte()
+					);
+					cobranzaMovimientoExtorno.setMoneda(cobranzaMovimiento.getMoneda());
+					cobranzaMovimientoExtorno.setServicio(cobranzaMovimiento.getServicio());
+					
+					cobranzaMovimientoExtorno.setUact(new Long(1));
+					cobranzaMovimientoExtorno.setFact(hoy);
+					cobranzaMovimientoExtorno.setTerm(new Long(1));
+					
+					entityManager.persist(cobranzaMovimientoExtorno);
+				}
+			}
+			
+			result = entityManager.merge(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
 	public void remove(Factura factura) {
 		try {
 			Factura managedFactura = entityManager.find(Factura.class,

@@ -18,6 +18,7 @@ public class FacturaTO extends BaseTO {
 	private Double importeSubtotal;
 	private Double importeIVA;
 	private Double importeTotal;
+	private Boolean anulada;
 	private ClienteTO cliente;
 	private MonedaTO moneda;
 	private Collection<FacturaLineaTO> facturaLineas;
@@ -100,6 +101,14 @@ public class FacturaTO extends BaseTO {
 
 	public void setImporteTotal(Double importeTotal) {
 		this.importeTotal = importeTotal;
+	}
+
+	public Boolean getAnulada() {
+		return anulada;
+	}
+
+	public void setAnulada(Boolean anulada) {
+		this.anulada = anulada;
 	}
 
 	public ClienteTO getCliente() {

@@ -41,9 +41,24 @@ function reloadData() {
 									+ data[i].moneda.abreviacion
 								+ "</div>"
 							+ "</td>"
-							+ "<td class='tdFacturaImporte'>"
-								+ "<div class='divFacturaImporte'>" 
-									+ new Number(data[i].importeTotal).toFixed(2)
+							+ "<td class='tdFacturaImporteSubtotal'>"
+								+ "<div class='divFacturaImporteSubtotal'>" 
+									+ new Number(data[i].importeSubtotal).toFixed(0)
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdFacturaImporteIVA'>"
+								+ "<div class='divFacturaImporteIVA'>" 
+									+ new Number(data[i].importeIVA).toFixed(0)
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdFacturaImporteTotal'>"
+								+ "<div class='divFacturaImporteTotal'>" 
+									+ new Number(data[i].importeTotal).toFixed(0)
+								+ "</div>"
+							+ "</td>"
+							+ "<td class='tdFacturaAnulada'>"
+								+ "<div class='divFacturaAnulada'>" 
+									+ (data[i].anulada ? "Si" : "No")
 								+ "</div>"
 							+ "</td>"
 						+ "</tr>"
@@ -69,4 +84,20 @@ function trFacturaOnClick(event, element) {
 
 function divCloseOnClick(event, element) {
 	closePopUp(event, element.parentNode.parentNode);
+	
+	reloadData();
+}
+
+function inputExportarAExcelOnClick(event, element) {
+	FacturaDWR.exportarListDesdeHastaAExcel(
+		parseShortDate($("#inputDesde").val()),
+		parseShortDate($("#inputHasta").val()),
+		{
+			callback: function(data) {
+				if (data != null) {
+					alert("Archivo generado: " + data);
+				}
+			}, async: false
+		}
+	);
 }

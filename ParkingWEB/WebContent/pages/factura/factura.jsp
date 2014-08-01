@@ -20,10 +20,11 @@
 <body>
 	<div class="divButtonBar">
 		<div class="divButton"><input type="submit" id="inputImprimirFactura" value="Imprimir factura" onclick="javascript:inputImprimirFacturaOnClick(event)"/></div>
+		<div class="divButton"><input type="submit" id="inputAnularFactura" value="Anular factura" onclick="javascript:inputAnularFacturaOnClick(event)"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
-		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Factura</div>
+		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Acciones</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
@@ -31,6 +32,7 @@
 		<div style="float: left;">Fecha:</div><div id="divFacturaFecha">&nbsp;</div>
 		<div style="float: left;">Cliente:</div><div id="divFacturaClienteNombre">&nbsp;</div>
 		<div style="float: left;">Moneda:</div><div id="divFacturaMonedaDescripcion">&nbsp;</div>
+		<div style="float: left;">Anulada:</div><div id="divFacturaAnulada">&nbsp;</div>
 	</div>
 	<div>
 		<table id="tableFacturaLineas" border="0" cellspacing="0" cellpadding="0">

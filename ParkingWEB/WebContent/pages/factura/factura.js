@@ -2,6 +2,7 @@ var factura = null;
 
 $(document).ready(function() {
 	$("#inputGrabarFactura").prop("disabled", true);
+	$("#inputAnularFactura").prop("disabled", true);
 	$("#inputImprimirFactura").prop("disabled", true);
 	
 	if (matricula != null && matricula != "") {
@@ -25,6 +26,8 @@ $(document).ready(function() {
 					factura = data;
 					
 					showFactura();
+					
+					$("#inputAnularFactura").prop("disabled", false);
 				}, async: false
 			}
 		);
@@ -36,9 +39,13 @@ $(document).ready(function() {
 });
 
 function showFactura() {
+	if (factura.numero != null) {
+		$("#divFacturaNumero").text(factura.numero);
+	}
 	$("#divFacturaFecha").text(formatShortDate(factura.fecha));
 	$("#divFacturaClienteNombre").text(factura.nombre + " " + factura.apellido);
 	$("#divFacturaMonedaDescripcion").text(factura.moneda.descripcion);
+	$("#divFacturaAnulada").text(factura.anulada ? "Si" : "No");
 	
 	$("#tableFacturaLineas > tbody:last > tr").remove();
 	
@@ -76,10 +83,12 @@ function showFactura() {
 function clearForm() {
 	$("#inputGrabarFactura").prop("disabled", true);
 	$("#inputImprimirFactura").prop("disabled", true);
+	$("#inputAnularFactura").prop("disabled", true);
 	
 	$("#divFacturaFecha").text(".");
 	$("#divFacturaClienteNombre").text(".");
 	$("#divFacturaMonedaDescripcion").text(".");
+	$("#divFacturaAnulada").text(".");
 	
 	$("#tableFacturaLineas > tbody:last > tr").remove();
 	
@@ -157,4 +166,23 @@ function inputGrabarFacturaOnClick(event) {
 
 function inputImprimirFacturaOnClick(event) {
 	window.print();
+}
+
+function inputAnularFacturaOnClick(event) {
+	if (confirm("¿Desea anular la Factura?")) {
+		FacturaDWR.anularFacturaById(
+			factura.id,
+			{
+				callback: function(data) {
+					if (data != null) {
+						factura = data;
+						
+						alert("Factura anulada correctamente.");
+						
+						showFactura();
+					}
+				}, async: false
+			}
+		);
+	}
 }

@@ -129,6 +129,20 @@ public class FacturaDWR {
 		return result;
 	}
 	
+	public String exportarListDesdeHastaAExcel(Date desde, Date hasta) {
+		String result = null;
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			result = iFacturaBean.exportarListDesdeHastaAExcel(desde, hasta);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void add(FacturaTO facturaTO) {
 		try {
 			IFacturaBean iFacturaBean = lookupBean();
@@ -186,6 +200,24 @@ public class FacturaDWR {
 					transform(facturaTO), cobranzaMovimientos
 				)
 			);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public FacturaTO anularFacturaById(Long id) {
+		FacturaTO result = null;
+		
+		try {
+			IFacturaBean iFacturaBean = lookupBean();
+			
+			Factura factura = iFacturaBean.anularFacturaById(id);
+			
+			if (factura != null) {
+				result = transform(factura);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -266,6 +298,7 @@ public class FacturaDWR {
 	public static FacturaTO transform(Factura factura) {
 		FacturaTO facturaTO = new FacturaTO();
 		
+		facturaTO.setAnulada(factura.getAnulada());
 		facturaTO.setApellido(factura.getApellido());
 		
 		facturaTO.setCliente(ClienteDWR.transform(factura.getCliente(), false));
@@ -322,6 +355,7 @@ public class FacturaDWR {
 	private Factura transform(FacturaTO facturaTO) {
 		Factura factura = new Factura();
 		
+		factura.setAnulada(facturaTO.getAnulada());
 		factura.setApellido(facturaTO.getApellido());
 		
 		Cliente cliente = new Cliente();

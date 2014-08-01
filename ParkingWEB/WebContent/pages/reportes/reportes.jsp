@@ -18,9 +18,13 @@
 		<div class="divButton"><input type="submit" value="Facturaci&oacute;n a la fecha"/></div>
 		<div class="divButton"><input type="submit" value="Facturaci&oacute;n por servicio"/></div>
 		<div class="divButtonBarSeparator">&nbsp;</div>
+		<div class="divButton"><input type="submit" value="Exportar a Excel" onclick="javascript:inputExportarAExcelOnClick(event, this)"/></div>
+		<div class="divButtonBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divButtonTitleBar">
 		<div id="divButtonTitleDoubleSize" class="divButtonTitleBarTitle">Reportes</div>
+		<div class="divButtonTitleBarSeparator">&nbsp;</div>
+		<div id="divButtonTitleSingleSize" class="divButtonTitleBarTitle">Acciones</div>
 		<div class="divButtonTitleBarSeparator">&nbsp;</div>
 	</div>
 	<div class="divMainWindow">
@@ -41,11 +45,17 @@
 					<td class="tdFacturaFecha"><div>Fecha</div></td>
 					<td class="tdFacturaCliente"><div>Cliente</div></td>
 					<td class="tdFacturaMoneda"><div>Moneda</div></td>
-					<td class="tdFacturaImporte"><div>Importe</div></td>
+					<td class="tdFacturaImporteSubtotal"><div>Subtotal</div></td>
+					<td class="tdFacturaImporteIVA"><div>IVA</div></td>
+					<td class="tdFacturaImporteTotal"><div>Total</div></td>
+					<td class="tdFacturaAnulada"><div>Anulada</div></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
+					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>
 					<td><div>&nbsp;</div></td>

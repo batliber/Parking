@@ -48,6 +48,9 @@ public class Factura extends BaseEntity {
 	@Column(name = "importe_total")
 	private Double importeTotal;
 
+	@Column(name = "anulada")
+	private Boolean anulada;
+	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
@@ -123,6 +126,14 @@ public class Factura extends BaseEntity {
 
 	public void setFacturaLineas(Set<FacturaLinea> facturaLineas) {
 		this.facturaLineas = facturaLineas;
+	}
+
+	public Boolean getAnulada() {
+		return anulada;
+	}
+
+	public void setAnulada(Boolean anulada) {
+		this.anulada = anulada;
 	}
 
 	public String getDocumento() {

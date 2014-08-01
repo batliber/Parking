@@ -19,6 +19,8 @@ public interface IFacturaBean {
 	
 	public Factura getByNumero(Long numero);
 	
+	public String exportarListDesdeHastaAExcel(Date desde, Date hasta);
+	
 	public void save(Factura factura);
 	
 	public Factura saveAndCloseRegistro(Factura factura, String matricula);
@@ -26,6 +28,8 @@ public interface IFacturaBean {
 	public Factura generateFacturaByMatricula(String matricula);
 	
 	public Factura facturarCobranzaMovimientos(Factura factura, Collection<CobranzaMovimiento> cobranzaMovimientos);
+	
+	public Factura anularFacturaById(Long id);
 	
 	public void remove(Factura factura);
 	

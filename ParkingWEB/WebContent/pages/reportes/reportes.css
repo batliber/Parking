@@ -1,5 +1,5 @@
 #tableFacturas {
-	width: 585px;
+	width: 820px;
 	height: 318px;
 }
 
@@ -8,7 +8,7 @@
 }
 
 #tableFacturas thead tr .tdFacturaNumero {
-	width: 90px;
+	width: 50px;
 }
 
 #tableFacturas thead tr .tdFacturaFecha {
@@ -16,53 +16,79 @@
 }
 
 #tableFacturas thead tr .tdFacturaCliente {
-	width: 200px;
+	width: 280px;
 }
 
 #tableFacturas thead tr .tdFacturaMoneda {
+	width: 50px;
+}
+
+#tableFacturas thead tr .tdFacturaImporteSubtotal {
 	width: 90px;
 }
 
-#tableFacturas thead tr .tdFacturaImporte {
+#tableFacturas thead tr .tdFacturaImporteIVA {
 	width: 90px;
+}
+
+#tableFacturas thead tr .tdFacturaImporteTotal {
+	width: 90px;
+}
+
+#tableFacturas thead tr .tdFacturaAnulada {
+	width: 50px;
 }
 
 #tableFacturas tbody {
 	position: fixed;
 	margin-top: 17px;
 	overflow: auto;
-	width: 583px;
+	width: 816px;
 	height: 299px;
 }
 
 #tableFacturas tbody tr td .divFacturaNumero {
-	text-align: left;
-	margin-left: 2px;
-	width: 88px;
+	text-align: right;
+	margin-right: 2px;
+	width: 48px;
 }
 
 #tableFacturas tbody tr td .divFacturaFecha {
 	text-align: center;
-	margin-left: 2px;
-	width: 88px;
+	width: 90px;
 }
 
 #tableFacturas tbody tr td .divFacturaCliente {
-	text-align: left;
 	margin-left: 2px;
-	width: 198px;
+	width: 278px;
 }
 
 #tableFacturas tbody tr td .divFacturaMoneda {
-	text-align: left;
 	margin-left: 2px;
+	width: 48px;
+}
+
+#tableFacturas tbody tr td .divFacturaImporteSubtotal {
+	text-align: right;
+	margin-right: 2px;
 	width: 88px;
 }
 
-#tableFacturas tbody tr td .divFacturaImporte {
-	text-align: left;
-	margin-left: 2px;
+#tableFacturas tbody tr td .divFacturaImporteIVA {
+	text-align: right;
+	margin-right: 2px;
 	width: 88px;
+}
+
+#tableFacturas tbody tr td .divFacturaImporteTotal {
+	text-align: right;
+	margin-right: 2px;
+	width: 88px;
+}
+
+#tableFacturas tbody tr td .divFacturaAnulada {
+	text-align: center;
+	width: 50px;
 }
 
 #divIFrameFactura {
