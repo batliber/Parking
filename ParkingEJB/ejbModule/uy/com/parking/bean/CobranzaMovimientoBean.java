@@ -368,7 +368,8 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				Configuration.getInstance().getProperty("archivoONL.posicionCampoImporte");
 			String posicionCampoMoneda = 
 				Configuration.getInstance().getProperty("archivoONL.posicionCampoMoneda");
-			String cantidadMonedas = "1";
+			String cantidadMonedas = 
+				Configuration.getInstance().getProperty("archivoONL.cantidadMonedas");
 			
 			String cabezal = 
 				posicionCampoImporte + __SEPARADOR_CAMPO 

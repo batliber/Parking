@@ -10,7 +10,10 @@ $(document).ready(function() {
 				callback: function(data) {
 					cliente = data;
 					
-					$("#divCliente").html(data.apellido + ", " + data.nombre);
+					$("#divCliente").html(
+						data.documento + " - " + 
+						data.apellido + ", " + data.nombre
+					);
 				}, async: false
 			}
 		);

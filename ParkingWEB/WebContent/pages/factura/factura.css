@@ -1,29 +1,66 @@
 #tableFacturaLineas {
-	
+	width: 597px;
+	height: 88px;
 }
 
-.tdNumero div {
-	width: 75px;
+#tableFacturaLineas thead {
+	position: fixed;
 }
 
-.tdDetalle div {
-	width: 300px;
+#tableFacturaLineas thead tr .tdNumero {
+	width: 50px;
 }
 
-.tdImporteUnitario div {
-	width: 75px;
+#tableFacturaLineas thead tr .tdDetalle {
+	width: 250px;
 }
 
-.tdUnidades div {
-	width: 75px;
+#tableFacturaLineas thead tr .tdImporteUnitario {
+	width: 90px;
 }
 
-.tdImporteTotal div {
-	width: 75px;
+#tableFacturaLineas thead tr .tdUnidades {
+	width: 90px;
 }
 
-.tdImporteTotal div div {
-	width: 37px;
+#tableFacturaLineas thead tr .tdImporteTotal {
+	width: 90px;
+}
+
+#tableFacturaLineas tbody {
+	position: fixed;
+	margin-top: 17px;
+	overflow: auto;
+	width: 593px;
+	height: 68px;
+}
+
+#tableFacturaLineas tbody tr .tdNumero div {
+	text-align: right;
+	width: 50px;
+}
+
+#tableFacturaLineas tbody tr .tdDetalle div {
+	margin-left: 2px;
+	width: 248px;
+}
+
+#tableFacturaLineas tbody tr .tdImporteUnitario div {
+	text-align: right;
+	margin-right: 2px;
+	width: 88px;
+}
+
+#tableFacturaLineas tbody tr .tdUnidades div {
+	text-align: right;
+	margin-right: 2px;
+	width: 88px;
+}
+
+#tableFacturaLineas tbody tr .tdImporteTotal div {
+	text-align: right;
+	margin-right: 2px;
+	width: 88px;
 }
 
 td div input {

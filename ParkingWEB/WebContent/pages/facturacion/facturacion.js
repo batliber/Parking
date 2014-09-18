@@ -52,7 +52,9 @@ function inputClienteDocumentoOnChange(event, element) {
 								for (i=0; i<dataCobranza.length; i++) {
 									$("#tableFacturaLineas > tbody:last").append(
 										"<tr class='trCobranzaMovimiento' id='" + dataCobranza[i].id + "'>"
-											+ "<td>&nbsp;</td>"
+											+ "<td class='tdAcciones' onclick='javascript:tdAccionesOnClick(event, this)'>"
+												+ "&nbsp;"
+											+ "</td>"
 											+ "<td class='tdServicio'"
 												+ "id='" + dataCobranza[i].servicio.id + "' " 
 												+ "stid='" + dataCobranza[i].servicio.servicioTipo.id + "' "
@@ -253,7 +255,7 @@ function calcularPieDeFactura() {
 	var importeSubtotal = importeTotal / (1 + __PORCENTAJE_IVA);
 	var importeIVA = importeTotal - importeSubtotal;
 	
-	if (importeNoGravado.toFixed(0) != importeSubtotal.toFixed(0)) {
+	if (importeNoGravado.toFixed(0) < importeSubtotal.toFixed(0)) {
 		$("#tableFacturaLineas > tbody:last").append(
 			"<tr class='trServicioAdicional' id='trRedondeo'>"
 				+ "<td>&nbsp;</td>"

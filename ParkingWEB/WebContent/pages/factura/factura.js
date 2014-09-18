@@ -43,7 +43,9 @@ function showFactura() {
 		$("#divFacturaNumero").text(factura.numero);
 	}
 	$("#divFacturaFecha").text(formatShortDate(factura.fecha));
-	$("#divFacturaClienteNombre").text(factura.nombre + " " + factura.apellido);
+	$("#divFacturaClienteNombre").text(
+		factura.documento + " - " + factura.apellido + ", " + factura.nombre
+	);
 	$("#divFacturaMonedaDescripcion").text(factura.moneda.descripcion);
 	$("#divFacturaAnulada").text(factura.anulada ? "Si" : "No");
 	
@@ -55,29 +57,32 @@ function showFactura() {
 				+ "<td class='tdNumero'><div>" + factura.facturaLineas[i].numero + "</div></td>"
 				+ "<td class='tdDetalle'><div>" + factura.facturaLineas[i].detalle + "</div></td>"
 				+ "<td class='tdImporteUnitario'>"
-					+ "<div>" + factura.moneda.abreviacion + " " + new Number(factura.facturaLineas[i].importeUnitario).toFixed(2) + "</div>"
+					+ "<div>" + new Number(factura.facturaLineas[i].importeUnitario).toFixed(0) + "</div>"
 				+ "</td>"
-				+ "<td class='tdUnidades'><div>" + new Number(factura.facturaLineas[i].unidades).toFixed(2) + "</div></td>"
+				+ "<td class='tdUnidades'>"
+					+ "<div>" + new Number(factura.facturaLineas[i].unidades).toFixed(0) + "</div></td>"
 				+ "<td class='tdImporteTotal'>" 
 					+ "<div id='divImporteTotalFacturaLinea" + factura.facturaLineas[i].numero + "'>" 
-						+ "<div style='float: left;'>" + factura.moneda.abreviacion + "</div>"
 						+ ((matricula != null && matricula != "") ?
 							" <div>"
-								+ "<input type='text' id='inputImporteTotalFacturaLinea" + factura.facturaLineas[i].numero + "'"
-								+ " value='" + new Number(factura.facturaLineas[i].importeTotal).toFixed(2) + "'"
-								+ " onchange='javascript:inputImporteTotalFacturaLineaOnChange(event)'/>"
+								+ "<input type='text'"
+									+ " id='inputImporteTotalFacturaLinea" + factura.facturaLineas[i].numero + "'"
+									+ " value='" + new Number(factura.facturaLineas[i].importeTotal).toFixed(0) + "'"
+									+ " onchange='javascript:inputImporteTotalFacturaLineaOnChange(event)'/>"
 							+ "</div>"
-							: "<div>" + new Number(factura.facturaLineas[i].importeTotal).toFixed(2) + "</div>"
-							)
+							: "<div>" 
+								+ new Number(factura.facturaLineas[i].importeTotal).toFixed(0) 
+							+ "</div>"
+						)
 					+ "</div>"
 				+ "</td>"
 			+ "</tr>"
 		);
 	}
 	
-	$("#divFacturaImporteSubtotal").text(factura.moneda.abreviacion + " " + new Number(factura.importeSubtotal).toFixed(2));
-	$("#divFacturaImporteIVA").text(factura.moneda.abreviacion + " " + new Number(factura.importeIVA).toFixed(2));
-	$("#divFacturaImporteTotal").text(factura.moneda.abreviacion + " " + new Number(factura.importeTotal).toFixed(2));
+	$("#divFacturaImporteSubtotal").text(new Number(factura.importeSubtotal).toFixed(0));
+	$("#divFacturaImporteIVA").text(new Number(factura.importeIVA).toFixed(0));
+	$("#divFacturaImporteTotal").text(new Number(factura.importeTotal).toFixed(0));
 }
 
 function clearForm() {
@@ -85,10 +90,10 @@ function clearForm() {
 	$("#inputImprimirFactura").prop("disabled", true);
 	$("#inputAnularFactura").prop("disabled", true);
 	
-	$("#divFacturaFecha").text(".");
-	$("#divFacturaClienteNombre").text(".");
-	$("#divFacturaMonedaDescripcion").text(".");
-	$("#divFacturaAnulada").text(".");
+	$("#divFacturaFecha").html("&nbsp;");
+	$("#divFacturaClienteNombre").html("&nbsp;");
+	$("#divFacturaMonedaDescripcion").html("&nbsp;");
+	$("#divFacturaAnulada").html("&nbsp;");
 	
 	$("#tableFacturaLineas > tbody:last > tr").remove();
 	
@@ -102,9 +107,9 @@ function clearForm() {
 		+ "</tr>"
 	);
 	
-	$("#divFacturaImporteSubtotal").text(".");
-	$("#divFacturaImporteIVA").text(".");
-	$("#divFacturaImporteTotal").text(".");
+	$("#divFacturaImporteSubtotal").html("&nbsp;");
+	$("#divFacturaImporteIVA").html("&nbsp;");
+	$("#divFacturaImporteTotal").html("&nbsp;");
 }
 
 function inputFacturaNumeroOnChange(event) {
