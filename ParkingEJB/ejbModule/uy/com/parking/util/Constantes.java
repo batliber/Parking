@@ -11,4 +11,8 @@ public class Constantes {
 	public static final double __MINIMO_UNIDADES_PARKING = 0.5;
 	
 	public static final double __IMPUESTO_IVA = 0.22;
+	
+	public static final String __SEPARADOR_CAMPO = ";";
+	
+	public static final String __PREFIJO_ARCHIVO_CLIENTES = "Clientes";
 }

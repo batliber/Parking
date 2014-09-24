@@ -79,6 +79,20 @@ public class ClienteDWR {
 		return result;
 	}
 	
+	public String exportarAExcel() {
+		String result = null;
+		
+		try {
+			IClienteBean iClienteBean = lookupBean();
+			
+			result = iClienteBean.exportarAExcel();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void add(ClienteTO clienteTO) {
 		this.update(clienteTO);
 	}

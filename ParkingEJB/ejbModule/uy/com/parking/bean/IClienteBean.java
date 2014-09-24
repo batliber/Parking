@@ -16,6 +16,8 @@ public interface IClienteBean {
 	
 	public Cliente getByDocumento(String documento);
 	
+	public String exportarAExcel();
+	
 	public void save(Cliente cliente);
 	
 	public void remove(Cliente cliente);

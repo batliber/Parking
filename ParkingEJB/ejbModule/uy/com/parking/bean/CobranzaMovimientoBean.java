@@ -647,7 +647,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 				for (Cliente cliente : vehiculoServicioPrecio.getVehiculo().getClientes()) {
 					if (cliente.getFechaBaja() == null) {
 						if (!clientesProcesados.contains(cliente)) {
-							// Creación de CobranzaMovimiento por cada Cliente
+							// Creación de CobranzaMovimiento
 							CobranzaMovimiento cobranzaMovimiento = new CobranzaMovimiento();
 							cobranzaMovimiento.setCliente(cliente);
 							cobranzaMovimiento.setCobranzaTipoDocumento(cobranzaTipoDocumentoDeuda);
@@ -666,6 +666,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 							
 							Double clienteDeuda = clientesDeudas.get(cliente.getId());
 							
+							// Cálculo de recargos
 							if (clienteDeuda != null &&
 								clienteDeuda < 0 &&
 								Math.abs(clienteDeuda) > 1) {

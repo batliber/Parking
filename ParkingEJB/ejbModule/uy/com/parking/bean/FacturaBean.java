@@ -15,7 +15,6 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -38,9 +37,6 @@ import uy.com.parking.util.Constantes;
 @Stateless
 public class FacturaBean implements IFacturaBean {
 
-	private static String __SEPARADOR_CAMPO = ";";
-	
-	@PersistenceContext(unitName = "uy.com.parking.persistenceUnit")
 	private EntityManager entityManager;
 
 	@EJB
@@ -176,19 +172,19 @@ public class FacturaBean implements IFacturaBean {
 			
 			String cabezal =
 				"Número"
-				+ __SEPARADOR_CAMPO
+				+ Constantes.__SEPARADOR_CAMPO
 				+ "Fecha"
-				+ __SEPARADOR_CAMPO
+				+ Constantes.__SEPARADOR_CAMPO
 				+ "Cliente"
-				+ __SEPARADOR_CAMPO
+				+ Constantes.__SEPARADOR_CAMPO
 				+ "Moneda"
-				+ __SEPARADOR_CAMPO
+				+ Constantes.__SEPARADOR_CAMPO
 				+ "Subtotal"
-				+ __SEPARADOR_CAMPO
+				+ Constantes.__SEPARADOR_CAMPO
 				+ "IVA"
-				+ __SEPARADOR_CAMPO
+				+ Constantes.__SEPARADOR_CAMPO
 				+ "Total"
-				+ __SEPARADOR_CAMPO
+				+ Constantes.__SEPARADOR_CAMPO
 				+ "Anulada";
 			
 			printWriter.println(cabezal);
@@ -196,20 +192,20 @@ public class FacturaBean implements IFacturaBean {
 			for (Factura factura : facturas) {
 				String linea =
 					factura.getNumero()
-					+ __SEPARADOR_CAMPO
+					+ Constantes.__SEPARADOR_CAMPO
 					+ format.format(factura.getFecha())
-					+ __SEPARADOR_CAMPO
+					+ Constantes.__SEPARADOR_CAMPO
 					+ factura.getDocumento() + " - "
 					+ factura.getApellido() + ", " + factura.getNombre()
-					+ __SEPARADOR_CAMPO
+					+ Constantes.__SEPARADOR_CAMPO
 					+ factura.getMoneda().getDescripcion()
-					+ __SEPARADOR_CAMPO
+					+ Constantes.__SEPARADOR_CAMPO
 					+ decimalFormat.format(factura.getImporteSubtotal())
-					+ __SEPARADOR_CAMPO
+					+ Constantes.__SEPARADOR_CAMPO
 					+ decimalFormat.format(factura.getImporteIVA())
-					+ __SEPARADOR_CAMPO
+					+ Constantes.__SEPARADOR_CAMPO
 					+ decimalFormat.format(factura.getImporteTotal())
-					+ __SEPARADOR_CAMPO
+					+ Constantes.__SEPARADOR_CAMPO
 					+ (factura.getAnulada() != null && factura.getAnulada() ? "Si" : "No");
 				
 				printWriter.println(linea);

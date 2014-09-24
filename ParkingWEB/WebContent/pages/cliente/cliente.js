@@ -60,6 +60,18 @@ function inputNewOnClick(event, element) {
 	showPopUp(document.getElementById("divIFrameCliente"));
 }
 
+function inputExportarAExcelOnClick(event) {
+	ClienteDWR.exportarAExcel(
+		{
+			callback: function(data) {
+				if (data != null) {
+					alert("Archivo generado: " + data);
+				}
+			}, async: false
+		}
+	);
+}
+
 function divCloseOnClick(event, element) {
 	closePopUp(event, element.parentNode.parentNode);
 	
