@@ -43,6 +43,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 	private static String __SEPARADOR_NOMBRE_ARCHIVO = "_";
 	private static String __CAMPO_VACIO = " ";
 	private static String __SEPARADOR_CAMPO = "|";
+	private static String __SEPARADOR_LINEA = "\r\n";
 	
 	@PersistenceContext(unitName = "uy.com.parking.persistenceUnit")
 	private EntityManager entityManager;
@@ -383,7 +384,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 					)
 				);
 			
-			printWriter.println(cabezal);
+			printWriter.print(cabezal + __SEPARADOR_LINEA);
 			
 			Map<Long, Integer> lineasMoneda = new HashMap<Long, Integer>();
 			Map<Long, Double> importesMoneda = new HashMap<Long, Double>();
@@ -462,10 +463,12 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 					String clienteDocumento = cobranzaMovimiento.getCliente().getDocumento();
 					String clienteNombre = cobranzaMovimiento.getCliente().getNombre();
 					String clienteApellido = cobranzaMovimiento.getCliente().getNombre();
-					if (cobranzaMovimiento.getCliente().getApellido() != null) {
+					
+					if ((cobranzaMovimiento.getCliente().getApellido() != null) &&
+						(!cobranzaMovimiento.getCliente().getApellido().equals(""))) {
 						clienteApellido = cobranzaMovimiento.getCliente().getApellido();
 					}
-					String clienteDocuemnto = __CAMPO_VACIO;
+					String clienteDocumentoVacio = __CAMPO_VACIO;
 					
 					// 1 - Factura | 2 - Nota de crédito
 					String tipoDocumento = Configuration.getInstance().getProperty("archivoONL.tipoDocumento");
@@ -484,7 +487,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 						+  clienteDocumento + __SEPARADOR_CAMPO
 						+  clienteNombre + __SEPARADOR_CAMPO
 						+  clienteApellido + __SEPARADOR_CAMPO
-						+  clienteDocuemnto + __SEPARADOR_CAMPO
+						+  clienteDocumentoVacio + __SEPARADOR_CAMPO
 						+  tipoDocumento + __SEPARADOR_CAMPO
 						+  fechaVencimiento + __SEPARADOR_CAMPO
 						+  fechaCorte + __SEPARADOR_CAMPO
@@ -512,7 +515,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 						+  observacion2 + __SEPARADOR_CAMPO
 						+  controlCuotas;
 					
-					printWriter.println(linea);
+					printWriter.print(linea + __SEPARADOR_LINEA);
 				}
 			}
 			
@@ -523,7 +526,7 @@ public class CobranzaMovimientoBean implements ICobranzaMovimientoBean {
 					+ lineasMoneda.get(monedaId) + __SEPARADOR_CAMPO 
 					+ decimalFormat.format(importesMoneda.get(monedaId) * 100);
 				
-				printWriter.println(totales);
+				printWriter.print(totales + __SEPARADOR_LINEA);
 			}
 			
 			result = nombreArchivo;

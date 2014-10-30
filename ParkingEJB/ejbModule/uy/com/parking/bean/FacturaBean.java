@@ -15,6 +15,7 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -37,6 +38,7 @@ import uy.com.parking.util.Constantes;
 @Stateless
 public class FacturaBean implements IFacturaBean {
 
+	@PersistenceContext(unitName = "uy.com.parking.persistenceUnit")
 	private EntityManager entityManager;
 
 	@EJB

@@ -144,9 +144,15 @@ public class ClienteBean implements IClienteBean {
 				+ Constantes.__SEPARADOR_CAMPO
 				+ "Domicilio"
 				+ Constantes.__SEPARADOR_CAMPO
-				+ "Telefono"
+				+ "Teléfono"
 				+ Constantes.__SEPARADOR_CAMPO
-				+ "Ingreso";
+				+ "Ingreso"
+				+ Constantes.__SEPARADOR_CAMPO
+				+ "Matrícula"
+				+ Constantes.__SEPARADOR_CAMPO
+				+ "Marca - Modelo"
+				+ Constantes.__SEPARADOR_CAMPO
+				+ "Precio";
 			
 			printWriter.println(cabezal);
 			
@@ -162,27 +168,46 @@ public class ClienteBean implements IClienteBean {
 					+ Constantes.__SEPARADOR_CAMPO
 					+ cliente.getTelefono()
 					+ Constantes.__SEPARADOR_CAMPO
-					+ format.format(cliente.getFechaAlta());
+					+ format.format(cliente.getFechaAlta())
+					+ Constantes.__SEPARADOR_CAMPO;
 				
-				printWriter.println(linea);
-				
+				int i = 0;
 				for (Vehiculo vehiculo : cliente.getVehiculos()) {
 					VehiculoServicioPrecio vehiculoServicioPrecioVigente = 
 						iVehiculoServicioPrecioBean.getPrecioVigenteByVehiculoServicioMoneda(
 							vehiculo, servicioParkingMensual, monedaPesosUruguayos
 						);
 					
-					if (vehiculoServicioPrecioVigente != null) {
-						linea =
-							vehiculo.getMatricula()
-							+ Constantes.__SEPARADOR_CAMPO
-							+ vehiculo.getDescripcion()
-							+ Constantes.__SEPARADOR_CAMPO
-							+ servicioParkingMensual.getDescripcion()
-							+ Constantes.__SEPARADOR_CAMPO
-							+ decimalFormat.format(vehiculoServicioPrecioVigente.getPrecio());
+					if (i == 0) {
+						if (vehiculoServicioPrecioVigente != null) {
+							linea +=
+								vehiculo.getMatricula()
+								+ Constantes.__SEPARADOR_CAMPO
+								+ vehiculo.getDescripcion()
+								+ Constantes.__SEPARADOR_CAMPO
+								+ decimalFormat.format(vehiculoServicioPrecioVigente.getPrecio());
+							
+							printWriter.println(linea);
+						}
 						
-						printWriter.println(linea);
+						i++;
+					} else {
+						if (vehiculoServicioPrecioVigente != null) {
+							linea = 
+								Constantes.__SEPARADOR_CAMPO
+								+ Constantes.__SEPARADOR_CAMPO
+								+ Constantes.__SEPARADOR_CAMPO
+								+ Constantes.__SEPARADOR_CAMPO
+								+ Constantes.__SEPARADOR_CAMPO
+								+ Constantes.__SEPARADOR_CAMPO
+								+ vehiculo.getMatricula()
+								+ Constantes.__SEPARADOR_CAMPO
+								+ vehiculo.getDescripcion()
+								+ Constantes.__SEPARADOR_CAMPO
+								+ decimalFormat.format(vehiculoServicioPrecioVigente.getPrecio());
+							
+							printWriter.println(linea);
+						}
 					}
 				}
 			}
